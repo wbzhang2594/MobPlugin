@@ -1,0 +1,2 @@
+# MobPlugin
+Mobs have inteligence?
