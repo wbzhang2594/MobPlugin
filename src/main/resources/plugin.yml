@@ -1,0 +1,24 @@
+name: MobPlugin
+main: PikyCZ.mobplugin.MobPlugin
+version: "1.0"
+api: ["1.0.0"]
+
+load: STARTUP
+author: PikyCZ
+description: Implement Entity AI from scratch beginning with 0.16.x
+website: https://github.com/PikyCZ/MobPlugin
+commands: []
+
+commands:
+  mob:
+    description: Spawn a simple mob to the player, that is using this command
+    usage: "/mob spawn <mob_name>"
+    permission: mob-plugin.command
+  removemobs:
+    description: Remove all living mobs
+    usage: "/mob removeall"
+    permission: mob-plugin.command
+permissions:
+  mob-plugin.command:
+    description: ""
+    default: op
