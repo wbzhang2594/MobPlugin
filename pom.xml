@@ -16,13 +16,16 @@
 		<dep.nukkit.version>1.0-SNAPSHOT</dep.nukkit.version>
 	</properties>
 
-	<dependencies>
-		<dependency>
+	
+			<dependency>
+			<!-- Nukkit is last, so that Guava can overwrite the ancient Google Collections -->
 			<groupId>cn.nukkit</groupId>
 			<artifactId>nukkit</artifactId>
-			<version>${dep.nukkit.version}</version>
+			<version>1.0-SNAPSHOT</version>
 			<scope>provided</scope>
 		</dependency>
-	</dependencies>
-
-</project>
+	<repositories>
+		<repository>
+			<id>nukkit-repo</id>
+			<url>http://ci.regularbox.com/plugin/repository/everything/</url>
+		</repository>
