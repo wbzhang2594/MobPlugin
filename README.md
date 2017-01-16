@@ -2,6 +2,7 @@
 Mobs have inteligence? Who knows? ヽ༼ຈل͜ຈ༽ﾉ
 
 **Warning!!** : Plugin does not work correctly ..
+**Please if you want this plugin , download plugin from Target Folder** /New builds are not function
 
 Know Bugs:
 - [ ]  Config.yml [now plugin save default config.yml]
