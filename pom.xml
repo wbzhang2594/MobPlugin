@@ -4,7 +4,7 @@
 	<groupId>cn.nukkit</groupId>
 	<artifactId>MobPlugin</artifactId>
 	<version>0.0.2-SNAPSHOT</version>
-	<name>Mob Plugin</name>
+	<name>Simple Mob Plugin</name>
 	<description>Trying to evolve a mob plugin for nukkit ...</description>
 
 	<properties>
@@ -16,16 +16,13 @@
 		<dep.nukkit.version>1.0-SNAPSHOT</dep.nukkit.version>
 	</properties>
 
-	
-			<dependency>
-			<!-- Nukkit is last, so that Guava can overwrite the ancient Google Collections -->
+	<dependencies>
+		<dependency>
 			<groupId>cn.nukkit</groupId>
 			<artifactId>nukkit</artifactId>
-			<version>1.0-SNAPSHOT</version>
+			<version>${dep.nukkit.version}</version>
 			<scope>provided</scope>
 		</dependency>
-	<repositories>
-		<repository>
-			<id>nukkit-repo</id>
-			<url>http://ci.regularbox.com/plugin/repository/everything/</url>
-		</repository>
+	</dependencies>
+
+</project>
