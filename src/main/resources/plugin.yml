@@ -1,10 +1,10 @@
 name: MobPlugin
-main: MobPlugin
+main: creeperCZ\MobPlugin\MobPlugin
 version: "1.0"
 api: ["1.0.0"]
 
 load: STARTUP
-author: milk0417, kniffo80, CreeperFace, PikyCZ
+author: milk0417, kniffo80, CreeperFace, PikyCZ, NycuRO
 description: Implement Entity AI from scratch beginning with 0.16.x
 website: https://github.com/PikyCZ/MobPlugin
 
