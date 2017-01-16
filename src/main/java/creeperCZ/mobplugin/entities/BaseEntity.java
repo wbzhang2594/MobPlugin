@@ -4,6 +4,7 @@ import cn.nukkit.Player;
 import cn.nukkit.block.Block;
 import cn.nukkit.entity.Entity;
 import cn.nukkit.entity.EntityCreature;
+import cn.nukkit.entity.EntityHuman;
 import cn.nukkit.entity.data.ByteEntityData;
 import cn.nukkit.event.entity.EntityDamageByEntityEvent;
 import cn.nukkit.event.entity.EntityDamageEvent;
@@ -16,12 +17,13 @@ import cn.nukkit.math.Vector3;
 import cn.nukkit.nbt.tag.CompoundTag;
 import cn.nukkit.network.protocol.AddEntityPacket;
 import cn.nukkit.potion.Effect;
+import com.google.common.collect.Maps;
 import creeperCZ.mobplugin.MobPlugin;
 import creeperCZ.mobplugin.entities.monster.Monster;
+import creeperCZ.mobplugin.pathfinding.PathNavigate;
+import creeperCZ.mobplugin.pathfinding.PathNodeType;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public abstract class BaseEntity extends EntityCreature {
 
@@ -34,6 +36,7 @@ public abstract class BaseEntity extends EntityCreature {
     protected Entity followTarget = null;
 
     protected List<Block> blocksAround = new ArrayList<>();
+    protected List<Block> collisionBlocks = new ArrayList<>();
 
     private boolean movement = true;
 
@@ -44,6 +47,16 @@ public abstract class BaseEntity extends EntityCreature {
     public boolean inWater = false;
     public boolean inLava = false;
     public boolean onClimbable = false;
+
+    protected PathNavigate navigator;
+
+    private final Map<PathNodeType, Float> mapPathPriority = new EnumMap<>(PathNodeType.class);
+
+    /** Passive tasks (wandering, look, idle, ...) */
+    //protected final EntityAITasks tasks; //TODO
+
+    /** Fighting tasks (used by monsters, wolves, ocelots) */
+    //protected final EntityAITasks targetTasks;
 
     public BaseEntity(FullChunk chunk, CompoundTag nbt) {
         super(chunk, nbt);
@@ -200,8 +213,14 @@ public abstract class BaseEntity extends EntityCreature {
         inLava = false;
         onClimbable = false;
 
+        ArrayList<Block> collisionBlocks = new ArrayList<>();
+
         while(d.hasNext()) {
             Block block = (Block)d.next();
+
+            if(block.getBoundingBox() != null && block.collidesWithBB(getBoundingBox())) {
+                collisionBlocks.add(block);
+            }
 
             if(block.hasEntityCollision()) {
                 block.onEntityCollide(this);
@@ -216,6 +235,8 @@ public abstract class BaseEntity extends EntityCreature {
                 onClimbable = true;
             }
         }
+
+        this.collisionBlocks = collisionBlocks;
 
         if(vector.lengthSquared() > 0.0D) {
             vector = vector.normalize();
@@ -318,6 +339,30 @@ public abstract class BaseEntity extends EntityCreature {
         this.attackTime = 7;
     }
 
+    public List<Block> getCollisionBlocks() {
+        return collisionBlocks;
+    }
+
+    public int getMaxFallHeight()
+    {
+        if (!(this.target instanceof Entity))
+        {
+            return 3;
+        }
+        else
+        {
+            int i = (int)(this.getHealth() - this.getMaxHealth() * 0.33F);
+            i = i - (3 - this.getServer().getDifficulty()) * 4;
+
+            if (i < 0)
+            {
+                i = 0;
+            }
+
+            return i + 3;
+        }
+    }
+
     @Override
     public boolean setMotion(Vector3 motion) {
         if (MobPlugin.MOB_AI_ENABLED) {
@@ -373,5 +418,20 @@ public abstract class BaseEntity extends EntityCreature {
         return true;
     }
 
+    public float getPathPriority(PathNodeType nodeType)
+    {
+        Float f = (Float) this.mapPathPriority.get(nodeType);
+        return f == null ? nodeType.getPriority() : f;
+    }
+
+    public void setPathPriority(PathNodeType nodeType, float priority)
+    {
+        this.mapPathPriority.put(nodeType, priority);
+    }
+
+    public PathNavigate getNavigator()
+    {
+        return this.navigator;
+    }
 
 }
