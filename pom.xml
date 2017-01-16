@@ -4,7 +4,7 @@
 	<groupId>cn.nukkit</groupId>
 	<artifactId>MobPlugin</artifactId>
 	<version>0.0.2-SNAPSHOT</version>
-	<name>Mob Plugin</name>
+	<name>Simple Mob Plugin</name>
 	<description>Trying to evolve a mob plugin for nukkit ...</description>
 
 	<properties>

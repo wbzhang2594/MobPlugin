@@ -2,8 +2,7 @@ checkout:
   post:
     - git submodule sync
     - git submodule update --init
-    - mvn clean
-    - mvn package
+    - mvn install
     - cp -R ./target/MobPlugin-0.0.2-SNAPSHOT.jar $CIRCLE_ARTIFACTS
 
 machine:
