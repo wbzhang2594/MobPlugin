@@ -1,9 +1,12 @@
 package creeperCZ.mobplugin.entities.animal;
 
 import cn.nukkit.Player;
+import cn.nukkit.entity.Entity;
 import cn.nukkit.entity.data.ShortEntityData;
 import cn.nukkit.event.entity.EntityDamageEvent;
+import cn.nukkit.item.Item;
 import cn.nukkit.level.format.FullChunk;
+import cn.nukkit.level.particle.HeartParticle;
 import cn.nukkit.math.Vector3;
 import cn.nukkit.nbt.tag.CompoundTag;
 import cn.nukkit.potion.Effect;
@@ -11,6 +14,9 @@ import cn.nukkit.timings.Timings;
 import creeperCZ.mobplugin.entities.WalkingEntity;
 
 public abstract class WalkingAnimal extends WalkingEntity implements Animal {
+
+    protected int inLoveTicks = 0;
+    protected int spawnBabyDelay = 0; //TODO: spawn baby animal
 
     public WalkingAnimal(FullChunk chunk, CompoundTag nbt) {
         super(chunk, nbt);
@@ -34,10 +40,19 @@ public abstract class WalkingAnimal extends WalkingEntity implements Animal {
 
     @Override
     public boolean entityBaseTick(int tickDiff) {
-        boolean hasUpdate = false;
+        boolean hasUpdate;
         Timings.entityBaseTickTimer.startTiming();
 
         hasUpdate = super.entityBaseTick(tickDiff);
+
+        if(inLoveTicks > 0) {
+            inLoveTicks--;
+
+            if(inLoveTicks % 10 == 0) {
+                Vector3 pos = new Vector3(this.x + (double)(this.level.rand.nextFloat() * this.getWidth() * 2.0F) - (double)this.getWidth(), this.y + 0.5D + (double)(this.level.rand.nextFloat() * this.getHeight()), this.z + (double)(this.level.rand.nextFloat() * this.getWidth() * 2.0F) - (double)this.getWidth());
+                this.level.addParticle(new HeartParticle(pos));
+            }
+        }
 
         if (!this.hasEffect(Effect.WATER_BREATHING) && this.isInsideOfWater()) {
             hasUpdate = true;
@@ -87,4 +102,19 @@ public abstract class WalkingAnimal extends WalkingEntity implements Animal {
         return true;
     }
 
+    @Override
+    public boolean onInteract(Entity entity, Item item) {
+        //TODO: mating
+
+        return false;
+    }
+
+    public void setInLove() {
+        this.inLoveTicks = 600;
+        this.setDataFlag(DATA_FLAGS, DATA_FLAG_INLOVE);
+    }
+
+    public boolean isBreedingItem(Item item) {
+        return item != null && item.getId() == Item.WHEAT;
+    }
 }

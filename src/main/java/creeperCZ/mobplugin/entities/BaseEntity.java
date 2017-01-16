@@ -20,6 +20,7 @@ import creeperCZ.mobplugin.MobPlugin;
 import creeperCZ.mobplugin.entities.monster.Monster;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public abstract class BaseEntity extends EntityCreature {
@@ -39,6 +40,10 @@ public abstract class BaseEntity extends EntityCreature {
     private boolean friendly = false;
 
     private boolean wallcheck = true;
+
+    public boolean inWater = false;
+    public boolean inLava = false;
+    public boolean onClimbable = false;
 
     public BaseEntity(FullChunk chunk, CompoundTag nbt) {
         super(chunk, nbt);
@@ -176,15 +181,49 @@ public abstract class BaseEntity extends EntityCreature {
                 for (int x = minX; x <= maxX; ++x) {
                     for (int y = minY; y <= maxY; ++y) {
                         Block block = this.level.getBlock(this.temporalVector.setComponents(x, y, z));
-                        if (block.hasEntityCollision()) {
-                            this.blocksAround.add(block);
-                        }
+
+                        this.blocksAround.add(block);
                     }
                 }
             }
         }
 
         return this.blocksAround;
+    }
+
+    @Override
+    protected void checkBlockCollision() {
+        Vector3 vector = new Vector3(0.0D, 0.0D, 0.0D);
+        Iterator d = this.getBlocksAround().iterator();
+
+        inWater = false;
+        inLava = false;
+        onClimbable = false;
+
+        while(d.hasNext()) {
+            Block block = (Block)d.next();
+
+            if(block.hasEntityCollision()) {
+                block.onEntityCollide(this);
+                block.addVelocityToEntity(this, vector);
+            }
+
+            if(block.getId() == Block.WATER || block.getId() == Block.STILL_WATER){
+                inWater = true;
+            } else if(block.getId() == Block.LAVA || block.getId() == Block.STILL_LAVA){
+                inLava = true;
+            } else if(block.getId() == Block.LADDER || block.getId() == Block.VINE){
+                onClimbable = true;
+            }
+        }
+
+        if(vector.lengthSquared() > 0.0D) {
+            vector = vector.normalize();
+            double d1 = 0.014D;
+            this.motionX += vector.x * d1;
+            this.motionY += vector.y * d1;
+            this.motionZ += vector.z * d1;
+        }
     }
 
     @Override
