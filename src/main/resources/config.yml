@@ -17,6 +17,7 @@ max-spawns:
   enderman: 0
   ghast: 0
   horse: 2
+  husk: 0
   iron-golem: 0
   mooshroom: 0
   mule: 0
@@ -27,6 +28,7 @@ max-spawns:
   silverfish: 0
   sheep: 4
   skeleton: 2
+  stray: 0
   skeleton-horse: 0
   snow-golem: 0
   spider: 2
