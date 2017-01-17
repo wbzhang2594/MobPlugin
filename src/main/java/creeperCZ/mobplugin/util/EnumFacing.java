@@ -26,36 +26,27 @@ public enum EnumFacing {
      */
     private final int index;
 
-    /**
-     * Index of the opposite Facing in the VALUES array
-     */
+    /** Index of the opposite Facing in the VALUES array */
     private final int opposite;
 
-    /**
-     * Ordering index for the HORIZONTALS field (S-W-N-E)
-     */
+    /** Ordering index for the HORIZONTALS field (S-W-N-E) */
     private final int horizontalIndex;
     private final String name;
     private final EnumFacing.Axis axis;
     private final EnumFacing.AxisDirection axisDirection;
 
-    /**
-     * Normalized Vector that points in the direction of this Facing
-     */
+    /** Normalized Vector that points in the direction of this Facing */
     private final Vector3 directionVec;
 
-    /**
-     * All facings in D-U-N-S-W-E order
-     */
+    /** All facings in D-U-N-S-W-E order */
     private static final EnumFacing[] VALUES = new EnumFacing[6];
 
-    /**
-     * All Facings with horizontal axis in order S-W-N-E
-     */
+    /** All Facings with horizontal axis in order S-W-N-E */
     private static final EnumFacing[] HORIZONTALS = new EnumFacing[4];
     private static final Map<String, EnumFacing> NAME_LOOKUP = new HashMap<>();
 
-    private EnumFacing(int indexIn, int oppositeIn, int horizontalIndexIn, String nameIn, EnumFacing.AxisDirection axisDirectionIn, EnumFacing.Axis axisIn, Vector3 directionVecIn) {
+    private EnumFacing(int indexIn, int oppositeIn, int horizontalIndexIn, String nameIn, EnumFacing.AxisDirection axisDirectionIn, EnumFacing.Axis axisIn, Vector3 directionVecIn)
+    {
         this.index = indexIn;
         this.horizontalIndex = horizontalIndexIn;
         this.opposite = oppositeIn;
@@ -68,28 +59,32 @@ public enum EnumFacing {
     /**
      * Get the Index of this Facing (0-5). The order is D-U-N-S-W-E
      */
-    public int getIndex() {
+    public int getIndex()
+    {
         return this.index;
     }
 
     /**
      * Get the index of this horizontal facing (0-3). The order is S-W-N-E
      */
-    public int getHorizontalIndex() {
+    public int getHorizontalIndex()
+    {
         return this.horizontalIndex;
     }
 
     /**
      * Get the AxisDirection of this Facing.
      */
-    public EnumFacing.AxisDirection getAxisDirection() {
+    public EnumFacing.AxisDirection getAxisDirection()
+    {
         return this.axisDirection;
     }
 
     /**
      * Get the opposite Facing (e.g. DOWN => UP)
      */
-    public EnumFacing getOpposite() {
+    public EnumFacing getOpposite()
+    {
         return getFront(this.opposite);
     }
 
@@ -97,7 +92,8 @@ public enum EnumFacing {
      * Rotate this Facing around the Y axis clockwise (NORTH => EAST => SOUTH => WEST => NORTH)
      */
     public EnumFacing rotateY() {
-        switch (this) {
+        switch (this)
+        {
             case NORTH:
                 return EAST;
 
@@ -119,7 +115,8 @@ public enum EnumFacing {
      * Rotate this Facing around the Y axis counter-clockwise (NORTH => WEST => SOUTH => EAST => NORTH)
      */
     public EnumFacing rotateYCCW() {
-        switch (this) {
+        switch (this)
+        {
             case NORTH:
                 return WEST;
 
@@ -140,50 +137,58 @@ public enum EnumFacing {
     /**
      * Returns a offset that addresses the block in front of this facing.
      */
-    public int getFrontOffsetX() {
+    public int getFrontOffsetX()
+    {
         return this.axis == EnumFacing.Axis.X ? this.axisDirection.getOffset() : 0;
     }
 
-    public int getFrontOffsetY() {
+    public int getFrontOffsetY()
+    {
         return this.axis == EnumFacing.Axis.Y ? this.axisDirection.getOffset() : 0;
     }
 
     /**
      * Returns a offset that addresses the block in front of this facing.
      */
-    public int getFrontOffsetZ() {
+    public int getFrontOffsetZ()
+    {
         return this.axis == EnumFacing.Axis.Z ? this.axisDirection.getOffset() : 0;
     }
 
     /**
      * Same as getName, but does not override the method from Enum.
      */
-    public String getName2() {
+    public String getName2()
+    {
         return this.name;
     }
 
-    public EnumFacing.Axis getAxis() {
+    public EnumFacing.Axis getAxis()
+    {
         return this.axis;
     }
 
     /**
      * Get a Facing by it's index (0-5). The order is D-U-N-S-W-E. Named getFront for legacy reasons.
      */
-    public static EnumFacing getFront(int index) {
+    public static EnumFacing getFront(int index)
+    {
         return VALUES[Math.abs(index % VALUES.length)];
     }
 
     /**
      * Get a Facing by it's horizontal index (0-3). The order is S-W-N-E.
      */
-    public static EnumFacing getHorizontal(int p_176731_0_) {
+    public static EnumFacing getHorizontal(int p_176731_0_)
+    {
         return HORIZONTALS[Math.abs(p_176731_0_ % HORIZONTALS.length)];
     }
 
     /**
      * Get the Facing corresponding to the given angle (0-360). An angle of 0 is SOUTH, an angle of 90 would be WEST.
      */
-    public static EnumFacing fromAngle(double angle) {
+    public static EnumFacing fromAngle(double angle)
+    {
         return getHorizontal(NukkitMath.floorDouble(angle / 90.0D + 0.5D) & 3);
     }
 
@@ -194,15 +199,18 @@ public enum EnumFacing {
     /**
      * Choose a random Facing using the given Random
      */
-    public static EnumFacing random(Random rand) {
+    public static EnumFacing random(Random rand)
+    {
         return values()[rand.nextInt(values().length)];
     }
 
-    public String toString() {
+    public String toString()
+    {
         return this.name;
     }
 
-    public String getName() {
+    public String getName()
+    {
         return this.name;
     }
 
@@ -217,7 +225,8 @@ public enum EnumFacing {
     }
 
     static {
-        for (EnumFacing enumfacing : values()) {
+        for (EnumFacing enumfacing : values())
+        {
             VALUES[enumfacing.index] = enumfacing;
 
             if (enumfacing.getAxis().isHorizontal()) {
@@ -237,36 +246,44 @@ public enum EnumFacing {
         private final String name;
         private final EnumFacing.Plane plane;
 
-        private Axis(String name, EnumFacing.Plane plane) {
+        private Axis(String name, EnumFacing.Plane plane)
+        {
             this.name = name;
             this.plane = plane;
         }
 
-        public String getName2() {
+        public String getName2()
+        {
             return this.name;
         }
 
-        public boolean isVertical() {
+        public boolean isVertical()
+        {
             return this.plane == EnumFacing.Plane.VERTICAL;
         }
 
-        public boolean isHorizontal() {
+        public boolean isHorizontal()
+        {
             return this.plane == EnumFacing.Plane.HORIZONTAL;
         }
 
-        public String toString() {
+        public String toString()
+        {
             return this.name;
         }
 
-        public boolean apply(EnumFacing facing) {
+        public boolean apply(EnumFacing facing)
+        {
             return facing != null && facing.getAxis() == this;
         }
 
-        public EnumFacing.Plane getPlane() {
+        public EnumFacing.Plane getPlane()
+        {
             return this.plane;
         }
 
-        public String getName() {
+        public String getName()
+        {
             return this.name;
         }
 
@@ -284,16 +301,19 @@ public enum EnumFacing {
         private final int offset;
         private final String description;
 
-        private AxisDirection(int offset, String description) {
+        private AxisDirection(int offset, String description)
+        {
             this.offset = offset;
             this.description = description;
         }
 
-        public int getOffset() {
+        public int getOffset()
+        {
             return this.offset;
         }
 
-        public String toString() {
+        public String toString()
+        {
             return this.description;
         }
     }
@@ -313,16 +333,19 @@ public enum EnumFacing {
             }
         }
 
-        public EnumFacing random(Random rand) {
+        public EnumFacing random(Random rand)
+        {
             EnumFacing[] aenumfacing = this.facings();
             return aenumfacing[rand.nextInt(aenumfacing.length)];
         }
 
-        public boolean apply(EnumFacing p_apply_1_) {
+        public boolean apply(EnumFacing p_apply_1_)
+        {
             return p_apply_1_ != null && p_apply_1_.getAxis().getPlane() == this;
         }
 
-        public Iterator<EnumFacing> iterator() {
+        public Iterator<EnumFacing> iterator()
+        {
             return Iterators.<EnumFacing>forArray(this.facings());
         }
     }

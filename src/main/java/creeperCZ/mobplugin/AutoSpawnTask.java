@@ -62,11 +62,13 @@ public class AutoSpawnTask implements Runnable {
         entitySpawners.add(new CowSpawner(this, this.pluginConfig));
         entitySpawners.add(new CreeperSpawner(this, this.pluginConfig));
         entitySpawners.add(new EndermanSpawner(this, this.pluginConfig));
+        entitySpawners.add(new HuskSpawner(this, this.pluginConfig));
         entitySpawners.add(new OcelotSpawner(this, this.pluginConfig));
         entitySpawners.add(new PigSpawner(this, this.pluginConfig));
         entitySpawners.add(new RabbitSpawner(this, this.pluginConfig));
         entitySpawners.add(new SheepSpawner(this, this.pluginConfig));
         entitySpawners.add(new SkeletonSpawner(this, this.pluginConfig));
+        entitySpawners.add(new StraySpawner(this, this.pluginConfig));
         entitySpawners.add(new SpiderSpawner(this, this.pluginConfig));
         entitySpawners.add(new WolfSpawner(this, this.pluginConfig));
         entitySpawners.add(new ZombieSpawner(this, this.pluginConfig));
@@ -84,6 +86,7 @@ public class AutoSpawnTask implements Runnable {
         maxSpawns.put(Enderman.NETWORK_ID, this.pluginConfig.getInt("max-spawns.enderman", 0));
         maxSpawns.put(Ghast.NETWORK_ID, this.pluginConfig.getInt("max-spawns.ghast", 0));
         maxSpawns.put(Horse.NETWORK_ID, this.pluginConfig.getInt("max-spawns.horse", 0));
+        maxSpawns.put(Husk.NETWORK_ID, this.pluginConfig.getInt("max-spawns.husk", 0));
         maxSpawns.put(IronGolem.NETWORK_ID, this.pluginConfig.getInt("max-spawns.iron-golem", 0));
         maxSpawns.put(Mooshroom.NETWORK_ID, this.pluginConfig.getInt("max-spawns.mooshroom", 0));
         maxSpawns.put(Mule.NETWORK_ID, this.pluginConfig.getInt("max-spawns.mule", 0));
@@ -94,6 +97,7 @@ public class AutoSpawnTask implements Runnable {
         maxSpawns.put(Silverfish.NETWORK_ID, this.pluginConfig.getInt("max-spawns.silverfish", 0));
         maxSpawns.put(Sheep.NETWORK_ID, this.pluginConfig.getInt("max-spawns.sheep", 0));
         maxSpawns.put(Skeleton.NETWORK_ID, this.pluginConfig.getInt("max-spawns.skeleton", 0));
+        maxSpawns.put(Stray.NETWORK_ID, this.pluginConfig.getInt("max-spawns.stray", 0));
         maxSpawns.put(SkeletonHorse.NETWORK_ID, this.pluginConfig.getInt("max-spawns.skeleton-horse", 0));
         maxSpawns.put(SnowGolem.NETWORK_ID, this.pluginConfig.getInt("max-spawns.snow-golem", 0));
         maxSpawns.put(Spider.NETWORK_ID, this.pluginConfig.getInt("max-spawns.spider", 0));
@@ -105,15 +109,15 @@ public class AutoSpawnTask implements Runnable {
         FileLogger.debug(String.format(
                 "max-spawns prepared [bat:%d] [blaze:%d] [caveSpider:%d] [chicken:%d] [cow:%d] [creeper:%d] [donkey:%d] [enderman:%d] [ghast:%d] [horse:%d] [ironGolem:%d] "
                         + "[mooshroom:%d] [mule:%d] [ocelot:%d] [pig:%d] [pigZombie:%d] [rabbit:%d] [silverfish:%d] [sheep:%d] [skeleton:%d] [skeletonHorse:%d] [snowGolem:%d] [spider:%d] [wolf:%d] [zombie:%d] "
-                        + "[zombieHorse:%d] [zombieVillager:%d]",
+                        + "[zombieHorse:%d] [zombieVillager:%d] [husk:%d] [stray:%d]",
                 maxSpawns.get(Bat.NETWORK_ID), maxSpawns.get(Blaze.NETWORK_ID), maxSpawns.get(CaveSpider.NETWORK_ID),
                 maxSpawns.get(Chicken.NETWORK_ID), maxSpawns.get(Cow.NETWORK_ID), maxSpawns.get(Creeper.NETWORK_ID),
                 maxSpawns.get(Donkey.NETWORK_ID), maxSpawns.get(Enderman.NETWORK_ID), maxSpawns.get(Ghast.NETWORK_ID),
-                maxSpawns.get(Horse.NETWORK_ID), maxSpawns.get(IronGolem.NETWORK_ID),
+                maxSpawns.get(Horse.NETWORK_ID), maxSpawns.get(Husk.NETWORK_ID), maxSpawns.get(IronGolem.NETWORK_ID),
                 maxSpawns.get(Mooshroom.NETWORK_ID), maxSpawns.get(Mule.NETWORK_ID), maxSpawns.get(Ocelot.NETWORK_ID),
                 maxSpawns.get(Pig.NETWORK_ID), maxSpawns.get(PigZombie.NETWORK_ID), maxSpawns.get(Rabbit.NETWORK_ID),
                 maxSpawns.get(Silverfish.NETWORK_ID), maxSpawns.get(Sheep.NETWORK_ID),
-                maxSpawns.get(Skeleton.NETWORK_ID), maxSpawns.get(SkeletonHorse.NETWORK_ID),
+                maxSpawns.get(Skeleton.NETWORK_ID), maxSpawns.get(Stray.NETWORK_ID), maxSpawns.get(SkeletonHorse.NETWORK_ID),
                 maxSpawns.get(SnowGolem.NETWORK_ID), maxSpawns.get(Spider.NETWORK_ID), maxSpawns.get(Wolf.NETWORK_ID),
                 maxSpawns.get(Zombie.NETWORK_ID), maxSpawns.get(ZombieHorse.NETWORK_ID),
                 maxSpawns.get(ZombieVillager.NETWORK_ID)));
