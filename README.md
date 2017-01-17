@@ -12,6 +12,6 @@ Know Bugs:
 **TODO**
 - [ ] Path-finding //in progress
 - [ ] AI //in progress
-- [ ] New Mobs 
+- [ ] New Mobs //in progress
 
 __[Jar Download at Circle CI](https://circleci.com/gh/PikyCZ/MobPlugin/tree/master/)__ (**login required**)
