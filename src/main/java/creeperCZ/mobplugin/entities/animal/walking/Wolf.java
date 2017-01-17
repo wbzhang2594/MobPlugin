@@ -1,4 +1,4 @@
-package creeperCZ.mobplugin.entities.monster.walking;
+package creeperCZ.mobplugin.entities.animal.walking;
 
 import cn.nukkit.Player;
 import cn.nukkit.entity.Entity;

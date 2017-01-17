@@ -15,7 +15,7 @@ import creeperCZ.mobplugin.AutoSpawnTask;
 import creeperCZ.mobplugin.FileLogger;
 import creeperCZ.mobplugin.entities.autospawn.AbstractEntitySpawner;
 import creeperCZ.mobplugin.entities.autospawn.SpawnResult;
-import creeperCZ.mobplugin.entities.monster.walking.Wolf;
+import creeperCZ.mobplugin.entities.animal.walking.Wolf;
 
 /**
  * Each entity get it's own spawner class.
