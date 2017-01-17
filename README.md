@@ -7,6 +7,11 @@ Mobs have inteligence? Who knows? ヽ༼ຈل͜ຈ༽ﾉ
 Know Bugs:
 - [ ]  Config.yml [now plugin save default config.yml]
 - [ ]  Disable worlds is not really disabled
-- [ ]  Duplicate items in inventory [Ink Sac]
+- [ ]  Duplicate items in inventory [Ink Sac] //fix?
+
+**TODO**
+- [ ] Path-finding //in progress
+- [ ] AI //in progress
+- [ ] New Mobs 
 
 __[Jar Download at Circle CI](https://circleci.com/gh/PikyCZ/MobPlugin/tree/master/)__ (**login required**)
