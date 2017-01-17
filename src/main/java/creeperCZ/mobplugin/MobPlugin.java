@@ -20,6 +20,8 @@ import cn.nukkit.event.block.BlockBreakEvent;
 import cn.nukkit.event.block.BlockPlaceEvent;
 import cn.nukkit.event.entity.EntityDamageByEntityEvent;
 import cn.nukkit.event.entity.EntityDeathEvent;
+import cn.nukkit.event.level.LevelLoadEvent;
+import cn.nukkit.event.level.LevelUnloadEvent;
 import cn.nukkit.event.player.PlayerInteractEvent;
 import cn.nukkit.event.player.PlayerMouseOverEntityEvent;
 import cn.nukkit.item.Item;
@@ -49,6 +51,10 @@ import creeperCZ.mobplugin.entities.utils.Utils;
 import creeperCZ.mobplugin.items.ItemEnderPearl;
 import creeperCZ.mobplugin.items.MobPluginItems;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 /**
  * @author <a href="mailto:kniffman@googlemail.com">Michael Gertz (kniffo80)</a>
  */
@@ -59,6 +65,9 @@ public class MobPlugin extends PluginBase implements Listener {
     private int counter = 0;
 
     private Config pluginConfig = null;
+
+    public final HashMap<Integer, Level> levelsToSpawn = new HashMap<>();
+    private List<String> disabledWorlds;
 
     @Override
     public void onLoad() {
@@ -79,6 +88,15 @@ public class MobPlugin extends PluginBase implements Listener {
         // we need this flag as it's controlled by the plugin's entities
         MOB_AI_ENABLED = pluginConfig.getBoolean("entities.mob-ai", true);
         int spawnDelay = pluginConfig.getInt("entities.auto-spawn-tick", 2500);
+        disabledWorlds = pluginConfig.getList("worlds-spawn-disabled", new ArrayList());
+
+        for (Level level : getServer().getLevels().values()) {
+            if (disabledWorlds.contains(level.getFolderName().toLowerCase())) {
+                continue;
+            }
+
+            levelsToSpawn.put(level.getId(), level);
+        }
 
         // register as listener to plugin events
         this.getServer().getPluginManager().registerEvents(this, this);
@@ -386,4 +404,20 @@ public class MobPlugin extends PluginBase implements Listener {
     // public void PlayerMouseRightEntityEvent(PlayerMouseRightEntityEvent ev) {
     // FileLogger.debug(String.format("Received PlayerMouseRightEntityEvent [entity:%s]", ev.getEntity()));
     // }
+
+    @EventHandler
+    public void onLevelLoad(LevelLoadEvent e) {
+        Level level = e.getLevel();
+
+        if (!disabledWorlds.contains(level.getFolderName())) {
+            levelsToSpawn.put(level.getId(), level);
+        }
+    }
+
+    @EventHandler
+    public void onLevelUnload(LevelUnloadEvent e) {
+        Level level = e.getLevel();
+
+        levelsToSpawn.remove(level.getId());
+    }
 }

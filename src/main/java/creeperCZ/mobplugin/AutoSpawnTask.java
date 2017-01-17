@@ -16,6 +16,7 @@ import creeperCZ.mobplugin.entities.monster.walking.*;
 import creeperCZ.mobplugin.entities.spawners.*;
 import creeperCZ.mobplugin.entities.utils.Utils;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class AutoSpawnTask implements Runnable {
@@ -24,11 +25,12 @@ public class AutoSpawnTask implements Runnable {
 
     private List<IEntitySpawner> entitySpawners = new ArrayList<>();
 
-    private Config pluginConfig = null;
+    private final Config pluginConfig;
 
-    // private MobPlugin plugin = null;
+    private final MobPlugin plugin;
 
     public AutoSpawnTask(MobPlugin plugin) {
+        this.plugin = plugin;
         this.pluginConfig = plugin.getConfig();
         // this.plugin = plugin;
 
@@ -44,11 +46,16 @@ public class AutoSpawnTask implements Runnable {
 
     @Override
     public void run() {
-        Collection<Player> onlinePlayers = Server.getInstance().getOnlinePlayers().values();
-        if (onlinePlayers.size() > 0) {
-            FileLogger.debug(String.format("Found %d online", onlinePlayers.size()));
+        List<Player> players = new ArrayList<>();
+
+        for (Level level : plugin.levelsToSpawn.values()) {
+            players.addAll(level.getPlayers().values());
+        }
+
+        if (players.size() > 0) {
+            FileLogger.debug(String.format("Found %d online", players.size()));
             for (IEntitySpawner spawner : entitySpawners) {
-                spawner.spawn(onlinePlayers);
+                spawner.spawn(players);
             }
         } else {
             FileLogger.debug("No player online or offline found. Skipping auto spawn.");
