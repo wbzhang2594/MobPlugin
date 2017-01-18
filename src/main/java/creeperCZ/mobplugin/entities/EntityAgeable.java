@@ -1,8 +1,7 @@
-package creeperCZ.mobplugin.entities.animal;
+package creeperCZ.mobplugin.entities;
 
 import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.nbt.tag.CompoundTag;
-import creeperCZ.mobplugin.entities.BaseEntity;
 
 /**
  * Created by CreeperFace on 18. 1. 2017.

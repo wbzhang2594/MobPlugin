@@ -11,6 +11,7 @@ import cn.nukkit.math.Vector3;
 import cn.nukkit.nbt.tag.CompoundTag;
 import cn.nukkit.potion.Effect;
 import cn.nukkit.timings.Timings;
+import creeperCZ.mobplugin.entities.EntityAgeable;
 
 /**
  * Created by CreeperFace on 18. 1. 2017.
