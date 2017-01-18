@@ -1,5 +1,5 @@
 name: MobPlugin
-main: creeperCZ.MobPlugin.MobPlugin
+main: creeperCZ.mobplugin.MobPlugin
 version: "1.0"
 api: ["1.0.0"]
 
