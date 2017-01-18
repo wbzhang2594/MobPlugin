@@ -80,11 +80,11 @@ public class MobPlugin extends PluginBase implements Listener {
      * enabled
      */
     @Override
-    public void onEnable() {
+    public function onEnable(){
         // Config reading and writing
-        saveDefaultConfig();
-        pluginConfig = getConfig();
-
+           $this->saveDefaultConfig();
+        $this->reloadConfig();
+        
         // we need this flag as it's controlled by the plugin's entities
         MOB_AI_ENABLED = pluginConfig.getBoolean("entities.mob-ai", true);
         int spawnDelay = pluginConfig.getInt("entities.auto-spawn-tick", 2500);
