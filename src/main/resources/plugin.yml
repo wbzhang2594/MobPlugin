@@ -4,7 +4,7 @@ version: "1.0"
 api: ["1.0.0"]
 
 load: STARTUP
-author: milk/kniffo80/PikyCZ
+author: milk/kniffo80/PikyCZ/CreeperFace
 description: Implement Entity AI from scratch beginning with 0.16.x
 website: https://github.com/PikyCZ/MobPlugin
 commands: []

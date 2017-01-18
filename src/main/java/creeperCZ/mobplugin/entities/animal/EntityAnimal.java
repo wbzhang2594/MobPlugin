@@ -1,6 +1,6 @@
 package creeperCZ.mobplugin.entities.animal;
 
-import cn.nukkit.Player;
+import cn.nukkit.block.Block;
 import cn.nukkit.entity.Entity;
 import cn.nukkit.entity.data.ShortEntityData;
 import cn.nukkit.event.entity.EntityDamageEvent;
@@ -11,14 +11,16 @@ import cn.nukkit.math.Vector3;
 import cn.nukkit.nbt.tag.CompoundTag;
 import cn.nukkit.potion.Effect;
 import cn.nukkit.timings.Timings;
-import creeperCZ.mobplugin.entities.WalkingEntity;
 
-public abstract class WalkingAnimal extends WalkingEntity implements Animal {
+/**
+ * Created by CreeperFace on 18. 1. 2017.
+ */
+public abstract class EntityAnimal extends EntityAgeable {
 
     protected int inLoveTicks = 0;
     protected int spawnBabyDelay = 0; //TODO: spawn baby animal
 
-    public WalkingAnimal(FullChunk chunk, CompoundTag nbt) {
+    public EntityAnimal(FullChunk chunk, CompoundTag nbt) {
         super(chunk, nbt);
     }
 
@@ -88,17 +90,6 @@ public abstract class WalkingAnimal extends WalkingEntity implements Animal {
         this.lastUpdate = currentTick;
         this.entityBaseTick(tickDiff);
 
-        Vector3 target = this.updateMove(tickDiff);
-        if (target instanceof Player) {
-            if (this.distanceSquared(target) <= 2) {
-                this.pitch = 22;
-                this.x = this.lastX;
-                this.y = this.lastY;
-                this.z = this.lastZ;
-            }
-        } else if (target != null && (Math.pow(this.x - target.x, 2) + Math.pow(this.z - target.z, 2)) <= 1) {
-            this.moveTime = 0;
-        }
         return true;
     }
 
@@ -116,5 +107,11 @@ public abstract class WalkingAnimal extends WalkingEntity implements Animal {
 
     public boolean isBreedingItem(Item item) {
         return item != null && item.getId() == Item.WHEAT;
+    }
+
+    public float getBlockPathWeight(Vector3 pos) {
+        pos = pos.getSide(Vector3.SIDE_DOWN);
+
+        return this.level.getBlockIdAt(pos.getFloorX(), pos.getFloorY(), pos.getFloorZ()) == Block.GRASS ? 10.0F : this.level.getFullLight(pos) - 0.5F;
     }
 }

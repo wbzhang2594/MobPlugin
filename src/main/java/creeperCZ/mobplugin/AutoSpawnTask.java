@@ -7,12 +7,8 @@ import cn.nukkit.entity.Entity;
 import cn.nukkit.level.Level;
 import cn.nukkit.level.Position;
 import cn.nukkit.utils.Config;
-import creeperCZ.mobplugin.entities.animal.flying.Bat;
-import creeperCZ.mobplugin.entities.animal.walking.*;
+import creeperCZ.mobplugin.entities.animal.Sheep;
 import creeperCZ.mobplugin.entities.autospawn.IEntitySpawner;
-import creeperCZ.mobplugin.entities.monster.flying.Blaze;
-import creeperCZ.mobplugin.entities.monster.flying.Ghast;
-import creeperCZ.mobplugin.entities.monster.walking.*;
 import creeperCZ.mobplugin.entities.spawners.*;
 import creeperCZ.mobplugin.entities.utils.Utils;
 
@@ -76,7 +72,7 @@ public class AutoSpawnTask implements Runnable {
     }
 
     private void prepareMaxSpawns() {
-        maxSpawns.put(Bat.NETWORK_ID, this.pluginConfig.getInt("max-spawns.bat", 0));
+        /*maxSpawns.put(Bat.NETWORK_ID, this.pluginConfig.getInt("max-spawns.bat", 0));
         maxSpawns.put(Blaze.NETWORK_ID, this.pluginConfig.getInt("max-spawns.blaze", 0));
         maxSpawns.put(CaveSpider.NETWORK_ID, this.pluginConfig.getInt("max-spawns.cave-spider", 0));
         maxSpawns.put(Chicken.NETWORK_ID, this.pluginConfig.getInt("max-spawns.chicken", 0));
@@ -94,9 +90,9 @@ public class AutoSpawnTask implements Runnable {
         maxSpawns.put(Pig.NETWORK_ID, this.pluginConfig.getInt("max-spawns.pig", 0));
         maxSpawns.put(PigZombie.NETWORK_ID, this.pluginConfig.getInt("max-spawns.pig-zombie", 0));
         maxSpawns.put(Rabbit.NETWORK_ID, this.pluginConfig.getInt("max-spawns.rabbit", 0));
-        maxSpawns.put(Silverfish.NETWORK_ID, this.pluginConfig.getInt("max-spawns.silverfish", 0));
+        maxSpawns.put(Silverfish.NETWORK_ID, this.pluginConfig.getInt("max-spawns.silverfish", 0));*/
         maxSpawns.put(Sheep.NETWORK_ID, this.pluginConfig.getInt("max-spawns.sheep", 0));
-        maxSpawns.put(Skeleton.NETWORK_ID, this.pluginConfig.getInt("max-spawns.skeleton", 0));
+        /*maxSpawns.put(Skeleton.NETWORK_ID, this.pluginConfig.getInt("max-spawns.skeleton", 0));
         maxSpawns.put(Stray.NETWORK_ID, this.pluginConfig.getInt("max-spawns.stray", 0));
         maxSpawns.put(SkeletonHorse.NETWORK_ID, this.pluginConfig.getInt("max-spawns.skeleton-horse", 0));
         maxSpawns.put(SnowGolem.NETWORK_ID, this.pluginConfig.getInt("max-spawns.snow-golem", 0));
@@ -120,7 +116,7 @@ public class AutoSpawnTask implements Runnable {
                 maxSpawns.get(Skeleton.NETWORK_ID), maxSpawns.get(Stray.NETWORK_ID), maxSpawns.get(SkeletonHorse.NETWORK_ID),
                 maxSpawns.get(SnowGolem.NETWORK_ID), maxSpawns.get(Spider.NETWORK_ID), maxSpawns.get(Wolf.NETWORK_ID),
                 maxSpawns.get(Zombie.NETWORK_ID), maxSpawns.get(ZombieHorse.NETWORK_ID),
-                maxSpawns.get(ZombieVillager.NETWORK_ID)));
+                maxSpawns.get(ZombieVillager.NETWORK_ID)));*/
     }
 
     public boolean entitySpawnAllowed(Level level, int networkId, String entityName) {

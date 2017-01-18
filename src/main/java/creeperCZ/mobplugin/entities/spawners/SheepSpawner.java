@@ -12,7 +12,7 @@ import cn.nukkit.level.Position;
 import cn.nukkit.utils.Config;
 import creeperCZ.mobplugin.AutoSpawnTask;
 import creeperCZ.mobplugin.FileLogger;
-import creeperCZ.mobplugin.entities.animal.walking.Sheep;
+import creeperCZ.mobplugin.entities.animal.Sheep;
 import creeperCZ.mobplugin.entities.autospawn.AbstractEntitySpawner;
 import creeperCZ.mobplugin.entities.autospawn.SpawnResult;
 

@@ -6,7 +6,6 @@
 package creeperCZ.mobplugin;
 
 import cn.nukkit.Player;
-import cn.nukkit.Server;
 import cn.nukkit.block.Block;
 import cn.nukkit.block.BlockAir;
 import cn.nukkit.blockentity.BlockEntity;
@@ -32,18 +31,11 @@ import cn.nukkit.nbt.tag.CompoundTag;
 import cn.nukkit.nbt.tag.DoubleTag;
 import cn.nukkit.nbt.tag.FloatTag;
 import cn.nukkit.nbt.tag.ListTag;
-import cn.nukkit.network.protocol.EntityEventPacket;
 import cn.nukkit.plugin.PluginBase;
 import cn.nukkit.utils.Config;
-import cn.nukkit.utils.DyeColor;
 import creeperCZ.mobplugin.entities.BaseEntity;
-import creeperCZ.mobplugin.entities.animal.flying.Bat;
-import creeperCZ.mobplugin.entities.animal.swimming.Squid;
-import creeperCZ.mobplugin.entities.animal.walking.*;
+import creeperCZ.mobplugin.entities.animal.Sheep;
 import creeperCZ.mobplugin.entities.block.BlockEntitySpawner;
-import creeperCZ.mobplugin.entities.monster.flying.Blaze;
-import creeperCZ.mobplugin.entities.monster.flying.Ghast;
-import creeperCZ.mobplugin.entities.monster.walking.*;
 import creeperCZ.mobplugin.entities.projectile.EntityFireBall;
 import creeperCZ.mobplugin.entities.utils.Utils;
 import creeperCZ.mobplugin.items.ItemEnderPearl;
@@ -172,7 +164,7 @@ public class MobPlugin extends PluginBase implements Listener {
 
     private void registerEntities() {
         // register living entities
-        Entity.registerEntity(Bat.class.getSimpleName(), Bat.class);
+        /*Entity.registerEntity(Bat.class.getSimpleName(), Bat.class);
         Entity.registerEntity(Chicken.class.getSimpleName(), Chicken.class);
         Entity.registerEntity(Cow.class.getSimpleName(), Cow.class);
         Entity.registerEntity(Donkey.class.getSimpleName(), Donkey.class);
@@ -181,13 +173,13 @@ public class MobPlugin extends PluginBase implements Listener {
         Entity.registerEntity(Mule.class.getSimpleName(), Mule.class);
         Entity.registerEntity(Ocelot.class.getSimpleName(), Ocelot.class);
         Entity.registerEntity(Pig.class.getSimpleName(), Pig.class);
-        Entity.registerEntity(Rabbit.class.getSimpleName(), Rabbit.class);
+        Entity.registerEntity(Rabbit.class.getSimpleName(), Rabbit.class);*/
         Entity.registerEntity(Sheep.class.getSimpleName(), Sheep.class);
-        Entity.registerEntity(SkeletonHorse.class.getSimpleName(), SkeletonHorse.class);
+        /*Entity.registerEntity(SkeletonHorse.class.getSimpleName(), SkeletonHorse.class);
         Entity.registerEntity(Squid.class.getSimpleName(), Squid.class);
-        Entity.registerEntity(ZombieHorse.class.getSimpleName(), ZombieHorse.class);
+        Entity.registerEntity(ZombieHorse.class.getSimpleName(), ZombieHorse.class);*/
 
-        Entity.registerEntity(Blaze.class.getSimpleName(), Blaze.class);
+        /*Entity.registerEntity(Blaze.class.getSimpleName(), Blaze.class);
         Entity.registerEntity(Ghast.class.getSimpleName(), Ghast.class);
         Entity.registerEntity(CaveSpider.class.getSimpleName(), CaveSpider.class);
         Entity.registerEntity(Creeper.class.getSimpleName(), Creeper.class);
@@ -201,7 +193,7 @@ public class MobPlugin extends PluginBase implements Listener {
         Entity.registerEntity(Witch.class.getSimpleName(), Witch.class);
         Entity.registerEntity(Wolf.class.getSimpleName(), Wolf.class);
         Entity.registerEntity(Zombie.class.getSimpleName(), Zombie.class);
-        Entity.registerEntity(ZombieVillager.class.getSimpleName(), ZombieVillager.class);
+        Entity.registerEntity(ZombieVillager.class.getSimpleName(), ZombieVillager.class);*/
 
         // register the fireball entity
         Entity.registerEntity("FireBall", EntityFireBall.class);
@@ -357,7 +349,7 @@ public class MobPlugin extends PluginBase implements Listener {
 
     @EventHandler
     public void PlayerMouseOverEntityEvent(PlayerMouseOverEntityEvent ev) {
-        if (this.counter > 10) {
+        /*if (this.counter > 10) {
             counter = 0;
             FileLogger.debug(String.format("Received PlayerMouseOverEntityEvent [entity:%s]", ev.getEntity()));
             // wolves can be tamed using bones
@@ -379,7 +371,7 @@ public class MobPlugin extends PluginBase implements Listener {
             }
         } else {
             counter++;
-        }
+        }*/
     }
     //
     // @EventHandler

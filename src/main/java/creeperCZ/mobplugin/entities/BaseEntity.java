@@ -4,7 +4,6 @@ import cn.nukkit.Player;
 import cn.nukkit.block.Block;
 import cn.nukkit.entity.Entity;
 import cn.nukkit.entity.EntityCreature;
-import cn.nukkit.entity.EntityHuman;
 import cn.nukkit.entity.data.ByteEntityData;
 import cn.nukkit.event.entity.EntityDamageByEntityEvent;
 import cn.nukkit.event.entity.EntityDamageEvent;
@@ -17,8 +16,8 @@ import cn.nukkit.math.Vector3;
 import cn.nukkit.nbt.tag.CompoundTag;
 import cn.nukkit.network.protocol.AddEntityPacket;
 import cn.nukkit.potion.Effect;
-import com.google.common.collect.Maps;
 import creeperCZ.mobplugin.MobPlugin;
+import creeperCZ.mobplugin.entities.ai.EntityAITasks;
 import creeperCZ.mobplugin.entities.monster.Monster;
 import creeperCZ.mobplugin.pathfinding.PathNavigate;
 import creeperCZ.mobplugin.pathfinding.PathNodeType;
@@ -52,19 +51,21 @@ public abstract class BaseEntity extends EntityCreature {
 
     private final Map<PathNodeType, Float> mapPathPriority = new EnumMap<>(PathNodeType.class);
 
+    protected int maxHomeDistance = -1;
+
     /** Passive tasks (wandering, look, idle, ...) */
-    //protected final EntityAITasks tasks; //TODO
+    protected final EntityAITasks tasks;
 
     /**
      * Fighting tasks (used by monsters, wolves, ocelots)
      */
-    //protected final EntityAITasks targetTasks;
-
+    protected final EntityAITasks targetTasks;
     public BaseEntity(FullChunk chunk, CompoundTag nbt) {
         super(chunk, nbt);
-    }
 
-    public abstract Vector3 updateMove(int tickDiff);
+        this.tasks = new EntityAITasks();
+        this.targetTasks = new EntityAITasks();
+    }
 
     public abstract int getKillExperience();
 
@@ -100,6 +101,10 @@ public abstract class BaseEntity extends EntityCreature {
         return 1;
     }
 
+    public int getAge() {
+        return this.age;
+    }
+
     public Entity getTarget() {
         return this.followTarget != null ? this.followTarget : (this.target instanceof Entity ? (Entity) this.target : null);
     }
@@ -124,7 +129,15 @@ public abstract class BaseEntity extends EntityCreature {
         if (this.namedTag.contains("WallCheck")) {
             this.setWallCheck(this.namedTag.getBoolean("WallCheck"));
         }
+
+        if (this.namedTag.contains("Age")) {
+            this.age = this.namedTag.getShort("Age");
+        }
+
         this.setDataProperty(new ByteEntityData(DATA_FLAG_NO_AI, (byte) 1));
+    }
+
+    protected void initEntityAI() {
     }
 
     @Override
@@ -132,6 +145,7 @@ public abstract class BaseEntity extends EntityCreature {
         super.saveNBT();
         this.namedTag.putBoolean("Movement", this.isMovement());
         this.namedTag.putBoolean("WallCheck", this.isWallCheck());
+        this.namedTag.putShort("Age", this.age);
     }
 
     @Override
@@ -229,11 +243,11 @@ public abstract class BaseEntity extends EntityCreature {
                 block.addVelocityToEntity(this, vector);
             }
 
-            if (block.getId() == Block.WATER || block.getId() == Block.STILL_WATER){
+            if (block.getId() == Block.WATER || block.getId() == Block.STILL_WATER) {
                 inWater = true;
-            } else if (block.getId() == Block.LAVA || block.getId() == Block.STILL_LAVA){
+            } else if (block.getId() == Block.LAVA || block.getId() == Block.STILL_LAVA) {
                 inLava = true;
-            } else if (block.getId() == Block.LADDER || block.getId() == Block.VINE){
+            } else if (block.getId() == Block.LADDER || block.getId() == Block.VINE) {
                 onClimbable = true;
             }
         }
@@ -346,8 +360,7 @@ public abstract class BaseEntity extends EntityCreature {
     }
 
     public int getMaxFallHeight() {
-        if (!(this.target instanceof Entity))
-        {
+        if (!(this.target instanceof Entity)) {
             return 3;
         } else {
             int i = (int) (this.getHealth() - this.getMaxHealth() * 0.33F);
@@ -416,20 +429,48 @@ public abstract class BaseEntity extends EntityCreature {
         return true;
     }
 
-    public float getPathPriority(PathNodeType nodeType)
-    {
+    public float getPathPriority(PathNodeType nodeType) {
         Float f = (Float) this.mapPathPriority.get(nodeType);
         return f == null ? nodeType.getPriority() : f;
     }
 
-    public void setPathPriority(PathNodeType nodeType, float priority)
-    {
+    public void setPathPriority(PathNodeType nodeType, float priority) {
         this.mapPathPriority.put(nodeType, priority);
     }
 
-    public PathNavigate getNavigator()
-    {
+    public PathNavigate getNavigator() {
         return this.navigator;
     }
 
+    public int getMaxHomeDistance() {
+        return maxHomeDistance;
+    }
+
+    public void setMaxHomeDistance(int distance) {
+        this.maxHomeDistance = distance;
+    }
+
+    public boolean hasMaxHomeDistance() {
+        return this.maxHomeDistance != -1;
+    }
+
+    public boolean isWithinHomeDistance(Vector3 pos) {
+        return this.maxHomeDistance == -1.0F ? true : this.distanceSquared(pos) < (double) (this.maxHomeDistance * this.maxHomeDistance);
+    }
+
+    public float getBlockPathWeight(Vector3 pos) {
+        return 0;
+    }
+
+    public boolean isBaby() {
+        return false;
+    }
+
+    public void eatGrassBonus() {
+
+    }
+
+    public void updateAITasks() {
+
+    }
 }
