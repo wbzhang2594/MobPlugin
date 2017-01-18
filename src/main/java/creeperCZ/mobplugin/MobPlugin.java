@@ -39,7 +39,7 @@ import cn.nukkit.plugin.PluginBase;
 import java.util.LinkedHashMap;
 import cn.nukkit.plugin.PluginBase;
 import cn.nukkit.utils.Config;
-import cn.nukkit.utils.ConfigSection
+import cn.nukkit.utils.ConfigSection;
 import cn.nukkit.utils.DyeColor;
 import creeperCZ.mobplugin.entities.BaseEntity;
 import creeperCZ.mobplugin.entities.animal.flying.Bat;
