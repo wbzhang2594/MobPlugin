@@ -85,12 +85,7 @@ public class MobPlugin extends PluginBase implements Listener {
         saveDefaultConfig();
         pluginConfig = getConfig();
         this.getDataFolder();
-        }
-	
-	@Override
-	public void onDisable() {
-		this.saveAll();
-        
+       
         // we need this flag as it's controlled by the plugin's entities
         MOB_AI_ENABLED = pluginConfig.getBoolean("entities.mob-ai", true);
         int spawnDelay = pluginConfig.getInt("entities.auto-spawn-tick", 2500);
@@ -117,6 +112,8 @@ public class MobPlugin extends PluginBase implements Listener {
     @Override
     public void onDisable() {
         Utils.logServerInfo("Plugin disabled successful.");
+	public void onDisable(){
+		this.saveAll();
     }
 
     @Override
