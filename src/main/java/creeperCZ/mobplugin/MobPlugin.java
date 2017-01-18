@@ -36,7 +36,10 @@ import cn.nukkit.nbt.tag.FloatTag;
 import cn.nukkit.nbt.tag.ListTag;
 import cn.nukkit.network.protocol.EntityEventPacket;
 import cn.nukkit.plugin.PluginBase;
+import java.util.LinkedHashMap;
+import cn.nukkit.plugin.PluginBase;
 import cn.nukkit.utils.Config;
+import cn.nukkit.utils.ConfigSection
 import cn.nukkit.utils.DyeColor;
 import creeperCZ.mobplugin.entities.BaseEntity;
 import creeperCZ.mobplugin.entities.animal.flying.Bat;
@@ -84,7 +87,8 @@ public class MobPlugin extends PluginBase implements Listener {
         // Config reading and writing
         saveDefaultConfig();
         pluginConfig = getConfig();
-        this.getDataFolder();
+	this.getDataFolder().mkdirs();
+	this.loadAll()
        
         // we need this flag as it's controlled by the plugin's entities
         MOB_AI_ENABLED = pluginConfig.getBoolean("entities.mob-ai", true);
@@ -112,8 +116,6 @@ public class MobPlugin extends PluginBase implements Listener {
     @Override
     public void onDisable() {
         Utils.logServerInfo("Plugin disabled successful.");
-	public void onDisable(){
-		this.saveAll();
     }
 
     @Override
