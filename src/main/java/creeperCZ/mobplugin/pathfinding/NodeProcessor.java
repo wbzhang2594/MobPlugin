@@ -6,7 +6,7 @@ import creeperCZ.mobplugin.entities.BaseEntity;
 import creeperCZ.mobplugin.util.IntHashMap;
 
 public abstract class NodeProcessor {
-    protected Level blockaccess;
+    protected Level level;
     protected BaseEntity entity;
     protected final IntHashMap<PathPoint> pointMap = new IntHashMap<>();
     protected int entitySizeX;
@@ -17,7 +17,7 @@ public abstract class NodeProcessor {
     protected boolean canSwim;
 
     public void initProcessor(Level sourceIn, BaseEntity mob) {
-        this.blockaccess = sourceIn;
+        this.level = sourceIn;
         this.entity = mob;
         this.pointMap.clearMap();
         this.entitySizeX = NukkitMath.floorFloat(mob.getWidth() + 1.0F);
@@ -29,7 +29,7 @@ public abstract class NodeProcessor {
      * This method is called when all nodes have been processed and PathEntity is created.
      */
     public void postProcess() {
-        this.blockaccess = null;
+        this.level = null;
         this.entity = null;
     }
 

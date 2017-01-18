@@ -53,7 +53,7 @@ public class SwimNodeProcessor extends NodeProcessor {
         for (int i = p_186327_1_; i < p_186327_1_ + this.entitySizeX; ++i) {
             for (int j = p_186327_2_; j < p_186327_2_ + this.entitySizeY; ++j) {
                 for (int k = p_186327_3_; k < p_186327_3_ + this.entitySizeZ; ++k) {
-                    int iblockstate = Utils.getBlockId(this.blockaccess, blockpos$mutableblockpos.setComponents(i, j, k));
+                    int iblockstate = Utils.getBlockId(this.level, blockpos$mutableblockpos.setComponents(i, j, k));
 
                     if (iblockstate != Block.WATER && iblockstate != Block.STILL_WATER) {
                         return PathNodeType.BLOCKED;

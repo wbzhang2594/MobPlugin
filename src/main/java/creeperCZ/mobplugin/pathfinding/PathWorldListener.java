@@ -5,20 +5,20 @@ import cn.nukkit.entity.Entity;
 import cn.nukkit.level.Level;
 import cn.nukkit.math.AxisAlignedBB;
 import cn.nukkit.math.Vector3;
-import com.google.common.collect.Lists;
 import creeperCZ.mobplugin.entities.BaseEntity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PathWorldListener {
-    private final List<PathNavigate> field_189519_a = Lists.newArrayList();
+    private final List<PathNavigate> navigators = new ArrayList<>();
 
-    public void notifyBlockUpdate(Level worldIn, Vector3 pos, Block oldState, Block newState, int flags) {
-        if (this.didBlockChange(worldIn, pos, oldState, newState)) {
+    public void notifyBlockUpdate(Level level, Vector3 pos, Block oldState, Block newState, int flags) {
+        if (this.didBlockChange(level, pos, oldState, newState)) {
             int i = 0;
 
-            for (int j = this.field_189519_a.size(); i < j; ++i) {
-                PathNavigate pathnavigate = (PathNavigate) this.field_189519_a.get(i);
+            for (int j = this.navigators.size(); i < j; ++i) {
+                PathNavigate pathnavigate = this.navigators.get(i);
 
                 if (pathnavigate != null && !pathnavigate.canUpdatePathOnTimeout()) {
                     Path path = pathnavigate.getPath();
@@ -37,7 +37,7 @@ public class PathWorldListener {
         }
     }
 
-    protected boolean didBlockChange(Level worldIn, Vector3 pos, Block oldState, Block newState) {
+    protected boolean didBlockChange(Level level, Vector3 pos, Block oldState, Block newState) {
         AxisAlignedBB axisalignedbb = oldState.getBoundingBox();
         AxisAlignedBB axisalignedbb1 = newState.getBoundingBox();
         return axisalignedbb != axisalignedbb1 && (axisalignedbb == null || !axisalignedbb.equals(axisalignedbb1));
@@ -67,7 +67,7 @@ public class PathWorldListener {
      */
     public void onEntityAdded(Entity entityIn) {
         if (entityIn instanceof BaseEntity) {
-            this.field_189519_a.add(((BaseEntity) entityIn).getNavigator());
+            this.navigators.add(((BaseEntity) entityIn).getNavigator());
         }
     }
 
@@ -77,7 +77,7 @@ public class PathWorldListener {
      */
     public void onEntityRemoved(Entity entityIn) {
         if (entityIn instanceof BaseEntity) {
-            this.field_189519_a.remove(((BaseEntity) entityIn).getNavigator());
+            this.navigators.remove(((BaseEntity) entityIn).getNavigator());
         }
     }
 

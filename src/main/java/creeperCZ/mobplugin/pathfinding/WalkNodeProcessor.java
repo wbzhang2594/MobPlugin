@@ -36,7 +36,7 @@ public class WalkNodeProcessor extends NodeProcessor {
             i = (int) this.entity.getBoundingBox().minY;
             Vector3 pos = new Vector3(NukkitMath.floorDouble(this.entity.x), i, NukkitMath.floorDouble(this.entity.z));
 
-            for (int block = Utils.getBlockId(blockaccess, pos); block == Block.STILL_WATER || block == Block.WATER; block = Utils.getBlockId(this.blockaccess, pos)) {
+            for (int block = Utils.getBlockId(level, pos); block == Block.STILL_WATER || block == Block.WATER; block = Utils.getBlockId(this.level, pos)) {
                 ++i;
                 pos.setComponents(NukkitMath.floorDouble(this.entity.x), i, NukkitMath.floorDouble(this.entity.z));
             }
@@ -45,7 +45,7 @@ public class WalkNodeProcessor extends NodeProcessor {
         } else {
             Vector3 blockpos = this.entity.clone();
 
-            int id = Utils.getBlockId(this.blockaccess, blockpos);
+            int id = Utils.getBlockId(this.level, blockpos);
             Block block = Block.get(id);
 
             while ((id == 0 || block.canPassThrough()) && blockpos.y > 0) {
@@ -96,7 +96,7 @@ public class WalkNodeProcessor extends NodeProcessor {
         }
 
         Vector3 blockpos = (new Vector3(currentPoint.xCoord, currentPoint.yCoord, currentPoint.zCoord)).getSide(Vector3.SIDE_DOWN);
-        double d0 = (double) currentPoint.yCoord - (1.0D - this.blockaccess.getBlock(blockpos).getBoundingBox().maxY);
+        double d0 = (double) currentPoint.yCoord - (1.0D - this.level.getBlock(blockpos).getBoundingBox().maxY);
         PathPoint pathpoint = this.getSafePoint(currentPoint.xCoord, currentPoint.yCoord, currentPoint.zCoord + 1, j, d0, EnumFacing.SOUTH);
         PathPoint pathpoint1 = this.getSafePoint(currentPoint.xCoord - 1, currentPoint.yCoord, currentPoint.zCoord, j, d0, EnumFacing.WEST);
         PathPoint pathpoint2 = this.getSafePoint(currentPoint.xCoord + 1, currentPoint.yCoord, currentPoint.zCoord, j, d0, EnumFacing.EAST);
@@ -165,7 +165,7 @@ public class WalkNodeProcessor extends NodeProcessor {
         PathPoint pathpoint = null;
         Vector3 blockpos = new Vector3(x, y, z);
         Vector3 blockpos1 = blockpos.getSide(Vector3.SIDE_DOWN);
-        double d0 = (double) y - (1.0D - this.blockaccess.getBlock(blockpos1).getBoundingBox().maxY);
+        double d0 = (double) y - (1.0D - this.level.getBlock(blockpos1).getBoundingBox().maxY);
 
         if (d0 - p_186332_5_ > 1.125D) {
             return null;
@@ -190,7 +190,7 @@ public class WalkNodeProcessor extends NodeProcessor {
                         double d2 = (double) (x - facing.getFrontOffsetX()) + 0.5D;
                         double d3 = (double) (z - facing.getFrontOffsetZ()) + 0.5D;
                         AxisAlignedBB axisalignedbb = new AxisAlignedBB(d2 - d1, (double) y + 0.001D, d3 - d1, d2 + d1, (double) ((float) y + this.entity.getHeight()), d3 + d1);
-                        AxisAlignedBB axisalignedbb1 = this.blockaccess.getBlock(blockpos).getBoundingBox();
+                        AxisAlignedBB axisalignedbb1 = this.level.getBlock(blockpos).getBoundingBox();
                         AxisAlignedBB axisalignedbb2 = axisalignedbb.addCoord(0.0D, axisalignedbb1.maxY - 0.002D, 0.0D);
 
                         if (this.entity.getLevel().getCollisionBlocks(axisalignedbb2, true).length != 0) {
@@ -310,7 +310,7 @@ public class WalkNodeProcessor extends NodeProcessor {
     }
 
     private PathNodeType getPathNodeType(BaseEntity entitylivingIn, int x, int y, int z) {
-        return this.getPathNodeType(this.blockaccess, x, y, z, entitylivingIn, this.entitySizeX, this.entitySizeY, this.entitySizeZ, this.getCanBreakDoors(), this.getCanEnterDoors());
+        return this.getPathNodeType(this.level, x, y, z, entitylivingIn, this.entitySizeX, this.entitySizeY, this.entitySizeZ, this.getCanBreakDoors(), this.getCanEnterDoors());
     }
 
     public PathNodeType getPathNodeType(Level level, int x, int y, int z) {
