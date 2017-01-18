@@ -86,7 +86,7 @@ public class MobPlugin extends PluginBase implements Listener {
     public void onEnable() {
         // Config reading and writing
         saveDefaultConfig();
-	reloadConfig();
+	//reloadConfig();
 
         // we need this flag as it's controlled by the plugin's entities
         MOB_AI_ENABLED = pluginConfig.getBoolean("entities.mob-ai", true);
