@@ -102,7 +102,6 @@ public abstract class WalkingAnimal extends WalkingEntity implements Animal {
         return true;
     }
 
-    @Override
     public boolean onInteract(Entity entity, Item item) {
         //TODO: mating
 
