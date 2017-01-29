@@ -90,9 +90,7 @@ public class WalkNodeProcessor extends NodeProcessor {
         PathNodeType pathnodetype = this.getPathNodeType(this.entity, currentPoint.xCoord, currentPoint.yCoord + 1, currentPoint.zCoord);
 
         if (this.entity.getPathPriority(pathnodetype) >= 0.0F) {
-            float stepHeight = 1;
-            //j = NukkitMath.floorFloat(Math.max(1.0F, this.entity.stepHeight)); TODO: add stepHeight
-            j = NukkitMath.floorFloat(stepHeight);
+            j = NukkitMath.floorFloat(Math.max(1.0F, this.entity.stepHeight));
         }
 
         Vector3 blockpos = (new Vector3(currentPoint.xCoord, currentPoint.yCoord, currentPoint.zCoord)).getSide(Vector3.SIDE_DOWN);

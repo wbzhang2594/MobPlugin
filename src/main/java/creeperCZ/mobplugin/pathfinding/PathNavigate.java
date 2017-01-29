@@ -222,7 +222,7 @@ public abstract class PathNavigate {
                     Vector3 blockpos = vec3d2.getSide(Vector3.SIDE_DOWN);
                     AxisAlignedBB axisalignedbb = this.level.getBlock(blockpos).getBoundingBox();
                     vec3d2 = vec3d2.subtract(0.0D, 1.0D - axisalignedbb.maxY, 0.0D);
-                    //this.theEntity.getMoveHelper().setMoveTo(vec3d2.xCoord, vec3d2.yCoord, vec3d2.zCoord, this.speed); //TODO: moving
+                    this.theEntity.getMoveHelper().setMoveTo(vec3d2.x, vec3d2.y, vec3d2.z, this.speed);
                 }
             }
         }
@@ -321,7 +321,7 @@ public abstract class PathNavigate {
      * Returns true if the entity is in water or lava, false otherwise
      */
     protected boolean isInLiquid() {
-        return this.theEntity.isInsideOfWater()/* || this.theEntity.isInLava()*/; //TODO: lava
+        return this.theEntity.isInsideOfWater() || this.theEntity.inLava;
     }
 
     /**

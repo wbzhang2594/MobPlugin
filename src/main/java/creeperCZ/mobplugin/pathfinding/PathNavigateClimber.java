@@ -55,7 +55,7 @@ public class PathNavigateClimber extends PathNavigateGround {
                 double d0 = (double) (this.theEntity.getWidth() * this.theEntity.getWidth());
 
                 if (this.theEntity.distanceSquared(this.targetPosition.floor().add(0.5, 0, 0.5)) >= d0 && (this.theEntity.y <= (double) this.targetPosition.getY() || this.theEntity.distanceSquared(new Vector3(this.targetPosition.getFloorX() + 0.5, NukkitMath.floorDouble(this.theEntity.y), this.targetPosition.getFloorZ() + 0.5)) >= d0)) {
-                    //this.theEntity.getMoveHelper().setMoveTo((double)this.targetPosition.getX(), (double)this.targetPosition.getY(), (double)this.targetPosition.getZ(), this.speed); TODO: move
+                    this.theEntity.getMoveHelper().setMoveTo((double) this.targetPosition.getX(), (double) this.targetPosition.getY(), (double) this.targetPosition.getZ(), this.speed);
                 } else {
                     this.targetPosition = null;
                 }

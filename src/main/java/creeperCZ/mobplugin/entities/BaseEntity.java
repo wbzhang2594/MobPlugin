@@ -20,15 +20,22 @@ import creeperCZ.mobplugin.MobPlugin;
 import creeperCZ.mobplugin.entities.ai.EntityAITasks;
 import creeperCZ.mobplugin.entities.monster.Monster;
 import creeperCZ.mobplugin.pathfinding.PathNavigate;
+import creeperCZ.mobplugin.pathfinding.PathNavigateGround;
 import creeperCZ.mobplugin.pathfinding.PathNodeType;
+import creeperCZ.mobplugin.util.EntityJumpHelper;
+import creeperCZ.mobplugin.util.EntityLookHelper;
+import creeperCZ.mobplugin.util.EntityMoveHelper;
 
 import java.util.*;
 
 public abstract class BaseEntity extends EntityCreature {
 
+    public float headYaw = 0;
+
     protected int stayTime = 0;
 
     protected int moveTime = 0;
+    private int jumpTicks;
 
     protected Vector3 target = null;
 
@@ -43,15 +50,28 @@ public abstract class BaseEntity extends EntityCreature {
 
     private boolean wallcheck = true;
 
+    protected boolean isJumping = false;
+    public float moveStrafing;
+    public float moveForward;
+    public float randomYawVelocity;
+
     public boolean inWater = false;
     public boolean inLava = false;
     public boolean onClimbable = false;
+
+    private EntityLookHelper lookHelper;
+    protected EntityMoveHelper moveHelper;
+    protected EntityJumpHelper jumpHelper;
 
     protected PathNavigate navigator;
 
     private final Map<PathNodeType, Float> mapPathPriority = new EnumMap<>(PathNodeType.class);
 
     protected int maxHomeDistance = -1;
+
+    private float landMovementFactor;
+
+    public float stepHeight = 0.6f;
 
     /** Passive tasks (wandering, look, idle, ...) */
     protected final EntityAITasks tasks;
@@ -65,6 +85,10 @@ public abstract class BaseEntity extends EntityCreature {
 
         this.tasks = new EntityAITasks();
         this.targetTasks = new EntityAITasks();
+        this.lookHelper = new EntityLookHelper(this);
+        this.moveHelper = new EntityMoveHelper(this);
+        this.jumpHelper = new EntityJumpHelper(this);
+        this.navigator = this.getNewNavigator(this.level);
     }
 
     public abstract int getKillExperience();
@@ -442,6 +466,18 @@ public abstract class BaseEntity extends EntityCreature {
         return this.navigator;
     }
 
+    public EntityLookHelper getLookHelper() {
+        return this.lookHelper;
+    }
+
+    public EntityMoveHelper getMoveHelper() {
+        return this.moveHelper;
+    }
+
+    public EntityJumpHelper getJumpHelper() {
+        return this.jumpHelper;
+    }
+
     public int getMaxHomeDistance() {
         return maxHomeDistance;
     }
@@ -472,5 +508,33 @@ public abstract class BaseEntity extends EntityCreature {
 
     public void updateAITasks() {
 
+    }
+
+    public void setJumping(boolean jumping) {
+        this.isJumping = jumping;
+    }
+
+    public void setMoveForward(float amount) {
+        this.moveForward = amount;
+    }
+
+    public void setMoveStrafing(float amount) {
+        this.moveStrafing = amount;
+    }
+
+    /**
+     * set the movespeed used for the new AI system
+     */
+    public void setAIMoveSpeed(float speedIn) {
+        this.landMovementFactor = speedIn;
+        this.setMoveForward(speedIn);
+    }
+
+    protected PathNavigate getNewNavigator(Level level) {
+        return new PathNavigateGround(this, level);
+    }
+
+    public float getAIMoveSpeed() {
+        return this.landMovementFactor;
     }
 }

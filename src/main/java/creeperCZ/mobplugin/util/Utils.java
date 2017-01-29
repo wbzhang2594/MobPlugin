@@ -198,4 +198,18 @@ public class Utils {
 
         return new RayTraceResult(result.hitVec.add(pos.getX(), pos.getY(), pos.getZ()), raytraceresult.sideHit, pos);
     }
+
+    public static float wrapDegrees(float value) {
+        value = value % 360.0F;
+
+        if (value >= 180.0F) {
+            value -= 360.0F;
+        }
+
+        if (value < -180.0F) {
+            value += 360.0F;
+        }
+
+        return value;
+    }
 }
