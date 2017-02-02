@@ -9,7 +9,7 @@ import cn.nukkit.item.Item;
 import cn.nukkit.level.Level;
 import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.nbt.tag.CompoundTag;
-import cn.nukkit.timings.Timings;
+import co.aikar.timings.Timings;
 import creeperCZ.mobplugin.entities.monster.WalkingMonster;
 import creeperCZ.mobplugin.entities.utils.Utils;
 
