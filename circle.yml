@@ -3,7 +3,7 @@ checkout:
     - git submodule sync
     - git submodule update --init
     - mvn install
-    - cp -R ./target/MobPlugin-1.0.jar $CIRCLE_ARTIFACTS
+    - cp -r ./target/MobPlugin*.jar $CIRCLE_ARTIFACTS
 
 machine:
   java:

@@ -4,7 +4,7 @@
 
 Mobs have inteligence? Who knows? ヽ༼ຈل͜ຈ༽ﾉ
 
-**If you want this plugin, please download from "Target" folder or a working build from CircleCI!**
+**If you want this plugin, please download from "Releases" tab or a from working build from CircleCI!**
 
 Know Bugs:
 - [ ]  Config.yml [now plugin save default config.yml]
