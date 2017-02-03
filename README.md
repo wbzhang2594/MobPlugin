@@ -4,7 +4,9 @@
 
 Mobs have inteligence? Who knows? ヽ༼ຈل͜ຈ༽ﾉ
 
-**If you want this plugin, please download from "Releases" tab or a from working build from CircleCI!**
+**If you want this plugin, please download from Target folder or "Releases" tab!**
+
+__[Jar Download at Circle CI](https://circleci.com/gh/PikyCZ/MobPlugin/tree/master/)__ (**login required**)
 
 Know Bugs:
 - [ ]  Config.yml [now plugin save default config.yml]
@@ -15,5 +17,3 @@ Know Bugs:
 - [ ] Path-finding //in progress
 - [ ] AI //in progress
 - [ ] New Mobs //in progress
-
-__[Jar Download at Circle CI](https://circleci.com/gh/PikyCZ/MobPlugin/tree/master/)__ (**login required**)
