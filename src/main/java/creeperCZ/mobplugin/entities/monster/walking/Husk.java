@@ -16,12 +16,12 @@ import creeperCZ.mobplugin.entities.utils.Utils;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
 /**
- *
  * @author PikyCZ
  */
 public class Husk extends WalkingMonster implements EntityAgeable {
-    
+
     public static final int NETWORK_ID = 47;
 
     public Husk(FullChunk chunk, CompoundTag nbt) {

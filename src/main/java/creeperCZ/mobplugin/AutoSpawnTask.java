@@ -15,7 +15,10 @@ import creeperCZ.mobplugin.entities.monster.walking.*;
 import creeperCZ.mobplugin.entities.spawners.*;
 import creeperCZ.mobplugin.entities.utils.Utils;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class AutoSpawnTask implements Runnable {
 
@@ -73,7 +76,7 @@ public class AutoSpawnTask implements Runnable {
         entitySpawners.add(new RabbitSpawner(this, this.pluginConfig));
         entitySpawners.add(new SheepSpawner(this, this.pluginConfig));
         entitySpawners.add(new SkeletonSpawner(this, this.pluginConfig));
-        entitySpawners.add(new StraySpawner (this, this.pluginConfig));
+        entitySpawners.add(new StraySpawner(this, this.pluginConfig));
         entitySpawners.add(new SpiderSpawner(this, this.pluginConfig));
         entitySpawners.add(new WolfSpawner(this, this.pluginConfig));
         entitySpawners.add(new ZombieSpawner(this, this.pluginConfig));

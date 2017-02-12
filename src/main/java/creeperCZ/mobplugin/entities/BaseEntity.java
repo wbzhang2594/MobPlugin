@@ -200,24 +200,24 @@ public abstract class BaseEntity extends EntityCreature {
         inLava = false;
         onClimbable = false;
 
-        while(d.hasNext()) {
-            Block block = (Block)d.next();
+        while (d.hasNext()) {
+            Block block = (Block) d.next();
 
-            if(block.hasEntityCollision()) {
+            if (block.hasEntityCollision()) {
                 block.onEntityCollide(this);
                 block.addVelocityToEntity(this, vector);
             }
 
-            if(block.getId() == Block.WATER || block.getId() == Block.STILL_WATER){
+            if (block.getId() == Block.WATER || block.getId() == Block.STILL_WATER) {
                 inWater = true;
-            } else if(block.getId() == Block.LAVA || block.getId() == Block.STILL_LAVA){
+            } else if (block.getId() == Block.LAVA || block.getId() == Block.STILL_LAVA) {
                 inLava = true;
-            } else if(block.getId() == Block.LADDER || block.getId() == Block.VINE){
+            } else if (block.getId() == Block.LADDER || block.getId() == Block.VINE) {
                 onClimbable = true;
             }
         }
 
-        if(vector.lengthSquared() > 0.0D) {
+        if (vector.lengthSquared() > 0.0D) {
             vector = vector.normalize();
             double d1 = 0.014D;
             this.motionX += vector.x * d1;

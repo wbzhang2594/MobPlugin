@@ -44,11 +44,11 @@ public abstract class WalkingAnimal extends WalkingEntity implements Animal {
 
         hasUpdate = super.entityBaseTick(tickDiff);
 
-        if(inLoveTicks > 0) {
+        if (inLoveTicks > 0) {
             inLoveTicks--;
 
-            if(inLoveTicks % 10 == 0) {
-                Vector3 pos = new Vector3(this.x + (double)(this.level.rand.nextFloat() * this.getWidth() * 2.0F) - (double)this.getWidth(), this.y + 0.5D + (double)(this.level.rand.nextFloat() * this.getHeight()), this.z + (double)(this.level.rand.nextFloat() * this.getWidth() * 2.0F) - (double)this.getWidth());
+            if (inLoveTicks % 10 == 0) {
+                Vector3 pos = new Vector3(this.x + (double) (this.level.rand.nextFloat() * this.getWidth() * 2.0F) - (double) this.getWidth(), this.y + 0.5D + (double) (this.level.rand.nextFloat() * this.getHeight()), this.z + (double) (this.level.rand.nextFloat() * this.getWidth() * 2.0F) - (double) this.getWidth());
                 this.level.addParticle(new HeartParticle(pos));
             }
         }

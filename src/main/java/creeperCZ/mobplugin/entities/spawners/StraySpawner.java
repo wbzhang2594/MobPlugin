@@ -12,12 +12,11 @@ import creeperCZ.mobplugin.entities.autospawn.SpawnResult;
 import creeperCZ.mobplugin.entities.monster.walking.Stray;
 
 /**
- *
  * @author PikyCZ
  */
 public class StraySpawner extends AbstractEntitySpawner {
-    
-       /**
+
+    /**
      * @param spawnTask
      * @param pluginConfig
      */
@@ -26,7 +25,6 @@ public class StraySpawner extends AbstractEntitySpawner {
     }
 
     /**
-     *
      * @param iPlayer
      * @param pos
      * @param level

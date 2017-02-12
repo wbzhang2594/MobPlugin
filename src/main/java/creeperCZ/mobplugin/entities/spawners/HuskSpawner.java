@@ -10,18 +10,17 @@ import creeperCZ.mobplugin.FileLogger;
 import creeperCZ.mobplugin.entities.autospawn.AbstractEntitySpawner;
 import creeperCZ.mobplugin.entities.autospawn.SpawnResult;
 import creeperCZ.mobplugin.entities.monster.walking.Husk;
+
 /**
- *
  * @author PikyCZ
  */
 public class HuskSpawner extends AbstractEntitySpawner {
-    
-     public HuskSpawner(AutoSpawnTask spawnTask, Config pluginConfig) {
+
+    public HuskSpawner(AutoSpawnTask spawnTask, Config pluginConfig) {
         super(spawnTask, pluginConfig);
     }
 
     /**
-     *
      * @param iPlayer
      * @param pos
      * @param level

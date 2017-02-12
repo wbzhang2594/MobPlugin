@@ -35,11 +35,8 @@ import cn.nukkit.nbt.tag.DoubleTag;
 import cn.nukkit.nbt.tag.FloatTag;
 import cn.nukkit.nbt.tag.ListTag;
 import cn.nukkit.network.protocol.EntityEventPacket;
-//import cn.nukkit.plugin.PluginBase;
-import java.util.LinkedHashMap;
 import cn.nukkit.plugin.PluginBase;
 import cn.nukkit.utils.Config;
-import cn.nukkit.utils.ConfigSection;
 import cn.nukkit.utils.DyeColor;
 import creeperCZ.mobplugin.entities.BaseEntity;
 import creeperCZ.mobplugin.entities.animal.flying.Bat;
@@ -57,6 +54,8 @@ import creeperCZ.mobplugin.items.MobPluginItems;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+//import cn.nukkit.plugin.PluginBase;
 
 /**
  * @author <a href="mailto:kniffman@googlemail.com">Michael Gertz (kniffo80)</a>
@@ -82,12 +81,12 @@ public class MobPlugin extends PluginBase implements Listener {
     /**
      * enabled
      */
-       @Override
+    @Override
     public void onEnable() {
         // Config reading and writing
         saveDefaultConfig();
-	pluginConfig = getConfig();
-	//this.loadAll();
+        pluginConfig = getConfig();
+        //this.loadAll();
 
         // we need this flag as it's controlled by the plugin's entities
         MOB_AI_ENABLED = pluginConfig.getBoolean("entities.mob-ai", true);

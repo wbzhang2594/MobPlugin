@@ -24,7 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
  * @author PikyCZ
  */
 public class Stray extends WalkingMonster {

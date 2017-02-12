@@ -16,10 +16,7 @@ import cn.nukkit.nbt.tag.CompoundTag;
 import cn.nukkit.utils.DyeColor;
 import creeperCZ.mobplugin.entities.animal.WalkingAnimal;
 import creeperCZ.mobplugin.entities.utils.Utils;
-import creeperCZ.mobplugin.items.MobPluginItems;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Sheep extends WalkingAnimal {
@@ -110,7 +107,7 @@ public class Sheep extends WalkingAnimal {
             return true;
         }
 
-        if(item.getId() == Item.WHEAT) {
+        if (item.getId() == Item.WHEAT) {
 
         }
 
