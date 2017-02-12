@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="MobPlugin:jar">
+    <output-path>$PROJECT_DIR$/..</output-path>
+    <root id="archive" name="MobPlugin.jar">
+      <element id="module-output" name="MobPlugin" />
+    </root>
+  </artifact>
+</component>

@@ -30,7 +30,6 @@ public abstract class WalkingAnimal extends WalkingEntity implements Animal {
     @Override
     protected void initEntity() {
         super.initEntity();
-
     }
 
     @Override
