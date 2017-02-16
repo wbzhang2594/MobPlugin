@@ -97,6 +97,7 @@ public class PathFinder {
         }
 
         if (pathpoint == startPoint) {
+            System.out.println("start point");
             return null;
         } else {
             Path path = this.createEntityPath(startPoint, pathpoint);

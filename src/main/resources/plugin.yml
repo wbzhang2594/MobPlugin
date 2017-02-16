@@ -17,6 +17,10 @@ commands:
     description: Remove all living mobs
     usage: "/mob removeall"
     permission: mob-plugin.command
+  testpath:
+    description: Calculates a path
+    usage: "/testpath"
+    permission: mob-plugin.command
 
 permissions:
   mob-plugin.command:

@@ -9,6 +9,7 @@ import cn.nukkit.Player;
 import cn.nukkit.Server;
 import cn.nukkit.block.Block;
 import cn.nukkit.block.BlockAir;
+import cn.nukkit.block.BlockGlowstone;
 import cn.nukkit.blockentity.BlockEntity;
 import cn.nukkit.command.Command;
 import cn.nukkit.command.CommandSender;
@@ -50,6 +51,10 @@ import creeperCZ.mobplugin.entities.projectile.EntityFireBall;
 import creeperCZ.mobplugin.entities.utils.Utils;
 import creeperCZ.mobplugin.items.ItemEnderPearl;
 import creeperCZ.mobplugin.items.MobPluginItems;
+import creeperCZ.mobplugin.pathfinding.Path;
+import creeperCZ.mobplugin.pathfinding.PathFinder;
+import creeperCZ.mobplugin.pathfinding.PathPoint;
+import creeperCZ.mobplugin.pathfinding.WalkNodeProcessor;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -70,6 +75,8 @@ public class MobPlugin extends PluginBase implements Listener {
 
     public final HashMap<Integer, Level> levelsToSpawn = new HashMap<>();
     private List<String> disabledWorlds;
+
+    public Vector3 pathFinalPoint = new Vector3();
 
     @Override
     public void onLoad() {
@@ -119,6 +126,27 @@ public class MobPlugin extends PluginBase implements Listener {
     @Override
     public boolean onCommand(CommandSender commandSender, Command cmd, String label, String[] sub) {
         String output = "";
+
+        if (cmd.getName().toLowerCase().equals("testpath")) {
+            Player p = (Player) commandSender;
+
+            CompoundTag nbt = new CompoundTag().putList(new ListTag<DoubleTag>("Pos").add(new DoubleTag("", p.x)).add(new DoubleTag("", p.y)).add(new DoubleTag("", p.z)))
+                    .putList(new ListTag<DoubleTag>("Motion").add(new DoubleTag("", 0)).add(new DoubleTag("", 0)).add(new DoubleTag("", 0)))
+                    .putList(new ListTag<FloatTag>("Rotation").add(new FloatTag("", (float) p.yaw))
+                            .add(new FloatTag("", (float) p.pitch)));
+
+            BaseEntity entity = new Zombie(p.chunk, nbt);
+            Path path = new PathFinder(new WalkNodeProcessor()).findPath(p.getLevel(), entity, pathFinalPoint, 30f);
+            entity.close();
+
+            while (!path.isFinished()) {
+                PathPoint point = path.getPathPointFromIndex(path.getCurrentPathIndex());
+                path.incrementPathIndex();
+
+                p.getLevel().setBlock(new Vector3(point.x, point.y, point.z), new BlockGlowstone(), false, false);
+            }
+            return true;
+        }
 
         if (sub.length == 0) {
             output += "no command given. Use 'mob spawn Wolf <opt:playername(if spawned by server)>' e.g.";
@@ -422,5 +450,10 @@ public class MobPlugin extends PluginBase implements Listener {
         Level level = e.getLevel();
 
         levelsToSpawn.remove(level.getId());
+    }
+
+    @EventHandler
+    public void onBlockBreak(BlockBreakEvent e) {
+        this.pathFinalPoint = e.getBlock().add(0.5, 0.5, 0.5);
     }
 }
