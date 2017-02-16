@@ -4,6 +4,8 @@
 
 Mobs have inteligence? Who knows? ヽ༼ຈل͜ຈ༽ﾉ
 
+**website https://pikycz.github.io/MobPlugin/ by woofie :)**
+
 **If you want this plugin, please download from Target folder or "Releases" tab!**
 
 __[Jar Download at Circle CI](https://circleci.com/gh/PikyCZ/MobPlugin/tree/master/)__ (**login required**)
@@ -11,7 +13,6 @@ __[Jar Download at Circle CI](https://circleci.com/gh/PikyCZ/MobPlugin/tree/mast
 Know Bugs:
 - [ ]  Config.yml [now plugin save default config.yml]
 - [ ]  Disable worlds is not really disabled
-- [X]  Duplicate items in inventory [Ink Sac] //fixed
 
 **TODO**
 - [ ] Path-finding //in progress
