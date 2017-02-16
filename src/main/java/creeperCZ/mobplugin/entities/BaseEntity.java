@@ -18,10 +18,10 @@ import cn.nukkit.network.protocol.AddEntityPacket;
 import cn.nukkit.potion.Effect;
 import creeperCZ.mobplugin.MobPlugin;
 import creeperCZ.mobplugin.entities.monster.Monster;
+import creeperCZ.mobplugin.pathfinding.Path;
+import creeperCZ.mobplugin.pathfinding.PathNodeType;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public abstract class BaseEntity extends EntityCreature {
 
@@ -44,6 +44,11 @@ public abstract class BaseEntity extends EntityCreature {
     public boolean inWater = false;
     public boolean inLava = false;
     public boolean onClimbable = false;
+
+    private final Map<PathNodeType, Float> mapPathPriority = new EnumMap<>(PathNodeType.class);
+    public float stepHeight = 0.6f;
+
+    public Path currentPath = null;
 
     public BaseEntity(FullChunk chunk, CompoundTag nbt) {
         super(chunk, nbt);
@@ -373,5 +378,27 @@ public abstract class BaseEntity extends EntityCreature {
         return true;
     }
 
+    public float getPathPriority(PathNodeType nodeType) {
+        Float f = this.mapPathPriority.get(nodeType);
+        return f == null ? nodeType.getPriority() : f;
+    }
 
+    public void setPathPriority(PathNodeType nodeType, float priority) {
+        this.mapPathPriority.put(nodeType, priority);
+    }
+
+    public int getMaxFallHeight() {
+        if (this.followTarget == null) { //TODO: change this to only attack target
+            return 3;
+        } else {
+            int i = (int) (this.getHealth() - this.getMaxHealth() * 0.33F);
+            i = i - (3 - this.getServer().getDifficulty()) * 4;
+
+            if (i < 0) {
+                i = 0;
+            }
+
+            return i + 3;
+        }
+    }
 }
