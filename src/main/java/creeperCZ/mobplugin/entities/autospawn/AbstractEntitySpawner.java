@@ -15,10 +15,7 @@ import creeperCZ.mobplugin.AutoSpawnTask;
 import creeperCZ.mobplugin.FileLogger;
 import creeperCZ.mobplugin.entities.utils.Utils;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.StringTokenizer;
+import java.util.*;
 
 /**
  * @author <a href="mailto:kniffman@googlemail.com">Michael Gertz</a>
@@ -30,6 +27,8 @@ public abstract class AbstractEntitySpawner implements IEntitySpawner {
     protected Server server;
 
     protected List<String> disabledSpawnWorlds = new ArrayList<>();
+
+    protected static Random random = new Random();
 
     public AbstractEntitySpawner(AutoSpawnTask spawnTask, Config pluginConfig) {
         this.spawnTask = spawnTask;
