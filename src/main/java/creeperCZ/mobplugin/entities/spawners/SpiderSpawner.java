@@ -33,20 +33,24 @@ public class SpiderSpawner extends AbstractEntitySpawner {
     public SpawnResult spawn(IPlayer iPlayer, Position pos, Level level) {
         SpawnResult result = SpawnResult.OK;
 
-        int blockId = level.getBlockIdAt((int) pos.x, (int) pos.y, (int) pos.z);
-        int blockLightLevel = level.getBlockLightAt((int) pos.x, (int) pos.y, (int) pos.z);
+        if (level.getTime() > Level.TIME_NIGHT) {
+            int blockId = level.getBlockIdAt((int) pos.x, (int) pos.y, (int) pos.z);
+            int blockLightLevel = level.getBlockLightAt((int) pos.x, (int) pos.y, (int) pos.z);
 
-        if (!Block.solid[blockId]) { // only spawns on solid blocks
-            result = SpawnResult.WRONG_BLOCK;
-        } else if (blockLightLevel > 7) { // lightlevel not working for now, but as lightlevel is always zero that should work
+            if (!Block.solid[blockId]) { // only spawns on solid blocks
+                result = SpawnResult.WRONG_BLOCK;
+            } else if (blockLightLevel > 7) { // lightlevel not working for now, but as lightlevel is always zero that should work
+                result = SpawnResult.WRONG_LIGHTLEVEL;
+            } else if (pos.y > 127 || pos.y < 1 || level.getBlockIdAt((int) pos.x, (int) pos.y, (int) pos.z) == Block.AIR) { // cannot spawn on AIR block
+                result = SpawnResult.POSITION_MISMATCH;
+            } else { // creeper is spawned
+                this.spawnTask.createEntity(getEntityName(), pos.add(0, 2.12, 0));
+            }
+
+            FileLogger.info(String.format("[%s] spawn for %s at %s,%s,%s with lightlevel %s and blockId %s, result: %s", getLogprefix(), iPlayer.getName(), pos.x, pos.y, pos.z, blockLightLevel, blockId, result));
+        } else {
             result = SpawnResult.WRONG_LIGHTLEVEL;
-        } else if (pos.y > 127 || pos.y < 1 || level.getBlockIdAt((int) pos.x, (int) pos.y, (int) pos.z) == Block.AIR) { // cannot spawn on AIR block
-            result = SpawnResult.POSITION_MISMATCH;
-        } else { // creeper is spawned
-            this.spawnTask.createEntity(getEntityName(), pos.add(0, 2.12, 0));
         }
-
-        FileLogger.info(String.format("[%s] spawn for %s at %s,%s,%s with lightlevel %s and blockId %s, result: %s", getLogprefix(), iPlayer.getName(), pos.x, pos.y, pos.z, blockLightLevel, blockId, result));
 
         return result;
     }
