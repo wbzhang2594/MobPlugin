@@ -56,6 +56,10 @@ public abstract class WalkingAnimal extends WalkingEntity implements Animal {
                 Vector3 pos = new Vector3(this.x + (double) (this.level.rand.nextFloat() * this.getWidth() * 2.0F) - (double) this.getWidth(), this.y + 0.5D + (double) (this.level.rand.nextFloat() * this.getHeight()), this.z + (double) (this.level.rand.nextFloat() * this.getWidth() * 2.0F) - (double) this.getWidth());
                 this.level.addParticle(new HeartParticle(pos));
             }
+
+            if (inLove <= 0) {
+                this.setDataFlag(DATA_FLAGS, DATA_FLAG_INLOVE, false);
+            }
         }
 
         if (getTarget() == null) {
