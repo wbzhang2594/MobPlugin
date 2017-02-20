@@ -1,7 +1,5 @@
 package creeperCZ.mobplugin.entities.monster;
 
-import cn.nukkit.Player;
-import cn.nukkit.Server;
 import cn.nukkit.block.BlockWater;
 import cn.nukkit.entity.Entity;
 import cn.nukkit.entity.data.ShortEntityData;
@@ -18,14 +16,6 @@ import creeperCZ.mobplugin.entities.utils.Utils;
 
 public abstract class WalkingMonster extends WalkingEntity implements Monster {
 
-    private int[] minDamage;
-
-    private int[] maxDamage;
-
-    protected int attackDelay = 0;
-
-    private boolean canAttack = true;
-
     public WalkingMonster(FullChunk chunk, CompoundTag nbt) {
         super(chunk, nbt);
     }
@@ -38,105 +28,6 @@ public abstract class WalkingMonster extends WalkingEntity implements Monster {
     public void setTarget(Entity target, boolean attack) {
         super.setTarget(target);
         this.canAttack = attack;
-    }
-
-    public int getDamage() {
-        return getDamage(null);
-    }
-
-    public int getDamage(Integer difficulty) {
-        return Utils.rand(this.getMinDamage(difficulty), this.getMaxDamage(difficulty));
-    }
-
-    public int getMinDamage() {
-        return getMinDamage(null);
-    }
-
-    public int getMinDamage(Integer difficulty) {
-        if (difficulty == null || difficulty > 3 || difficulty < 0) {
-            difficulty = Server.getInstance().getDifficulty();
-        }
-        return this.minDamage[difficulty];
-    }
-
-    public int getMaxDamage() {
-        return getMaxDamage(null);
-    }
-
-    public int getMaxDamage(Integer difficulty) {
-        if (difficulty == null || difficulty > 3 || difficulty < 0) {
-            difficulty = Server.getInstance().getDifficulty();
-        }
-        return this.maxDamage[difficulty];
-    }
-
-    public void setDamage(int damage) {
-        this.setDamage(damage, Server.getInstance().getDifficulty());
-    }
-
-    public void setDamage(int damage, int difficulty) {
-        if (difficulty >= 1 && difficulty <= 3) {
-            this.minDamage[difficulty] = damage;
-            this.maxDamage[difficulty] = damage;
-        }
-    }
-
-    public void setDamage(int[] damage) {
-        if (damage.length < 4) {
-            return;
-        }
-
-        if (minDamage == null || minDamage.length < 4) {
-            minDamage = new int[]{0, 0, 0, 0};
-        }
-
-        if (maxDamage == null || maxDamage.length < 4) {
-            maxDamage = new int[]{0, 0, 0, 0};
-        }
-
-        for (int i = 0; i < 4; i++) {
-            this.minDamage[i] = damage[i];
-            this.maxDamage[i] = damage[i];
-        }
-    }
-
-    public void setMinDamage(int[] damage) {
-        if (damage.length < 4) {
-            return;
-        }
-
-        for (int i = 0; i < 4; i++) {
-            this.setMinDamage(Math.min(damage[i], this.getMaxDamage(i)), i);
-        }
-    }
-
-    public void setMinDamage(int damage) {
-        this.setMinDamage(damage, Server.getInstance().getDifficulty());
-    }
-
-    public void setMinDamage(int damage, int difficulty) {
-        if (difficulty >= 1 && difficulty <= 3) {
-            this.minDamage[difficulty] = Math.min(damage, this.getMaxDamage(difficulty));
-        }
-    }
-
-    public void setMaxDamage(int[] damage) {
-        if (damage.length < 4)
-            return;
-
-        for (int i = 0; i < 4; i++) {
-            this.setMaxDamage(Math.max(damage[i], this.getMinDamage(i)), i);
-        }
-    }
-
-    public void setMaxDamage(int damage) {
-        setMinDamage(damage, Server.getInstance().getDifficulty());
-    }
-
-    public void setMaxDamage(int damage, int difficulty) {
-        if (difficulty >= 1 && difficulty <= 3) {
-            this.maxDamage[difficulty] = Math.max(damage, this.getMinDamage(difficulty));
-        }
     }
 
     public boolean onUpdate(int currentTick) {
@@ -157,18 +48,7 @@ public abstract class WalkingMonster extends WalkingEntity implements Monster {
             return true;
         }
 
-        int tickDiff = currentTick - this.lastUpdate;
-        this.lastUpdate = currentTick;
-        this.entityBaseTick(tickDiff);
-
-        Vector3 target = this.updateMove(tickDiff);
-        if ((!this.isFriendly() || !(target instanceof Player)) && target instanceof Entity) {
-            if (target != this.followTarget || this.canAttack) {
-                this.attackEntity((Entity) target);
-            }
-        } else if (target != null && (Math.pow(this.x - target.x, 2) + Math.pow(this.z - target.z, 2)) <= 1) {
-            this.moveTime = 0;
-        }
+        super.onUpdate(currentTick);
         return true;
     }
 

@@ -15,7 +15,8 @@ import creeperCZ.mobplugin.entities.WalkingEntity;
 
 public abstract class WalkingAnimal extends WalkingEntity implements Animal {
 
-    protected int inLoveTicks = 0;
+    protected int inLove = 0;
+
     protected int spawnBabyDelay = 0; //TODO: spawn baby animal
 
     public WalkingAnimal(FullChunk chunk, CompoundTag nbt) {
@@ -30,6 +31,10 @@ public abstract class WalkingAnimal extends WalkingEntity implements Animal {
     @Override
     protected void initEntity() {
         super.initEntity();
+
+        if (namedTag.contains("InLove")) {
+            this.inLove = namedTag.getInt("InLove");
+        }
     }
 
     @Override
@@ -44,12 +49,21 @@ public abstract class WalkingAnimal extends WalkingEntity implements Animal {
 
         hasUpdate = super.entityBaseTick(tickDiff);
 
-        if (inLoveTicks > 0) {
-            inLoveTicks--;
+        if (inLove > 0) {
+            inLove--;
 
-            if (inLoveTicks % 10 == 0) {
+            if (inLove % 10 == 0) {
                 Vector3 pos = new Vector3(this.x + (double) (this.level.rand.nextFloat() * this.getWidth() * 2.0F) - (double) this.getWidth(), this.y + 0.5D + (double) (this.level.rand.nextFloat() * this.getHeight()), this.z + (double) (this.level.rand.nextFloat() * this.getWidth() * 2.0F) - (double) this.getWidth());
                 this.level.addParticle(new HeartParticle(pos));
+            }
+        }
+
+        if (getTarget() == null) {
+            for (Entity entity : this.level.getNearbyEntities(this.getBoundingBox().grow(8, 8, 8), this)) {
+                if (entity instanceof Player && this.isBreedingItem(((Player) entity).getInventory().getItemInHand())) {
+                    this.setTarget(entity);
+                    break;
+                }
             }
         }
 
@@ -102,13 +116,23 @@ public abstract class WalkingAnimal extends WalkingEntity implements Animal {
     }
 
     public boolean onInteract(Entity entity, Item item) {
-        //TODO: mating
+        if (this.inLove <= 0 && this.isBreedingItem(item)) {
+            this.setInLove();
+            return true;
+        }
 
+        if (this.isBaby() && this.isBreedingItem(item)) {
+            //TODO: age up
+        }
         return false;
     }
 
+    public boolean isInLove() {
+        return this.inLove > 0;
+    }
+
     public void setInLove() {
-        this.inLoveTicks = 600;
+        this.inLove = 600;
         this.setDataFlag(DATA_FLAGS, DATA_FLAG_INLOVE);
     }
 

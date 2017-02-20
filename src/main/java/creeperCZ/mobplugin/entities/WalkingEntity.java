@@ -1,5 +1,6 @@
 package creeperCZ.mobplugin.entities;
 
+import cn.nukkit.Player;
 import cn.nukkit.block.Block;
 import cn.nukkit.block.BlockFence;
 import cn.nukkit.block.BlockFenceGate;
@@ -19,6 +20,24 @@ public abstract class WalkingEntity extends BaseEntity {
 
     public WalkingEntity(FullChunk chunk, CompoundTag nbt) {
         super(chunk, nbt);
+    }
+
+    @Override
+    public boolean onUpdate(int currentTick) {
+        //TODO: change attacking system
+        int tickDiff = currentTick - this.lastUpdate;
+        this.lastUpdate = currentTick;
+        this.entityBaseTick(tickDiff);
+
+        Vector3 target = this.updateMove(tickDiff);
+        if ((!this.isFriendly() || !(target instanceof Player)) && target instanceof Entity) {
+            if (target != this.followTarget || this.canAttack) {
+                this.attackEntity((Entity) target);
+            }
+        } else if (target != null && (Math.pow(this.x - target.x, 2) + Math.pow(this.z - target.z, 2)) <= 1) {
+            this.moveTime = 0;
+        }
+        return true;
     }
 
     protected void checkTarget() {

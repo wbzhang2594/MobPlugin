@@ -1,6 +1,7 @@
 package creeperCZ.mobplugin.entities;
 
 import cn.nukkit.Player;
+import cn.nukkit.Server;
 import cn.nukkit.block.Block;
 import cn.nukkit.entity.Entity;
 import cn.nukkit.entity.EntityCreature;
@@ -18,6 +19,7 @@ import cn.nukkit.network.protocol.AddEntityPacket;
 import cn.nukkit.potion.Effect;
 import creeperCZ.mobplugin.MobPlugin;
 import creeperCZ.mobplugin.entities.monster.Monster;
+import creeperCZ.mobplugin.entities.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -25,11 +27,21 @@ import java.util.List;
 
 public abstract class BaseEntity extends EntityCreature {
 
+    protected boolean canAttack = false;
+
+    protected int[] minDamage;
+
+    protected int[] maxDamage;
+
+    protected int attackDelay = 0;
+
     protected int stayTime = 0;
 
     protected int moveTime = 0;
 
     protected Vector3 target = null;
+
+    protected Entity attackTarget = null;
 
     protected Entity followTarget = null;
 
@@ -92,6 +104,15 @@ public abstract class BaseEntity extends EntityCreature {
     // TODO
     public void setTarget(Entity target) {
         this.followTarget = target;
+
+        this.moveTime = 0;
+        this.stayTime = 0;
+        this.target = null;
+    }
+
+    //TODO
+    public void setAttackTarget(Entity entity) {
+        this.attackTarget = entity;
 
         this.moveTime = 0;
         this.stayTime = 0;
@@ -373,5 +394,110 @@ public abstract class BaseEntity extends EntityCreature {
         return true;
     }
 
+    public boolean canAttack(Entity entity) {
+        return this.canAttack;
+    }
 
+    public int getDamage() {
+        return getDamage(null);
+    }
+
+    public int getDamage(Integer difficulty) {
+        return Utils.rand(this.getMinDamage(difficulty), this.getMaxDamage(difficulty));
+    }
+
+    public int getMinDamage() {
+        return getMinDamage(null);
+    }
+
+    public int getMinDamage(Integer difficulty) {
+        if (difficulty == null || difficulty > 3 || difficulty < 0) {
+            difficulty = Server.getInstance().getDifficulty();
+        }
+        return this.minDamage[difficulty];
+    }
+
+    public int getMaxDamage() {
+        return getMaxDamage(null);
+    }
+
+    public int getMaxDamage(Integer difficulty) {
+        if (difficulty == null || difficulty > 3 || difficulty < 0) {
+            difficulty = Server.getInstance().getDifficulty();
+        }
+        return this.maxDamage[difficulty];
+    }
+
+    public void setDamage(int damage) {
+        this.setDamage(damage, Server.getInstance().getDifficulty());
+    }
+
+    public void setDamage(int damage, int difficulty) {
+        if (difficulty >= 1 && difficulty <= 3) {
+            this.minDamage[difficulty] = damage;
+            this.maxDamage[difficulty] = damage;
+        }
+    }
+
+    public void setDamage(int[] damage) {
+        if (damage.length < 4) {
+            return;
+        }
+
+        if (minDamage == null || minDamage.length < 4) {
+            minDamage = new int[]{0, 0, 0, 0};
+        }
+
+        if (maxDamage == null || maxDamage.length < 4) {
+            maxDamage = new int[]{0, 0, 0, 0};
+        }
+
+        for (int i = 0; i < 4; i++) {
+            this.minDamage[i] = damage[i];
+            this.maxDamage[i] = damage[i];
+        }
+    }
+
+    public void setMinDamage(int[] damage) {
+        if (damage.length < 4) {
+            return;
+        }
+
+        for (int i = 0; i < 4; i++) {
+            this.setMinDamage(Math.min(damage[i], this.getMaxDamage(i)), i);
+        }
+    }
+
+    public void setMinDamage(int damage) {
+        this.setMinDamage(damage, Server.getInstance().getDifficulty());
+    }
+
+    public void setMinDamage(int damage, int difficulty) {
+        if (difficulty >= 1 && difficulty <= 3) {
+            this.minDamage[difficulty] = Math.min(damage, this.getMaxDamage(difficulty));
+        }
+    }
+
+    public void setMaxDamage(int[] damage) {
+        if (damage.length < 4)
+            return;
+
+        for (int i = 0; i < 4; i++) {
+            this.setMaxDamage(Math.max(damage[i], this.getMinDamage(i)), i);
+        }
+    }
+
+    public void setMaxDamage(int damage) {
+        setMinDamage(damage, Server.getInstance().getDifficulty());
+    }
+
+    public void setMaxDamage(int damage, int difficulty) {
+        if (difficulty >= 1 && difficulty <= 3) {
+            this.maxDamage[difficulty] = Math.max(damage, this.getMinDamage(difficulty));
+        }
+    }
+
+    public void attackEntity(Entity player) {
+
+    }
 }
