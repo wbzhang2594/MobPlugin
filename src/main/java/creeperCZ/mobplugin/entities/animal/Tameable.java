@@ -5,7 +5,6 @@ import cn.nukkit.entity.Entity;
 import cn.nukkit.item.Item;
 import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.nbt.tag.CompoundTag;
-import com.sun.istack.internal.Nullable;
 
 /**
  * Created by CreeperFace on 19.2.2017.
@@ -85,7 +84,7 @@ public abstract class Tameable extends WalkingAnimal {
         return this.getDataFlag(DATA_FLAGS, DATA_FLAG_TAMED);
     }
 
-    public void setTamed(@Nullable Player owner) {
+    public void setTamed(Player owner) {
         this.setDataFlag(DATA_FLAGS, DATA_FLAG_TAMED);
 
         if (owner != null) {
