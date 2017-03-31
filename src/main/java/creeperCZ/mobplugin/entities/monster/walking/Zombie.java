@@ -93,7 +93,7 @@ public class Zombie extends WalkingMonster implements EntityAgeable {
         hasUpdate = super.entityBaseTick(tickDiff);
 
         int time = this.getLevel().getTime() % Level.TIME_FULL;
-        if (!this.isOnFire() && !this.level.isRaining() && !(time >= Level.TIME_NIGHT && time < Level.TIME_SUNRISE)) {
+        if (!this.isOnFire() && !this.level.isRaining() && !(time > Level.TIME_SUNSET && time >= 140000 && time < Level.TIME_SUNRISE)) {
             this.setOnFire(100);
         }
 
