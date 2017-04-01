@@ -13,8 +13,3 @@ __[Jar Download at Circle CI](https://circleci.com/gh/PikyCZ/MobPlugin/tree/mast
 Know Bugs:
 - [ ]  Config.yml [now plugin save default config.yml]
 - [ ]  Disable worlds is not really disabled
-
-**TODO**
-- [ ] Path-finding //in progress
-- [ ] AI //in progress
-- [ ] New Mobs //in progress
