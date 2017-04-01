@@ -1,23 +1,25 @@
 name: MobPlugin
-main: creeperCZ.mobplugin.MobPlugin
+main: de.kniffo80.mobplugin.MobPlugin
 version: "1.0"
 api: ["1.0.0"]
 
 load: STARTUP
-author: milk0417, kniffo80, CreeperFace, PikyCZ, NycuRO, caspervanneck, woofie
+author: kniffo80
 description: Implement Entity AI from scratch beginning with 0.16.x
-website: hhttps://pikycz.github.io/MobPlugin/
+website: https://github.com/kniffo80/NukkitMobPlugin
+commands: []
 
 commands:
   mob:
     description: Spawn a simple mob to the player, that is using this command
+    aliases: ["mob"]
     usage: "/mob spawn <mob_name>"
     permission: mob-plugin.command
   removemobs:
     description: Remove all living mobs
+    aliases: ["removeall"]
     usage: "/mob removeall"
     permission: mob-plugin.command
-
 permissions:
   mob-plugin.command:
     description: ""
