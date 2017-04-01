@@ -5,12 +5,10 @@
  */
 package com.pikycz.mobplugin;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.nukkit.Player;
-import cn.nukkit.IPlayer;
 import cn.nukkit.Server;
 import cn.nukkit.block.Block;
 import cn.nukkit.block.BlockAir;
@@ -106,7 +104,7 @@ public class MobPlugin extends PluginBase implements Listener {
 
         // we need this flag as it's controlled by the plugin's entities
         MOB_AI_ENABLED = pluginConfig.getBoolean("entities.mob-ai", true);
-        int spawnDelay = pluginConfig.getInt("entities.auto-spawn-tick", 1500);
+        int spawnDelay = pluginConfig.getInt("entities.auto-spawn-tick", 2000);
         disabledWorlds = pluginConfig.getList("worlds-spawn-disabled", new ArrayList());
 
         for (Level level : getServer().getLevels().values()) {
@@ -145,7 +143,7 @@ public class MobPlugin extends PluginBase implements Listener {
         String output = "";
 
         if (sub.length == 0) {
-            output += "Použij /mob spawn <mob>";
+            output += "use /mob spawn <mob>";
         } else {
             switch (sub[0]) {
                 case "spawn":
@@ -164,12 +162,12 @@ public class MobPlugin extends PluginBase implements Listener {
                         Entity ent;
                         if ((ent = MobPlugin.create(mob, pos)) != null) {
                             ent.spawnToAll();
-                            output += "Spawnuto " + mob + " k " + playerThatSpawns.getName();
+                            output += "Spawned " + mob + " to " + playerThatSpawns.getName();
                         } else {
-                            output += "Nelze spawnout " + mob;
+                            output += "Unable to spawn " + mob;
                         }
                     } else {
-                        output += "Neznamý hrác " + (sub.length == 3 ? sub[2] : ((Player) commandSender).getName());
+                        output += "Unknown player " + (sub.length == 3 ? sub[2] : ((Player) commandSender).getName());
                     }
                     break;
                 case "removeall":
@@ -182,7 +180,7 @@ public class MobPlugin extends PluginBase implements Listener {
                             }
                         }
                     }
-                    output += "Smazano " + count + " entit ze vsech svetu.";
+                    output += "Removed " + count + " entities from all levels.";
                     break;
                 case "removeitems":
                     count = 0;
@@ -194,10 +192,10 @@ public class MobPlugin extends PluginBase implements Listener {
                             }
                         }
                     }
-                    output += "Smazano " + count + " itemy ze vsech svetu.";
+                    output += "Removed " + count + " items on ground from all levels.";
                     break;
                 default:
-                    output += "Neznamy prikaz.";
+                    output += "Unkown command.";
                     break;
             }
         }
