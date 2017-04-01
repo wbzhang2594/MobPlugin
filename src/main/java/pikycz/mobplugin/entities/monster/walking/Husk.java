@@ -5,10 +5,8 @@ import cn.nukkit.entity.EntityAgeable;
 import cn.nukkit.event.entity.EntityDamageByEntityEvent;
 import cn.nukkit.event.entity.EntityDamageEvent;
 import cn.nukkit.item.Item;
-import cn.nukkit.level.Level;
 import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.nbt.tag.CompoundTag;
-import co.aikar.timings.Timings;
 import com.pikycz.mobplugin.entities.monster.WalkingMonster;
 import com.pikycz.mobplugin.entities.utils.Utils;
 
@@ -79,7 +77,6 @@ public class Husk extends WalkingMonster implements EntityAgeable {
     public void attackEntity(Entity player) {
         if (this.attackDelay > 10 && player.distanceSquared(this) <= 1) {
             this.attackDelay = 0;
-
             player.attack(new EntityDamageByEntityEvent(this, player, EntityDamageEvent.CAUSE_ENTITY_ATTACK, getDamage()));
         }
     }
