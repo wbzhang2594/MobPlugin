@@ -1,18 +1,8 @@
-/**
- * AbstractEntitySpawner.java
- * 
- * Created on 10:40:29
- */
 package com.pikycz.mobplugin.entities.autospawn;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.StringTokenizer;
+import java.util.*;
 
 import cn.nukkit.IPlayer;
-import cn.nukkit.OfflinePlayer;
 import cn.nukkit.Player;
 import cn.nukkit.Server;
 import cn.nukkit.level.Level;
@@ -33,6 +23,8 @@ public abstract class AbstractEntitySpawner implements IEntitySpawner {
 
     protected List<String>  disabledSpawnWorlds = new ArrayList<>();
 
+     protected static Random random = new Random();
+    
     public AbstractEntitySpawner(AutoSpawnTask spawnTask, Config pluginConfig) {
         this.spawnTask = spawnTask;
         this.server = Server.getInstance();
