@@ -1,13 +1,10 @@
 name: MobPlugin
-main: de.kniffo80.mobplugin.MobPlugin
+main: com.pikycz.mobplugin.MobPugin
 version: "1.0"
 api: ["1.0.0"]
 
 load: STARTUP
-author: kniffo80
-description: Implement Entity AI from scratch beginning with 0.16.x
-website: https://github.com/kniffo80/NukkitMobPlugin
-commands: []
+author: kniffo80,PikyCZ,CreeperFace,NycuRO
 
 commands:
   mob:
@@ -20,6 +17,7 @@ commands:
     aliases: ["removeall"]
     usage: "/mob removeall"
     permission: mob-plugin.command
+    
 permissions:
   mob-plugin.command:
     description: ""
