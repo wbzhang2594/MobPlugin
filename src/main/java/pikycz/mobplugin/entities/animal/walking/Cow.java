@@ -61,29 +61,28 @@ public class Cow extends WalkingAnimal {
         return false;
     }
 
-    @Override
+   @Override
     public Item[] getDrops() {
         List<Item> drops = new ArrayList<>();
-        if (this.lastDamageCause instanceof EntityDamageByEntityEvent) {
+        if (this.lastDamageCause instanceof EntityDamageByEntityEvent) {         
+            int leather = Utils.rand(1, 4); // drops 1-3 leather
+            int rawbeef = Utils.rand(1, 2); // drops 1-2 rawbeef
             
-            int leatherDropCount = Utils.rand(0, 3);
-            int beefDrop = Utils.rand(1, 4);
+            for (int i=0; i < leather; i++) {
+                drops.add(Item.get(Item.LEATHER, 0, 1));
+            }
             
-            // in any case, cow drops leather (0-2)
-            for (int i=0; i < leatherDropCount; i++) {
-                drops.add(Item.get(Item.LEATHER, 0, 3));
+            for (int i=0; i < rawbeef; i++) {
+                drops.add(Item.get(Item.RAW_BEEF, 0, 1));
             }
             // when cow is burning, it drops steak instead of raw beef (1-3)
-            for (int i=0; i < beefDrop; i++) {
-                drops.add(Item.get(this.isOnFire() ? Item.STEAK : Item.RAW_BEEF, 0, 4));
+            for (int i=0; i < rawbeef; i++) {
+                drops.add(Item.get(this.isOnFire() ? Item.STEAK : Item.RAW_BEEF, 0, 2));
             }
         }
         return drops.toArray(new Item[drops.size()]);
     }
 
-    /* (@Override)
-     * @see de.kniffo80.mobplugin.entities.BaseEntity#getKillExperience()
-     */
     @Override
     public int getKillExperience() {
         return Utils.rand(1, 4);
