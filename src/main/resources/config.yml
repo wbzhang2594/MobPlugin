@@ -16,7 +16,7 @@ max-spawns:
   enderman: 0
   ghast: 0
   horse: 0
-  husk: 1
+  husk: 0 
   iron-golem: 0
   mooshroom: 0
   mule: 0
