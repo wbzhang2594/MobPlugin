@@ -104,7 +104,7 @@ public class MobPlugin extends PluginBase implements Listener {
 
         // we need this flag as it's controlled by the plugin's entities
         MOB_AI_ENABLED = pluginConfig.getBoolean("entities.mob-ai", true);
-        int spawnDelay = pluginConfig.getInt("entities.auto-spawn-tick", 2000);
+        int spawnDelay = pluginConfig.getInt("entities.auto-spawn-tick", 800);
         disabledWorlds = pluginConfig.getList("worlds-spawn-disabled", new ArrayList());
 
         for (Level level : getServer().getLevels().values()) {
