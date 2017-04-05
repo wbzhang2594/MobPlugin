@@ -2,7 +2,7 @@ name: MobPlugin
 main: com.pikycz.mobplugin.MobPlugin
 version: "1.0"
 api: ["1.0.0"]
-author: kniffo80.PikyCZ.CreeperFace.NycuRO
+author: kniffo80,PikyCZ,CreeperFace,NycuRO
 
 commands:
   mob:
