@@ -1,4 +1,4 @@
-package com.pikycz.mobplugin.entities.monster.walking;
+package com.pikycz.mobplugin.entities.animal.walking;
 
 import cn.nukkit.entity.Entity;
 import cn.nukkit.entity.EntityCreature;
