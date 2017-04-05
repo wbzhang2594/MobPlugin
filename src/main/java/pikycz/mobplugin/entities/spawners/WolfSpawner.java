@@ -15,7 +15,7 @@ import com.pikycz.mobplugin.AutoSpawnTask;
 import com.pikycz.mobplugin.FileLogger;
 import com.pikycz.mobplugin.entities.autospawn.AbstractEntitySpawner;
 import com.pikycz.mobplugin.entities.autospawn.SpawnResult;
-import com.pikycz.mobplugin.entities.monster.walking.Wolf;
+import com.pikycz.mobplugin.entities.animal.walking.Wolf;
 
 /**
  * Each entity get it's own spawner class.
