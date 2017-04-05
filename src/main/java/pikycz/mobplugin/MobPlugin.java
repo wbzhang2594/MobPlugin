@@ -223,6 +223,7 @@ public class MobPlugin extends PluginBase implements Listener {
         Entity.registerEntity(Sheep.class.getSimpleName(), Sheep.class);
         Entity.registerEntity(SkeletonHorse.class.getSimpleName(), SkeletonHorse.class);
         Entity.registerEntity(Squid.class.getSimpleName(), Squid.class);
+        Entity.registerEntity(Wolf.class.getSimpleName(), Wolf.class);
         Entity.registerEntity(ZombieHorse.class.getSimpleName(), ZombieHorse.class);
 
         Entity.registerEntity(Blaze.class.getSimpleName(), Blaze.class);
@@ -237,7 +238,6 @@ public class MobPlugin extends PluginBase implements Listener {
         Entity.registerEntity(SnowGolem.class.getSimpleName(), SnowGolem.class);
         Entity.registerEntity(Spider.class.getSimpleName(), Spider.class);
         Entity.registerEntity(Witch.class.getSimpleName(), Witch.class);
-        Entity.registerEntity(Wolf.class.getSimpleName(), Wolf.class);
         Entity.registerEntity(Zombie.class.getSimpleName(), Zombie.class);
         Entity.registerEntity(ZombieVillager.class.getSimpleName(), ZombieVillager.class);
         Entity.registerEntity(Husk.class.getSimpleName(), Husk.class);
