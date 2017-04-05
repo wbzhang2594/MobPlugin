@@ -1,13 +1,11 @@
 package com.pikycz.mobplugin;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import cn.nukkit.Player;
-import cn.nukkit.Server;
 import cn.nukkit.block.Block;
 import cn.nukkit.entity.Entity;
 import cn.nukkit.level.Level;
@@ -40,7 +38,7 @@ import com.pikycz.mobplugin.entities.monster.walking.Skeleton;
 import com.pikycz.mobplugin.entities.monster.walking.SnowGolem;
 import com.pikycz.mobplugin.entities.monster.walking.Spider;
 import com.pikycz.mobplugin.entities.monster.walking.Stray;
-import com.pikycz.mobplugin.entities.monster.walking.Wolf;
+import com.pikycz.mobplugin.entities.animal.walking.Wolf;
 import com.pikycz.mobplugin.entities.monster.walking.Zombie;
 import com.pikycz.mobplugin.entities.monster.walking.ZombieVillager;
 import com.pikycz.mobplugin.entities.spawners.BatSpawner;
@@ -67,9 +65,9 @@ public class AutoSpawnTask implements Runnable {
  
     private List<IEntitySpawner> entitySpawners = new ArrayList<>();
  
-    private Config pluginConfig = null;
+    private final Config pluginConfig;
 
-    private MobPlugin plugin = null;
+    private final MobPlugin plugin;
 
     public AutoSpawnTask(MobPlugin plugin) {
         this.plugin = plugin;
@@ -88,11 +86,16 @@ public class AutoSpawnTask implements Runnable {
 
     @Override
     public void run() {
-Collection<Player> onlinePlayers = Server.getInstance().getOnlinePlayers().values();
-         if (onlinePlayers.size() > 0) {
-             FileLogger.debug(String.format("Found %d online", onlinePlayers.size()));
+    List<Player> players = new ArrayList<>();
+ 
+        for (Level level : plugin.levelsToSpawn.values()) {
+            players.addAll(level.getPlayers().values());
+        }
+
+        if (players.size() > 0) {
+            FileLogger.debug(String.format("Found %d online", players.size()));
             for (IEntitySpawner spawner : entitySpawners) {
-                 spawner.spawn(onlinePlayers);
+                 spawner.spawn(players);
             }
         } else {
             FileLogger.debug("No player online or offline found. Skipping auto spawn.");

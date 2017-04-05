@@ -1,12 +1,4 @@
-/**
- * MobPlugin.java
- * 
- * Created on 17:46:07
- */
 package com.pikycz.mobplugin;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import cn.nukkit.Player;
 import cn.nukkit.Server;
@@ -71,12 +63,15 @@ import com.pikycz.mobplugin.entities.monster.walking.SnowGolem;
 import com.pikycz.mobplugin.entities.monster.walking.Spider;
 import com.pikycz.mobplugin.entities.monster.walking.Stray;
 import com.pikycz.mobplugin.entities.monster.walking.Witch;
-import com.pikycz.mobplugin.entities.monster.walking.Wolf;
+import com.pikycz.mobplugin.entities.animal.walking.Wolf;
 import com.pikycz.mobplugin.entities.monster.walking.Zombie;
 import com.pikycz.mobplugin.entities.monster.walking.ZombieVillager;
 import com.pikycz.mobplugin.entities.projectile.EntityFireBall;
 import com.pikycz.mobplugin.entities.utils.Utils;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class MobPlugin extends PluginBase implements Listener {
 
