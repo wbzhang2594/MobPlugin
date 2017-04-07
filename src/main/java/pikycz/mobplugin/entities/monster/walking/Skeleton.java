@@ -124,11 +124,15 @@ public class Skeleton extends WalkingMonster {
         if (this.lastDamageCause instanceof EntityDamageByEntityEvent) {
             int bones = Utils.rand(0, 3); // drops 0-2 bones
             int arrows = Utils.rand(0, 3); // drops 0-2 arrows
+            int bow = Utils.rand(0, 101) <= 9 ? 1 : 0; // with a 8,5% chance to Bow is dropped
             for (int i=0; i < bones; i++) {
                 drops.add(Item.get(Item.BONE, 0, 1));
             }
             for (int i=0; i < arrows; i++) {
                 drops.add(Item.get(Item.ARROW, 0, 1));
+            }
+            for (int i=0; i < bow; i++) {
+                drops.add(Item.get(Item.BOW, 0, 1));
             }
         }
         return drops.toArray(new Item[drops.size()]);
