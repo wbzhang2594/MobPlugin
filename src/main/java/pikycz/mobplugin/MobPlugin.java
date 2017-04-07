@@ -35,7 +35,6 @@ import cn.nukkit.utils.Config;
 import cn.nukkit.utils.DyeColor;
 import com.pikycz.mobplugin.entities.BaseEntity;
 import com.pikycz.mobplugin.entities.animal.flying.Bat;
-import com.pikycz.mobplugin.entities.animal.swimming.Squid;
 import com.pikycz.mobplugin.entities.animal.walking.Chicken;
 import com.pikycz.mobplugin.entities.animal.walking.Cow;
 import com.pikycz.mobplugin.entities.animal.walking.Donkey;
@@ -222,7 +221,6 @@ public class MobPlugin extends PluginBase implements Listener {
         Entity.registerEntity(Rabbit.class.getSimpleName(), Rabbit.class);
         Entity.registerEntity(Sheep.class.getSimpleName(), Sheep.class);
         Entity.registerEntity(SkeletonHorse.class.getSimpleName(), SkeletonHorse.class);
-        Entity.registerEntity(Squid.class.getSimpleName(), Squid.class);
         Entity.registerEntity(Wolf.class.getSimpleName(), Wolf.class);
         Entity.registerEntity(ZombieHorse.class.getSimpleName(), ZombieHorse.class);
 
