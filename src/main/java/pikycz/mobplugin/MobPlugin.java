@@ -49,6 +49,7 @@ import com.pikycz.mobplugin.entities.animal.walking.SkeletonHorse;
 import com.pikycz.mobplugin.entities.animal.walking.Wolf;
 import com.pikycz.mobplugin.entities.animal.walking.ZombieHorse;
 import com.pikycz.mobplugin.entities.block.BlockEntitySpawner;
+import com.pikycz.mobplugin.entities.humantype.Villager;
 import com.pikycz.mobplugin.entities.monster.flying.Blaze;
 import com.pikycz.mobplugin.entities.monster.flying.Ghast;
 import com.pikycz.mobplugin.entities.monster.walking.CaveSpider;
@@ -221,6 +222,7 @@ public class MobPlugin extends PluginBase implements Listener {
         Entity.registerEntity(Rabbit.class.getSimpleName(), Rabbit.class);
         Entity.registerEntity(Sheep.class.getSimpleName(), Sheep.class);
         Entity.registerEntity(SkeletonHorse.class.getSimpleName(), SkeletonHorse.class);
+        Entity.registerEntity(Villager.class.getSimpleName(), Villager.class);
         Entity.registerEntity(Wolf.class.getSimpleName(), Wolf.class);
         Entity.registerEntity(ZombieHorse.class.getSimpleName(), ZombieHorse.class);
 
