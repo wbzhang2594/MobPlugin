@@ -24,7 +24,7 @@ import cn.nukkit.level.Level;
 import cn.nukkit.level.Location;
 import cn.nukkit.level.Position;
 import cn.nukkit.level.format.FullChunk;
-import cn.nukkit.math.Vector3;
+import cn.nukkit.math.BlockFace;
 import cn.nukkit.nbt.tag.CompoundTag;
 import cn.nukkit.nbt.tag.DoubleTag;
 import cn.nukkit.nbt.tag.FloatTag;
@@ -33,6 +33,7 @@ import cn.nukkit.network.protocol.EntityEventPacket;
 import cn.nukkit.plugin.PluginBase;
 import cn.nukkit.utils.Config;
 import cn.nukkit.utils.DyeColor;
+
 import com.pikycz.mobplugin.entities.BaseEntity;
 import com.pikycz.mobplugin.entities.animal.flying.Bat;
 import com.pikycz.mobplugin.entities.animal.walking.Chicken;
@@ -46,7 +47,6 @@ import com.pikycz.mobplugin.entities.animal.walking.Pig;
 import com.pikycz.mobplugin.entities.animal.walking.Rabbit;
 import com.pikycz.mobplugin.entities.animal.walking.Sheep;
 import com.pikycz.mobplugin.entities.animal.walking.SkeletonHorse;
-import com.pikycz.mobplugin.entities.animal.walking.Wolf;
 import com.pikycz.mobplugin.entities.animal.walking.ZombieHorse;
 import com.pikycz.mobplugin.entities.block.BlockEntitySpawner;
 import com.pikycz.mobplugin.entities.humantype.Villager;
@@ -64,6 +64,7 @@ import com.pikycz.mobplugin.entities.monster.walking.SnowGolem;
 import com.pikycz.mobplugin.entities.monster.walking.Spider;
 import com.pikycz.mobplugin.entities.monster.walking.Stray;
 import com.pikycz.mobplugin.entities.monster.walking.Witch;
+import com.pikycz.mobplugin.entities.animal.walking.Wolf;
 import com.pikycz.mobplugin.entities.monster.walking.Zombie;
 import com.pikycz.mobplugin.entities.monster.walking.ZombieVillager;
 import com.pikycz.mobplugin.entities.projectile.EntityFireBall;
@@ -135,7 +136,9 @@ public class MobPlugin extends PluginBase implements Listener {
      */
     @Override
     public boolean onCommand(CommandSender commandSender, Command cmd, String label, String[] sub) {
-        String output = "";
+        if(cmd.getName().toLowerCase().equals("mob")){
+            
+            String output = "";
 
         if (sub.length == 0) {
             output += "use /mob spawn <mob>";
@@ -196,7 +199,9 @@ public class MobPlugin extends PluginBase implements Listener {
         }
 
         commandSender.sendMessage(output);
+        }
         return true;
+        
     }
 
     /**
@@ -304,11 +309,7 @@ public class MobPlugin extends PluginBase implements Listener {
     }
 
     @EventHandler
-    public void PlayerInteractEvent(PlayerInteractEvent ev) {
-        if (ev.getFace() == 255 || ev.getAction() != PlayerInteractEvent.RIGHT_CLICK_BLOCK) {
-            return;
-        }
-
+    public void PlayerInteractEvent(PlayerInteractEvent ev, BlockFace face) {
         Item item = ev.getItem();
         Block block = ev.getBlock();
         if (item.getId() == Item.SPAWN_EGG && block.getId() == Item.MONSTER_SPAWNER) {
@@ -337,7 +338,7 @@ public class MobPlugin extends PluginBase implements Listener {
 
         Block block = ev.getBlock();
         if (block.getId() == Item.JACK_O_LANTERN || block.getId() == Item.PUMPKIN) {
-            if (block.getSide(Vector3.SIDE_DOWN).getId() == Item.SNOW_BLOCK && block.getSide(Vector3.SIDE_DOWN, 2).getId() == Item.SNOW_BLOCK) {
+            if (block.down().getId() == Item.SNOW_BLOCK && block.down(2).getId() == Item.SNOW_BLOCK) {
                 Entity entity = create("SnowGolem", block.add(0.5, -2, 0.5));
                 if (entity != null) {
                     entity.spawnToAll();
@@ -346,14 +347,14 @@ public class MobPlugin extends PluginBase implements Listener {
                 ev.setCancelled();
                 block.getLevel().setBlock(block.add(0, -1, 0), new BlockAir());
                 block.getLevel().setBlock(block.add(0, -2, 0), new BlockAir());
-            } else if (block.getSide(Vector3.SIDE_DOWN).getId() == Item.IRON_BLOCK && block.getSide(Vector3.SIDE_DOWN, 2).getId() == Item.IRON_BLOCK) {
-                block = block.getSide(Vector3.SIDE_DOWN);
+            } else if (block.down().getId() == Item.IRON_BLOCK && block.down(2).getId() == Item.IRON_BLOCK) {
+                block = block.down();
 
                 Block first, second = null;
-                if ((first = block.getSide(Vector3.SIDE_EAST)).getId() == Item.IRON_BLOCK && (second = block.getSide(Vector3.SIDE_WEST)).getId() == Item.IRON_BLOCK) {
+                if ((first = block.east()).getId() == Item.IRON_BLOCK && (second = block.west()).getId() == Item.IRON_BLOCK) {
                     block.getLevel().setBlock(first, new BlockAir());
                     block.getLevel().setBlock(second, new BlockAir());
-                } else if ((first = block.getSide(Vector3.SIDE_NORTH)).getId() == Item.IRON_BLOCK && (second = block.getSide(Vector3.SIDE_SOUTH)).getId() == Item.IRON_BLOCK) {
+                } else if ((first = block.north()).getId() == Item.IRON_BLOCK && (second = block.south()).getId() == Item.IRON_BLOCK) {
                     block.getLevel().setBlock(first, new BlockAir());
                     block.getLevel().setBlock(second, new BlockAir());
                 }
