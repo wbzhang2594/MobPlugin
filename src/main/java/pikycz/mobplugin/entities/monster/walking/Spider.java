@@ -12,6 +12,7 @@ import cn.nukkit.event.entity.EntityDamageByEntityEvent;
 import cn.nukkit.event.entity.EntityDamageEvent;
 import cn.nukkit.item.Item;
 import cn.nukkit.level.format.FullChunk;
+import cn.nukkit.math.BlockFace;
 import cn.nukkit.math.NukkitMath;
 import cn.nukkit.math.Vector2;
 import cn.nukkit.math.Vector3;
@@ -52,6 +53,7 @@ public class Spider extends WalkingMonster {
         return 1.13;
     }
 
+    @Override
     public void initEntity() {
         super.initEntity();
 
@@ -176,7 +178,7 @@ public class Spider extends WalkingMonster {
             }
         }
 
-        int[] sides = { Block.SIDE_SOUTH, Block.SIDE_WEST, Block.SIDE_NORTH, Block.SIDE_EAST };
+        BlockFace[] sides = { BlockFace.SOUTH, BlockFace.WEST, BlockFace.NORTH, BlockFace.EAST };
         Block block = this.getLevel().getBlock(new Vector3(NukkitMath.floorDouble(this.x + dx), (int) this.y, NukkitMath.floorDouble(this.z + dz)));
         Block directionBlock = block.getSide(sides[this.getDirection()]);
         if (!directionBlock.canPassThrough()) {
