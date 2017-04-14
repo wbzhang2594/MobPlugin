@@ -18,7 +18,6 @@ import java.util.Collection;
 public interface IEntitySpawner {
 
     /**
-     *
      * @param onlinePlayers
      */
     public void spawn(Collection<Player> onlinePlayers);

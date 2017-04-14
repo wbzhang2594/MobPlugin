@@ -14,7 +14,6 @@ import java.sql.Timestamp;
 
 /**
  * A simple file logger for logging into separate files
- *
  */
 public class FileLogger {
 
