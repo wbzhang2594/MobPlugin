@@ -34,6 +34,8 @@ public abstract class BaseEntity extends EntityCreature {
     protected Entity followTarget = null;
 
     protected List<Block> blocksAround = new ArrayList<>();
+    
+    protected List<Block> collisionBlocks = new ArrayList<>();
 
     private boolean movement = true;
 
@@ -42,6 +44,8 @@ public abstract class BaseEntity extends EntityCreature {
     private boolean wallcheck = true;
 
     public boolean inWater = false;
+
+    public double moveMultifier = 1.0d;
 
     public boolean inLava = false;
 
@@ -318,6 +322,25 @@ public abstract class BaseEntity extends EntityCreature {
         this.target = null;
         this.attackTime = 7;
     }
+    
+    public List<Block> getCollisionBlocks() {
+        return collisionBlocks;
+    }
+
+    public int getMaxFallHeight() {
+        if (!(this.target instanceof Entity)) {
+            return 3;
+        } else {
+            int i = (int) (this.getHealth() - this.getMaxHealth() * 0.33F);
+            i = i - (3 - this.getServer().getDifficulty()) * 4;
+
+            if (i < 0) {
+                i = 0;
+            }
+
+            return i + 3;
+        }
+    }
 
     @Override
     public boolean setMotion(Vector3 motion) {
@@ -342,9 +365,9 @@ public abstract class BaseEntity extends EntityCreature {
         if (MobPlugin.MOB_AI_ENABLED) {
             // Timings.entityMoveTimer.startTiming();
 
-            double movX = dx;
+            double movX = dx * moveMultifier;
             double movY = dy;
-            double movZ = dz;
+            double movZ = dz * moveMultifier;
 
             AxisAlignedBB[] list = this.level.getCollisionCubes(this, this.level.getTickRate() > 1 ? this.boundingBox.getOffsetBoundingBox(dx, dy, dz) : this.boundingBox.addCoord(dx, dy, dz));
             if (this.isWallCheck()) {

@@ -8,6 +8,7 @@ import cn.nukkit.entity.Entity;
 import cn.nukkit.entity.EntityCreature;
 import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.math.NukkitMath;
+import cn.nukkit.math.NukkitMath;
 import cn.nukkit.math.Vector2;
 import cn.nukkit.math.Vector3;
 import cn.nukkit.nbt.tag.CompoundTag;
@@ -96,14 +97,14 @@ public abstract class WalkingEntity extends BaseEntity {
             return false;
         }
 
-        int[] sides = {Block.SIDE_SOUTH, Block.SIDE_WEST, Block.SIDE_NORTH, Block.SIDE_EAST};
+        int[] sides = {SIDE_SOUTH, SIDE_WEST, SIDE_NORTH, SIDE_EAST};
         Block that = this.getLevel().getBlock(new Vector3(NukkitMath.floorDouble(this.x + dx), (int) this.y, NukkitMath.floorDouble(this.z + dz)));
         if (this.getDirection() == null) {
             return false;
         }
 
         Block block = that.getSide(sides[this.getDirection()]);
-        if (!block.canPassThrough() && block.getSide(Block.SIDE_UP).canPassThrough() && that.getSide(Block.SIDE_UP, 2).canPassThrough()) {
+        if (!block.canPassThrough() && block.getSide(SIDE_UP).canPassThrough() && that.getSide(SIDE_UP, 2).canPassThrough()) {
             if (block instanceof BlockFence || block instanceof BlockFenceGate) {
                 this.motionY = this.getGravity();
             } else if (this.motionY <= this.getGravity() * 4) {
@@ -122,19 +123,19 @@ public abstract class WalkingEntity extends BaseEntity {
             if (!this.isMovement()) {
                 return null;
             }
-
+    
             if (this.isKnockback()) {
                 this.move(this.motionX * tickDiff, this.motionY, this.motionZ * tickDiff);
                 this.motionY -= this.getGravity() * tickDiff;
                 this.updateMovement();
                 return null;
             }
-
+    
             if (this.followTarget != null && !this.followTarget.closed && this.followTarget.isAlive()) {
                 double x = this.followTarget.x - this.x;
                 double y = this.followTarget.y - this.y;
                 double z = this.followTarget.z - this.z;
-
+    
                 double diff = Math.abs(x) + Math.abs(z);
                 if (this.stayTime > 0 || this.distance(this.followTarget) <= (this.getWidth() + 0.0d) / 2 + 0.05) {
                     this.motionX = 0;
@@ -147,14 +148,14 @@ public abstract class WalkingEntity extends BaseEntity {
                 this.pitch = y == 0 ? 0 : Math.toDegrees(-Math.atan2(y, Math.sqrt(x * x + z * z)));
                 return this.followTarget;
             }
-
+    
             Vector3 before = this.target;
             this.checkTarget();
             if (this.target instanceof EntityCreature || before != this.target) {
                 double x = this.target.x - this.x;
                 double y = this.target.y - this.y;
                 double z = this.target.z - this.z;
-
+    
                 double diff = Math.abs(x) + Math.abs(z);
                 if (this.stayTime > 0 || this.distance(this.target) <= (this.getWidth() + 0.0d) / 2 + 0.05) {
                     this.motionX = 0;
@@ -166,7 +167,7 @@ public abstract class WalkingEntity extends BaseEntity {
                 this.yaw = Math.toDegrees(-Math.atan2(x / diff, z / diff));
                 this.pitch = y == 0 ? 0 : Math.toDegrees(-Math.atan2(y, Math.sqrt(x * x + z * z)));
             }
-
+    
             double dx = this.motionX * tickDiff;
             double dz = this.motionZ * tickDiff;
             boolean isJump = this.checkJump(dx, dz);
@@ -177,12 +178,12 @@ public abstract class WalkingEntity extends BaseEntity {
                 Vector2 be = new Vector2(this.x + dx, this.z + dz);
                 this.move(dx, this.motionY * tickDiff, dz);
                 Vector2 af = new Vector2(this.x, this.z);
-
+    
                 if ((be.x != af.x || be.y != af.y) && !isJump) {
                     this.moveTime -= 90 * tickDiff;
                 }
             }
-
+    
             if (!isJump) {
                 if (this.onGround) {
                     this.motionY = 0;
