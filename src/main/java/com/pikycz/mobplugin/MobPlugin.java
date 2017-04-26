@@ -33,11 +33,12 @@ import cn.nukkit.network.protocol.EntityEventPacket;
 import cn.nukkit.plugin.PluginBase;
 import cn.nukkit.utils.Config;
 import cn.nukkit.utils.DyeColor;
+
 import com.pikycz.mobplugin.entities.BaseEntity;
+import com.pikycz.mobplugin.entities.WalkingEntity;
 import com.pikycz.mobplugin.entities.animal.flying.Bat;
 import com.pikycz.mobplugin.entities.animal.walking.*;
 import com.pikycz.mobplugin.entities.block.BlockEntitySpawner;
-import com.pikycz.mobplugin.entities.humantype.Villager;
 import com.pikycz.mobplugin.entities.monster.flying.Blaze;
 import com.pikycz.mobplugin.entities.monster.flying.Ghast;
 import com.pikycz.mobplugin.entities.monster.walking.*;
@@ -55,7 +56,7 @@ public class MobPlugin extends PluginBase implements Listener {
     private int counter = 0;
 
     private Config pluginConfig = null;
-
+    
     public final HashMap<Integer, Level> levelsToSpawn = new HashMap<>();
     private List<String> disabledWorlds;
 
@@ -70,7 +71,6 @@ public class MobPlugin extends PluginBase implements Listener {
         // Config reading and writing
         saveDefaultConfig();
         pluginConfig = getConfig();
-
 
         // we need this flag as it's controlled by the plugin's entities
         MOB_AI_ENABLED = pluginConfig.getBoolean("entities.mob-ai", true);
@@ -109,7 +109,9 @@ public class MobPlugin extends PluginBase implements Listener {
      */
     @Override
     public boolean onCommand(CommandSender commandSender, Command cmd, String label, String[] sub) {
-        String output = "";
+        if(cmd.getName().toLowerCase().equals("mob")){
+            
+            String output = "";
 
         if (sub.length == 0) {
             output += "use /mob spawn <mob>";
@@ -155,7 +157,7 @@ public class MobPlugin extends PluginBase implements Listener {
                     count = 0;
                     for (Level level : getServer().getLevels().values()) {
                         for (Entity entity : level.getEntities()) {
-                            if (entity instanceof EntityItem && entity.isOnGround()) {
+                             if (entity instanceof EntityItem && entity.isOnGround()) {
                                 entity.close();
                                 count++;
                             }
@@ -170,12 +172,15 @@ public class MobPlugin extends PluginBase implements Listener {
         }
 
         commandSender.sendMessage(output);
+        }
         return true;
+        
     }
 
     /**
      * Returns plugin specific yml configuration
-     *
+     * 
+     * 
      * @return a {@link Config} instance
      */
     public Config getPluginConfig() {
@@ -196,6 +201,7 @@ public class MobPlugin extends PluginBase implements Listener {
         Entity.registerEntity(Rabbit.class.getSimpleName(), Rabbit.class);
         Entity.registerEntity(Sheep.class.getSimpleName(), Sheep.class);
         Entity.registerEntity(SkeletonHorse.class.getSimpleName(), SkeletonHorse.class);
+        //Entity.registerEntity(Villager.class.getSimpleName(), Villager.class);
         Entity.registerEntity(Wolf.class.getSimpleName(), Wolf.class);
         Entity.registerEntity(ZombieHorse.class.getSimpleName(), ZombieHorse.class);
 
@@ -248,10 +254,10 @@ public class MobPlugin extends PluginBase implements Listener {
     }
 
     // --- event listeners ---
-
+    
     /**
      * This event is called when an entity dies. We need this for experience gain.
-     *
+     * 
      * @param ev the event that is received
      */
     @EventHandler
@@ -267,7 +273,7 @@ public class MobPlugin extends PluginBase implements Listener {
                         player.addExperience(killExperience);
                         // don't drop that fucking experience orbs because they're somehow buggy :(
                         // if (player.isSurvival()) {
-                        // for (int i = 1; i <= killExperience; i++) {
+                        //for (int i = 1; i <= killExperience; i++) {
                         // player.getLevel().dropExpOrb(baseEntity, 1);
                         // }
                         // }
@@ -298,7 +304,7 @@ public class MobPlugin extends PluginBase implements Listener {
                 CompoundTag nbt = new CompoundTag().putString("id", BlockEntity.MOB_SPAWNER).putInt("EntityId", item.getDamage()).putInt("x", (int) block.x).putInt("y", (int) block.y).putInt("z",
                         (int) block.z);
 
-                new BlockEntitySpawner(block.getLevel().getChunk((int) block.x >> 4, (int) block.z >> 4), nbt);
+                BlockEntitySpawner blockEntitySpawner = new BlockEntitySpawner(block.getLevel().getChunk((int) block.x >> 4, (int) block.z >> 4), nbt);
             }
         }
     }
@@ -376,8 +382,9 @@ public class MobPlugin extends PluginBase implements Listener {
                     EntityEventPacket packet = new EntityEventPacket();
                     packet.eid = ev.getEntity().getId();
                     packet.event = EntityEventPacket.TAME_SUCCESS;
+                    
                     Server.broadcastPacket(new Player[]{ev.getPlayer()}, packet);
-
+                    
                     // set the owner
                     //wolf.setOwner(ev.getPlayer());
                     wolf.setCollarColor(DyeColor.BLUE);
@@ -393,8 +400,8 @@ public class MobPlugin extends PluginBase implements Listener {
     // public void PlayerMouseRightEntityEvent(PlayerMouseRightEntityEvent ev) {
     // FileLogger.debug(String.format("Received PlayerMouseRightEntityEvent [entity:%s]", ev.getEntity()));
     // }
-
-    @EventHandler
+    
+     @EventHandler
     public void onLevelLoad(LevelLoadEvent e) {
         Level level = e.getLevel();
 
@@ -404,6 +411,7 @@ public class MobPlugin extends PluginBase implements Listener {
     }
 
     /**
+     *
      * @param e
      */
     @EventHandler
@@ -412,5 +420,6 @@ public class MobPlugin extends PluginBase implements Listener {
 
         levelsToSpawn.remove(level.getId());
     }
+    
 }
 

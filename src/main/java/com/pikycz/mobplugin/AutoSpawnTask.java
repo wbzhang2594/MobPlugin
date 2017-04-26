@@ -20,7 +20,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 public class AutoSpawnTask implements Runnable {
 
     private Map<Integer, Integer> maxSpawns = new HashMap<>();
@@ -116,8 +115,8 @@ public class AutoSpawnTask implements Runnable {
 
         FileLogger.debug(String.format(
                 "max-spawns prepared [bat:%d] [blaze:%d] [caveSpider:%d] [chicken:%d] [cow:%d] [creeper:%d] [donkey:%d] [enderman:%d] [ghast:%d] [horse:%d] [ironGolem:%d] "
-                        + "[mooshroom:%d] [mule:%d] [ocelot:%d] [pig:%d] [pigZombie:%d] [rabbit:%d] [silverfish:%d] [sheep:%d] [skeleton:%d] [skeletonHorse:%d] [snowGolem:%d] [spider:%d] [wolf:%d] [zombie:%d] "
-                        + "[zombieHorse:%d] [zombieVillager:%d] [husk:%d] [stray:%d]",
+                + "[mooshroom:%d] [mule:%d] [ocelot:%d] [pig:%d] [pigZombie:%d] [rabbit:%d] [silverfish:%d] [sheep:%d] [skeleton:%d] [skeletonHorse:%d] [snowGolem:%d] [spider:%d] [wolf:%d] [zombie:%d] "
+                + "[zombieHorse:%d] [zombieVillager:%d] [husk:%d] [stray:%d]",
                 maxSpawns.get(Bat.NETWORK_ID), maxSpawns.get(Blaze.NETWORK_ID), maxSpawns.get(CaveSpider.NETWORK_ID),
                 maxSpawns.get(Chicken.NETWORK_ID), maxSpawns.get(Cow.NETWORK_ID), maxSpawns.get(Creeper.NETWORK_ID),
                 maxSpawns.get(Donkey.NETWORK_ID), maxSpawns.get(Enderman.NETWORK_ID), maxSpawns.get(Ghast.NETWORK_ID),
@@ -135,10 +134,7 @@ public class AutoSpawnTask implements Runnable {
     public boolean entitySpawnAllowed(Level level, int networkId, String entityName) {
         int count = countEntity(level, networkId);
         FileLogger.debug(String.format("Found %s/%s living %s", count, maxSpawns.get(networkId), entityName));
-        if (count < maxSpawns.get(networkId)) {
-            return true;
-        }
-        return false;
+        return count < maxSpawns.get(networkId);
     }
 
     private int countEntity(Level level, int networkId) {

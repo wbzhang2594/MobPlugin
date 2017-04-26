@@ -7,7 +7,6 @@ import cn.nukkit.level.Level;
 import cn.nukkit.level.Position;
 import com.pikycz.mobplugin.entities.utils.Utils;
 
-
 public class SpawnTask implements Runnable {
 
     private Server server = null;
@@ -45,7 +44,6 @@ public class SpawnTask implements Runnable {
         int spawnZ = (int) startSpawnPosition.z; // north/south (increase = south, decrease = north)
         int spawnY = (int) startSpawnPosition.y; // up/down (63 - water level overworld, 31 nether lava sea ...) so 63 is our zero height
         Position spawnPosition = null;
-
 
         int minSpawnX1 = spawnX - MIN_SPAWN_RADIUS;
         int minSpawnX2 = spawnX + MIN_SPAWN_RADIUS;
