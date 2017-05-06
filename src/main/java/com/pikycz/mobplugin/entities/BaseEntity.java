@@ -256,12 +256,12 @@ public abstract class BaseEntity extends EntityCreature {
 
         if (this.isInsideOfSolid()) {
             hasUpdate = true;
-            this.attack(new EntityDamageEvent(this, EntityDamageEvent.CAUSE_SUFFOCATION, 1));
+            this.attack(new EntityDamageEvent(this, EntityDamageEvent.DamageCause.SUFFOCATION, 1));
         }
 
         if (this.y <= -16 && this.isAlive()) {
             hasUpdate = true;
-            this.attack(new EntityDamageEvent(this, EntityDamageEvent.CAUSE_VOID, 10));
+            this.attack(new EntityDamageEvent(this, EntityDamageEvent.DamageCause.VOID, 10));
         }
 
         if (this.fireTicks > 0) {
@@ -269,7 +269,7 @@ public abstract class BaseEntity extends EntityCreature {
                 this.fireTicks -= 4 * tickDiff;
             } else {
                 if (!this.hasEffect(Effect.FIRE_RESISTANCE) && (this.fireTicks % 20) == 0 || tickDiff > 20) {
-                    EntityDamageEvent ev = new EntityDamageEvent(this, EntityDamageEvent.CAUSE_FIRE_TICK, 1);
+                    EntityDamageEvent ev = new EntityDamageEvent(this, EntityDamageEvent.DamageCause.FIRE_TICK, 1);
                     this.attack(ev);
                 }
                 this.fireTicks -= tickDiff;
@@ -312,15 +312,17 @@ public abstract class BaseEntity extends EntityCreature {
     }
 
     @Override
-    public void attack(EntityDamageEvent source) {
+    public boolean attack(EntityDamageEvent source) {
         if (this.isKnockback() && source instanceof EntityDamageByEntityEvent && ((EntityDamageByEntityEvent) source).getDamager() instanceof Player) {
-            return;
+            return false;
         }
 
-        super.attack(source);
+        boolean attacked = super.attack(source);
 
         this.target = null;
         this.attackTime = 7;
+
+        return attacked;
     }
     
     public List<Block> getCollisionBlocks() {

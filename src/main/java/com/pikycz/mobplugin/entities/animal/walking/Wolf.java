@@ -86,11 +86,16 @@ public class Wolf extends TameableMonster {
     }
 
     @Override
-    public void attack(EntityDamageEvent ev) {
-        super.attack(ev);
-
-        if (!ev.isCancelled()) {
-            this.setAngry(true);
+    public boolean attack(EntityDamageEvent ev) {
+        if(super.attack(ev)) {
+            if (!ev.isCancelled()) {
+                this.setAngry(true);
+            }
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 
@@ -99,7 +104,7 @@ public class Wolf extends TameableMonster {
         if (MobPlugin.MOB_AI_ENABLED) {
             if (this.attackDelay > 10 && this.distanceSquared(player) < 1.6) {
                 this.attackDelay = 0;
-                player.attack(new EntityDamageByEntityEvent(this, player, EntityDamageEvent.CAUSE_ENTITY_ATTACK, getDamage()));
+                player.attack(new EntityDamageByEntityEvent(this, player, EntityDamageEvent.DamageCause.ENTITY_ATTACK, getDamage()));
             }
         }
     }
