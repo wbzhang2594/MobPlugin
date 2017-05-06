@@ -5,6 +5,7 @@ import cn.nukkit.entity.EntityCreature;
 import cn.nukkit.entity.data.IntEntityData;
 import cn.nukkit.event.entity.EntityDamageByEntityEvent;
 import cn.nukkit.event.entity.EntityDamageEvent;
+import cn.nukkit.event.entity.EntityDamageEvent.DamageCause;
 import cn.nukkit.item.Item;
 import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.nbt.tag.CompoundTag;
@@ -87,16 +88,13 @@ public class Wolf extends TameableMonster {
 
     @Override
     public boolean attack(EntityDamageEvent ev) {
-        if(super.attack(ev)) {
-            if (!ev.isCancelled()) {
-                this.setAngry(true);
-            }
-            return true;
+        boolean result = super.attack(ev);
+
+        if (!ev.isCancelled()) {
+            this.setAngry(true);
         }
-        else
-        {
-            return false;
-        }
+
+        return result;
     }
 
     @Override
@@ -104,7 +102,7 @@ public class Wolf extends TameableMonster {
         if (MobPlugin.MOB_AI_ENABLED) {
             if (this.attackDelay > 10 && this.distanceSquared(player) < 1.6) {
                 this.attackDelay = 0;
-                player.attack(new EntityDamageByEntityEvent(this, player, EntityDamageEvent.DamageCause.ENTITY_ATTACK, getDamage()));
+                player.attack(new EntityDamageByEntityEvent(this, player, DamageCause.ENTITY_ATTACK, getDamage()));
             }
         }
     }

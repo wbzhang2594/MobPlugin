@@ -24,8 +24,6 @@ import cn.nukkit.level.Level;
 import cn.nukkit.level.Location;
 import cn.nukkit.level.Position;
 import cn.nukkit.level.format.FullChunk;
-import cn.nukkit.math.BlockFace;
-import cn.nukkit.math.Vector3;
 import cn.nukkit.nbt.tag.CompoundTag;
 import cn.nukkit.nbt.tag.DoubleTag;
 import cn.nukkit.nbt.tag.FloatTag;
@@ -34,9 +32,7 @@ import cn.nukkit.network.protocol.EntityEventPacket;
 import cn.nukkit.plugin.PluginBase;
 import cn.nukkit.utils.Config;
 import cn.nukkit.utils.DyeColor;
-
 import com.pikycz.mobplugin.entities.BaseEntity;
-import com.pikycz.mobplugin.entities.WalkingEntity;
 import com.pikycz.mobplugin.entities.animal.flying.Bat;
 import com.pikycz.mobplugin.entities.animal.walking.*;
 import com.pikycz.mobplugin.entities.block.BlockEntitySpawner;
@@ -290,7 +286,7 @@ public class MobPlugin extends PluginBase implements Listener {
 
     @EventHandler
     public void PlayerInteractEvent(PlayerInteractEvent ev) {
-        if (ev.getAction() != PlayerInteractEvent.RIGHT_CLICK_BLOCK) {
+        if (ev.getFace() == null || ev.getAction() != PlayerInteractEvent.RIGHT_CLICK_BLOCK) {
             return;
         }
 
@@ -322,7 +318,7 @@ public class MobPlugin extends PluginBase implements Listener {
 
         Block block = ev.getBlock();
         if (block.getId() == Item.JACK_O_LANTERN || block.getId() == Item.PUMPKIN) {
-            if (block.getSide(BlockFace.DOWN).getId() == Item.SNOW_BLOCK && block.getSide(BlockFace.DOWN, 2).getId() == Item.SNOW_BLOCK) {
+            if (block.down().getId() == Item.SNOW_BLOCK && block.down(2).getId() == Item.SNOW_BLOCK) {
                 Entity entity = create("SnowGolem", block.add(0.5, -2, 0.5));
                 if (entity != null) {
                     entity.spawnToAll();
@@ -331,14 +327,14 @@ public class MobPlugin extends PluginBase implements Listener {
                 ev.setCancelled();
                 block.getLevel().setBlock(block.add(0, -1, 0), new BlockAir());
                 block.getLevel().setBlock(block.add(0, -2, 0), new BlockAir());
-            } else if (block.getSide(BlockFace.DOWN).getId() == Item.IRON_BLOCK && block.getSide(BlockFace.DOWN, 2).getId() == Item.IRON_BLOCK) {
-                block = block.getSide(BlockFace.DOWN);
+            } else if (block.down().getId() == Item.IRON_BLOCK && block.down(2).getId() == Item.IRON_BLOCK) {
+                block = block.down();
 
                 Block first, second = null;
-                if ((first = block.getSide(BlockFace.EAST)).getId() == Item.IRON_BLOCK && (second = block.getSide(BlockFace.WEST)).getId() == Item.IRON_BLOCK) {
+                if ((first = block.east()).getId() == Item.IRON_BLOCK && (second = block.west()).getId() == Item.IRON_BLOCK) {
                     block.getLevel().setBlock(first, new BlockAir());
                     block.getLevel().setBlock(second, new BlockAir());
-                } else if ((first = block.getSide(BlockFace.NORTH)).getId() == Item.IRON_BLOCK && (second = block.getSide(BlockFace.SOUTH)).getId() == Item.IRON_BLOCK) {
+                } else if ((first = block.north()).getId() == Item.IRON_BLOCK && (second = block.south()).getId() == Item.IRON_BLOCK) {
                     block.getLevel().setBlock(first, new BlockAir());
                     block.getLevel().setBlock(second, new BlockAir());
                 }

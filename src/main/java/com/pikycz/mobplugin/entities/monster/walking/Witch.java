@@ -4,7 +4,6 @@ import cn.nukkit.Player;
 import cn.nukkit.entity.Entity;
 import cn.nukkit.entity.EntityCreature;
 import cn.nukkit.entity.item.EntityPotion;
-import cn.nukkit.event.entity.EntityDamageEvent;
 import cn.nukkit.event.entity.ProjectileLaunchEvent;
 import cn.nukkit.item.Item;
 import cn.nukkit.level.Location;
@@ -61,11 +60,6 @@ public class Witch extends WalkingMonster {
             return !player.closed && player.spawned && player.isAlive() && player.isSurvival() && distance <= 100;
         }
         return creature.isAlive() && !creature.closed && distance <= 81;
-    }
-
-    @Override
-    public boolean attack(EntityDamageEvent ev) {
-        return super.attack(ev);
     }
 
     /*

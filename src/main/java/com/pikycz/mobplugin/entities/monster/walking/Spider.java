@@ -6,10 +6,9 @@ import cn.nukkit.block.BlockLiquid;
 import cn.nukkit.entity.Entity;
 import cn.nukkit.entity.EntityCreature;
 import cn.nukkit.event.entity.EntityDamageByEntityEvent;
-import cn.nukkit.event.entity.EntityDamageEvent;
+import cn.nukkit.event.entity.EntityDamageEvent.DamageCause;
 import cn.nukkit.item.Item;
 import cn.nukkit.level.format.FullChunk;
-import cn.nukkit.math.BlockFace;
 import cn.nukkit.math.NukkitMath;
 import cn.nukkit.math.Vector2;
 import cn.nukkit.math.Vector3;
@@ -177,9 +176,8 @@ public class Spider extends WalkingMonster {
             }
         }
 
-        BlockFace[] sides = {BlockFace.SOUTH, BlockFace.WEST, BlockFace.NORTH, BlockFace.EAST};
         Block block = this.getLevel().getBlock(new Vector3(NukkitMath.floorDouble(this.x + dx), (int) this.y, NukkitMath.floorDouble(this.z + dz)));
-        Block directionBlock = block.getSide(sides[this.getDirection()]);
+        Block directionBlock = block.getSide(this.getHorizontalFacing());
         if (!directionBlock.canPassThrough()) {
             this.motionY = this.getGravity() * 3;
             return true;
@@ -196,7 +194,7 @@ public class Spider extends WalkingMonster {
     public void attackEntity(Entity player) {
         if (!this.isFriendly() || !(player instanceof Player)) {
             this.attackDelay = 0;
-            player.attack(new EntityDamageByEntityEvent(this, player, EntityDamageEvent.DamageCause.ENTITY_ATTACK, getDamage()));
+            player.attack(new EntityDamageByEntityEvent(this, player, DamageCause.ENTITY_ATTACK, getDamage()));
         }
     }
 

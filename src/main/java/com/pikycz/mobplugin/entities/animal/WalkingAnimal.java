@@ -4,6 +4,7 @@ import cn.nukkit.Player;
 import cn.nukkit.entity.Entity;
 import cn.nukkit.entity.data.ShortEntityData;
 import cn.nukkit.event.entity.EntityDamageEvent;
+import cn.nukkit.event.entity.EntityDamageEvent.DamageCause;
 import cn.nukkit.item.Item;
 import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.level.particle.HeartParticle;
@@ -59,7 +60,7 @@ public abstract class WalkingAnimal extends WalkingEntity implements Animal {
             int airTicks = this.getDataPropertyShort(DATA_AIR) - tickDiff;
             if (airTicks <= -20) {
                 airTicks = 0;
-                this.attack(new EntityDamageEvent(this, EntityDamageEvent.DamageCause.DROWNING, 2));
+                this.attack(new EntityDamageEvent(this, DamageCause.DROWNING, 2));
             }
             this.setDataProperty(new ShortEntityData(DATA_AIR, airTicks));
         } else {

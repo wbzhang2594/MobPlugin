@@ -137,14 +137,13 @@ public class Blaze extends FlyingMonster {
             return false;
         }
 
-        BlockFace[] sides = {BlockFace.SOUTH, BlockFace.WEST, BlockFace.NORTH, BlockFace.EAST};
         Block that = this.getLevel().getBlock(new Vector3(NukkitMath.floorDouble(this.x + dx), (int) this.y, NukkitMath.floorDouble(this.z + dz)));
         if (this.getDirection() == null) {
             return false;
         }
 
-        Block block = that.getSide(sides[this.getDirection()]);
-        if (!block.canPassThrough() && block.getSide(BlockFace.UP).canPassThrough() && that.getSide(BlockFace.UP, 2).canPassThrough()) {
+        Block block = that.getSide(BlockFace.fromHorizontalIndex(this.getDirection()));
+        if (!block.canPassThrough() && block.up().canPassThrough() && that.up(2).canPassThrough()) {
             if (block instanceof BlockFence || block instanceof BlockFenceGate) {
                 this.motionY = this.getGravity();
             } else if (this.motionY <= this.getGravity() * 4) {

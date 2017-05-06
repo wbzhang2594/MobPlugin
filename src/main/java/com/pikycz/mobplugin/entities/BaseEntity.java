@@ -7,6 +7,7 @@ import cn.nukkit.entity.EntityCreature;
 import cn.nukkit.entity.data.ByteEntityData;
 import cn.nukkit.event.entity.EntityDamageByEntityEvent;
 import cn.nukkit.event.entity.EntityDamageEvent;
+import cn.nukkit.event.entity.EntityDamageEvent.DamageCause;
 import cn.nukkit.event.entity.EntityMotionEvent;
 import cn.nukkit.level.Level;
 import cn.nukkit.level.format.FullChunk;
@@ -256,12 +257,12 @@ public abstract class BaseEntity extends EntityCreature {
 
         if (this.isInsideOfSolid()) {
             hasUpdate = true;
-            this.attack(new EntityDamageEvent(this, EntityDamageEvent.DamageCause.SUFFOCATION, 1));
+            this.attack(new EntityDamageEvent(this, DamageCause.SUFFOCATION, 1));
         }
 
         if (this.y <= -16 && this.isAlive()) {
             hasUpdate = true;
-            this.attack(new EntityDamageEvent(this, EntityDamageEvent.DamageCause.VOID, 10));
+            this.attack(new EntityDamageEvent(this, DamageCause.VOID, 10));
         }
 
         if (this.fireTicks > 0) {
@@ -269,7 +270,7 @@ public abstract class BaseEntity extends EntityCreature {
                 this.fireTicks -= 4 * tickDiff;
             } else {
                 if (!this.hasEffect(Effect.FIRE_RESISTANCE) && (this.fireTicks % 20) == 0 || tickDiff > 20) {
-                    EntityDamageEvent ev = new EntityDamageEvent(this, EntityDamageEvent.DamageCause.FIRE_TICK, 1);
+                    EntityDamageEvent ev = new EntityDamageEvent(this, DamageCause.FIRE_TICK, 1);
                     this.attack(ev);
                 }
                 this.fireTicks -= tickDiff;
@@ -317,12 +318,11 @@ public abstract class BaseEntity extends EntityCreature {
             return false;
         }
 
-        boolean attacked = super.attack(source);
+        super.attack(source);
 
         this.target = null;
         this.attackTime = 7;
-
-        return attacked;
+        return true;
     }
     
     public List<Block> getCollisionBlocks() {

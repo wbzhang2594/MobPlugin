@@ -5,6 +5,7 @@ import cn.nukkit.entity.Entity;
 import cn.nukkit.entity.EntityCreature;
 import cn.nukkit.event.entity.EntityDamageByEntityEvent;
 import cn.nukkit.event.entity.EntityDamageEvent;
+import cn.nukkit.event.entity.EntityDamageEvent.DamageCause;
 import cn.nukkit.item.Item;
 import cn.nukkit.item.ItemSwordGold;
 import cn.nukkit.level.format.FullChunk;
@@ -82,7 +83,7 @@ public class PigZombie extends WalkingMonster {
     public void attackEntity(Entity player) {
         if (this.attackDelay > 10 && this.distanceSquared(player) < 1.44) {
             this.attackDelay = 0;
-            player.attack(new EntityDamageByEntityEvent(this, player, EntityDamageEvent.DamageCause.ENTITY_ATTACK, getDamage()));
+            player.attack(new EntityDamageByEntityEvent(this, player, DamageCause.ENTITY_ATTACK, getDamage()));
         }
     }
 
@@ -96,16 +97,13 @@ public class PigZombie extends WalkingMonster {
 
     @Override
     public boolean attack(EntityDamageEvent ev) {
-        if(super.attack(ev)) {
-            if (!ev.isCancelled()) {
-                this.setAngry(1000);
-            }
-            return true;
+        boolean result = super.attack(ev);
+
+        if (!ev.isCancelled()) {
+            this.setAngry(1000);
         }
-        else
-        {
-            return false;
-        }
+
+        return result;
     }
 
     @Override
