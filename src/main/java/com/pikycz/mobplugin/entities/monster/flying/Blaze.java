@@ -12,7 +12,6 @@ import cn.nukkit.item.Item;
 import cn.nukkit.level.Location;
 import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.level.sound.LaunchSound;
-import cn.nukkit.math.BlockFace;
 import cn.nukkit.math.NukkitMath;
 import cn.nukkit.math.Vector2;
 import cn.nukkit.math.Vector3;
@@ -142,7 +141,7 @@ public class Blaze extends FlyingMonster {
             return false;
         }
 
-        Block block = that.getSide(BlockFace.fromHorizontalIndex(this.getDirection()));
+        Block block = that.getSide(this.getHorizontalFacing());
         if (!block.canPassThrough() && block.up().canPassThrough() && that.up(2).canPassThrough()) {
             if (block instanceof BlockFence || block instanceof BlockFenceGate) {
                 this.motionY = this.getGravity();
