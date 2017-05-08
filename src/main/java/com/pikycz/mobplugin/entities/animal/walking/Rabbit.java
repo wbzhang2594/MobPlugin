@@ -6,13 +6,14 @@ import cn.nukkit.event.entity.EntityDamageByEntityEvent;
 import cn.nukkit.item.Item;
 import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.nbt.tag.CompoundTag;
-import com.pikycz.mobplugin.entities.animal.WalkingAnimal;
+
+import com.pikycz.mobplugin.entities.JumpingEntity;
 import com.pikycz.mobplugin.entities.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Rabbit extends WalkingAnimal {
+public class Rabbit extends JumpingEntity {
 
     public static final int NETWORK_ID = 18;
 
@@ -27,7 +28,7 @@ public class Rabbit extends WalkingAnimal {
 
     @Override
     public float getWidth() {
-        return 0.4f;
+        return 0.5f;
     }
 
     @Override
@@ -35,9 +36,8 @@ public class Rabbit extends WalkingAnimal {
         return 0.75f;
     }
 
-    @Override
     public double getSpeed() {
-        return 1.2;
+        return 1.5;
     }
 
     @Override
@@ -47,11 +47,11 @@ public class Rabbit extends WalkingAnimal {
     }
 
     /**
+     *
      * @param creature
      * @param distance
      * @return
      */
-    @Override
     public boolean targetOption(EntityCreature creature, double distance) {
         if (creature instanceof Player) {
             Player player = (Player) creature;
@@ -76,7 +76,6 @@ public class Rabbit extends WalkingAnimal {
         return drops.toArray(new Item[drops.size()]);
     }
 
-    @Override
     public int getKillExperience() {
         return Utils.rand(1, 4); // gain 1-3 experience
     }
