@@ -20,7 +20,12 @@ public abstract class SwimmingEntity extends BaseEntity {
 
     @Override
     public Vector3 updateMove(int tickDiff) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (MobPlugin.MOB_AI_ENABLED) {
+            if (!this.isMovement()) {
+                return null;
+            }
+        }
+        return null;
     }
 
     @Override
