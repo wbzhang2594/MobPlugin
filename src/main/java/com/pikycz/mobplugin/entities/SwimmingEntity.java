@@ -3,6 +3,7 @@ package com.pikycz.mobplugin.entities;
 import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.math.Vector3;
 import cn.nukkit.nbt.tag.CompoundTag;
+import com.pikycz.mobplugin.MobPlugin;
 
 /**
  *
