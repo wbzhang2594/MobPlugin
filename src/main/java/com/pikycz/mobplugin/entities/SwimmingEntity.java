@@ -20,6 +20,7 @@ public abstract class SwimmingEntity extends BaseEntity {
 
     @Override
     public Vector3 updateMove(int tickDiff) {
+        return null;
         //todo
     }
 
