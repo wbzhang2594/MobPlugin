@@ -3,7 +3,6 @@ package com.pikycz.mobplugin.entities;
 import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.math.Vector3;
 import cn.nukkit.nbt.tag.CompoundTag;
-import com.pikycz.mobplugin.MobPlugin;
 
 /**
  *
@@ -21,12 +20,7 @@ public abstract class SwimmingEntity extends BaseEntity {
 
     @Override
     public Vector3 updateMove(int tickDiff) {
-        if (MobPlugin.MOB_AI_ENABLED) {
-            if (!this.isMovement()) {
-                return null;
-            }
-        }
-        return null;
+        //todo
     }
 
     @Override
