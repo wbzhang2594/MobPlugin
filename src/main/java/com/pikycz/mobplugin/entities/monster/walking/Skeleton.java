@@ -9,6 +9,7 @@ import cn.nukkit.event.entity.EntityShootBowEvent;
 import cn.nukkit.event.entity.ProjectileLaunchEvent;
 import cn.nukkit.item.Item;
 import cn.nukkit.item.ItemBow;
+import cn.nukkit.item.ItemSkull;
 import cn.nukkit.level.Level;
 import cn.nukkit.level.Location;
 import cn.nukkit.level.format.FullChunk;
@@ -46,6 +47,11 @@ public class Skeleton extends WalkingMonster {
     @Override
     public float getWidth() {
         return 0.65f;
+    }
+
+    @Override
+    public float getLength() {
+        return 0.6f;
     }
 
     @Override
@@ -110,7 +116,7 @@ public class Skeleton extends WalkingMonster {
         hasUpdate = super.entityBaseTick(tickDiff);
 
         int time = this.getLevel().getTime() % Level.TIME_FULL;
-        if (!this.isOnFire() && !this.level.isRaining() && (time > Level.TIME_SUNSET && time >= Level.TIME_NIGHT && time < Level.TIME_SUNRISE)) {
+        if (!this.isOnFire() && !this.level.isRaining() && !(time > Level.TIME_SUNSET && time >= Level.TIME_NIGHT && time < Level.TIME_SUNRISE)) {
             this.setOnFire(100);
         }
 
@@ -125,6 +131,7 @@ public class Skeleton extends WalkingMonster {
             int bones = Utils.rand(0, 3); // drops 0-2 bones
             int arrows = Utils.rand(0, 3); // drops 0-2 arrows
             int bow = Utils.rand(0, 101) <= 9 ? 1 : 0; // with a 8,5% chance to Bow is dropped
+            int skull = Utils.rand(0, 101) <= 9 ? 1 : 0; // with a 8,5% chance to Skull is dropped
             for (int i = 0; i < bones; i++) {
                 drops.add(Item.get(Item.BONE, 0, 1));
             }
@@ -133,6 +140,9 @@ public class Skeleton extends WalkingMonster {
             }
             for (int i = 0; i < bow; i++) {
                 drops.add(Item.get(Item.BOW, 0, 1));
+            }
+            for (int i = 0; i < skull; i++) {
+                drops.add(Item.get(ItemSkull.SKELETON_SKULL, 0, 1));
             }
         }
         return drops.toArray(new Item[drops.size()]);
