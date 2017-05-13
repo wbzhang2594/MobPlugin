@@ -9,5 +9,3 @@ Mobs have inteligence? Who knows? ¯\\_(ツ)_/¯
 **If you want this plugin, please download from Circle CI or "Releases" tab!**
 
 __[Jar Download at Circle CI](https://circleci.com/gh/PikyCZ/MobPlugin/tree/master/)__ (**login required**)
-
-**Know Bugs: []**
