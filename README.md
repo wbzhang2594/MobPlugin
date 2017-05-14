@@ -1,5 +1,5 @@
 # MobPlugin 
-===================
+
 ![mobplugin](https://github.com/PikyCZ/MobPlugin/blob/master/images/MobPlugin.png)
 
 *Mobs have inteligence? Who knows? ¯\\_(ツ)_/¯
