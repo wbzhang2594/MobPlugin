@@ -14,11 +14,6 @@ import cn.nukkit.nbt.tag.CompoundTag;
 import com.pikycz.mobplugin.entities.animal.WalkingAnimal;
 import com.pikycz.mobplugin.entities.utils.Utils;
 
-/**
- * Implementation of a mule
- *
- * @author <a href="mailto:kniffman@googlemail.com">Michael Gertz</a>
- */
 public class ZombieHorse extends WalkingAnimal {
 
     public static final int NETWORK_ID = 27;
@@ -60,7 +55,7 @@ public class ZombieHorse extends WalkingAnimal {
     @Override
     public Item[] getDrops() {
         if (this.lastDamageCause instanceof EntityDamageByEntityEvent) {
-            return new Item[]{Item.get(Item.ROTTEN_FLESH, 1, 1)};
+            return new Item[] { Item.get(Item.ROTTEN_FLESH, 1, 1) };
         }
         return new Item[0];
     }
