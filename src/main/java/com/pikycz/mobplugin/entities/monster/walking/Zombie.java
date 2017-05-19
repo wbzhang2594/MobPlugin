@@ -5,6 +5,7 @@ import cn.nukkit.entity.EntityAgeable;
 import cn.nukkit.event.entity.EntityDamageByEntityEvent;
 import cn.nukkit.event.entity.EntityDamageEvent.DamageCause;
 import cn.nukkit.item.Item;
+import cn.nukkit.item.ItemSkull;
 import cn.nukkit.level.Level;
 import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.nbt.tag.CompoundTag;
@@ -47,9 +48,6 @@ public class Zombie extends WalkingMonster implements EntityAgeable {
     protected void initEntity() {
         super.initEntity();
 
-//        if (this.getDataProperty(DATA_AGEABLE_FLAGS) == null) {
-//            this.setDataProperty(new ByteEntityData(DATA_AGEABLE_FLAGS, (byte) 0));
-//        }
         this.setDamage(new int[]{0, 2, 3, 4});
         setMaxHealth(20);
     }
@@ -57,7 +55,6 @@ public class Zombie extends WalkingMonster implements EntityAgeable {
     @Override
     public boolean isBaby() {
         return false;
-//        return this.getDataFlag(DATA_AGEABLE_FLAGS, DATA_FLAG_BABY);
     }
 
     @Override
@@ -106,8 +103,12 @@ public class Zombie extends WalkingMonster implements EntityAgeable {
         List<Item> drops = new ArrayList<>();
         if (this.lastDamageCause instanceof EntityDamageByEntityEvent) {
             int rottenFlesh = Utils.rand(0, 3); // drops 0-2 rotten flesh
+            int skull = Utils.rand(0, 101) <= 9 ? 1 : 0; // with a 8,5% chance to Skull is dropped
             for (int i = 0; i < rottenFlesh; i++) {
                 drops.add(Item.get(Item.ROTTEN_FLESH, 0, 1));
+            }
+            for (int i = 0; i < skull; i++) {
+                drops.add(Item.get(ItemSkull.ZOMBIE_HEAD, 0, 1));
             }
         }
         return drops.toArray(new Item[drops.size()]);

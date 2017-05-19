@@ -13,7 +13,7 @@ import cn.nukkit.math.Vector3;
 import cn.nukkit.nbt.tag.CompoundTag;
 import com.pikycz.mobplugin.MobPlugin;
 import com.pikycz.mobplugin.entities.monster.FlyingMonster;
-import com.pikycz.mobplugin.entities.projectile.EntityFireBall;
+import com.pikycz.mobplugin.entities.projectile.GhastFireBall;
 import com.pikycz.mobplugin.entities.utils.Utils;
 
 import java.util.ArrayList;
@@ -75,11 +75,11 @@ public class Ghast extends FlyingMonster {
             Location pos = new Location(this.x - Math.sin(Math.toRadians(yaw)) * Math.cos(Math.toRadians(pitch)) * 0.5, this.y + this.getEyeHeight(),
                     this.z + Math.cos(Math.toRadians(yaw)) * Math.cos(Math.toRadians(pitch)) * 0.5, yaw, pitch, this.level);
             Entity k = MobPlugin.create("FireBall", pos, this);
-            if (!(k instanceof EntityFireBall)) {
+            if (!(k instanceof GhastFireBall)) {
                 return;
             }
 
-            EntityFireBall fireball = (EntityFireBall) k;
+            GhastFireBall fireball = (GhastFireBall) k;
             fireball.setExplode(true);
             fireball.setMotion(new Vector3(-Math.sin(Math.toDegrees(yaw)) * Math.cos(Math.toDegrees(pitch)) * f * f, -Math.sin(Math.toDegrees(pitch)) * f * f,
                     Math.cos(Math.toDegrees(yaw)) * Math.cos(Math.toDegrees(pitch)) * f * f));

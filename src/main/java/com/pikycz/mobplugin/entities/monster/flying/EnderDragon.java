@@ -2,6 +2,7 @@ package com.pikycz.mobplugin.entities.monster.flying;
 
 import cn.nukkit.entity.Entity;
 import cn.nukkit.item.Item;
+import cn.nukkit.item.ItemSkull;
 import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.nbt.tag.CompoundTag;
 
@@ -38,12 +39,14 @@ public class EnderDragon extends FlyingMonster {
     @Override
     public void initEntity() {
         super.initEntity();
+        this.fireProof = true;
         this.setMaxHealth(200);
+        this.setDamage(new int[]{0, 0, 0, 0});
     }
 
     @Override
     public Item[] getDrops() {
-        return new Item[]{Item.get(Item.DRAGON_EGG), Item.get(410)};
+        return new Item[]{Item.get(Item.DRAGON_EGG), Item.get(ItemSkull.DRAGON_HEAD)};
     }
 
     @Override

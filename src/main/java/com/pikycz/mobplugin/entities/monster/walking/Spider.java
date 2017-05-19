@@ -52,6 +52,7 @@ public class Spider extends WalkingMonster {
         return 1.13;
     }
 
+    @Override
     public void initEntity() {
         super.initEntity();
 

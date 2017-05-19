@@ -47,6 +47,7 @@ public class CaveSpider extends Spider {
         this.setDamage(new int[]{0, 2, 3, 3});
     }
 
+    @Override
     public void attackEntity(Entity player) {
         if (this.attackDelay > 10 && this.distanceSquared(player) < 1.32) {
             this.attackDelay = 0;

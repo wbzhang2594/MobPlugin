@@ -62,5 +62,4 @@ public class Silverfish extends WalkingMonster {
         return 5; // gain 5 experience
     }
 
-
 }

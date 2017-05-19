@@ -52,6 +52,7 @@ public class IronGolem extends WalkingMonster {
         this.setMinDamage(new int[]{0, 7, 7, 7});
     }
 
+    @Override
     public void attackEntity(Entity player) {
         if (this.attackDelay > 10 && this.distanceSquared(player) < 4) {
             this.attackDelay = 0;
@@ -59,6 +60,7 @@ public class IronGolem extends WalkingMonster {
         }
     }
 
+    @Override
     public boolean targetOption(EntityCreature creature, double distance) {
         return !(creature instanceof Player) && creature.isAlive() && distance <= 60;
     }
@@ -83,6 +85,5 @@ public class IronGolem extends WalkingMonster {
     public int getKillExperience() {
         return 0; // gain 0 experience
     }
-
 
 }
