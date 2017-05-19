@@ -36,6 +36,13 @@ public class Slime extends JumpingEntity {
         return new Item[]{Item.get(Item.SLIMEBALL)};
     }
 
+
+    public int getKillExperience() {
+        return Utils.rand(1, 4);
+    }
+
+}
+
     @Override
     public int getKillExperience() {
         return Utils.rand(1, 4);
