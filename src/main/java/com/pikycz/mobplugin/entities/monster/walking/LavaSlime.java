@@ -39,7 +39,6 @@ public class LavaSlime extends JumpingEntity {
         super.initEntity();
     }
 
-    @Override
     public int getKillExperience() {
         return Utils.rand(1, 5);
     }
