@@ -42,10 +42,3 @@ public class Slime extends JumpingEntity {
     }
 
 }
-
-    @Override
-    public int getKillExperience() {
-        return Utils.rand(1, 4);
-    }
-
-}
