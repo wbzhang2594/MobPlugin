@@ -36,7 +36,6 @@ public class Rabbit extends JumpingEntity {
         return 0.7f;
     }
 
-    @Override
     public double getSpeed() {
         return 1.5;
     }
@@ -53,7 +52,6 @@ public class Rabbit extends JumpingEntity {
      * @param distance
      * @return
      */
-    @Override
     public boolean targetOption(EntityCreature creature, double distance) {
         if (creature instanceof Player) {
             Player player = (Player) creature;
@@ -78,7 +76,6 @@ public class Rabbit extends JumpingEntity {
         return drops.toArray(new Item[drops.size()]);
     }
 
-    @Override
     public int getKillExperience() {
         return Utils.rand(1, 4); // gain 1-3 experience
     }
