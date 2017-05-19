@@ -52,10 +52,8 @@ public class Squid extends SwimmingEntity {
     @Override
     public Item[] getDrops() {
         if (this.lastDamageCause instanceof EntityDamageByEntityEvent) {
-            return new Item[]{new ItemDye(DyeColor.BLACK.getDyeData())};
         }
-
-        return new Item[0];
+        return new Item[]{new ItemDye(DyeColor.BLACK.getDyeData())};
     }
 
 }

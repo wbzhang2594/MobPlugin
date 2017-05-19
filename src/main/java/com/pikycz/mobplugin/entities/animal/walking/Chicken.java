@@ -47,6 +47,11 @@ public class Chicken extends WalkingAnimal {
     }
 
     @Override
+    public float getDrag() {
+        return 0.2f;
+    }
+
+    @Override
     public void initEntity() {
         super.initEntity();
 
@@ -80,6 +85,5 @@ public class Chicken extends WalkingAnimal {
     public int getKillExperience() {
         return Utils.rand(1, 4); // gain 1-3 experience
     }
-
 
 }

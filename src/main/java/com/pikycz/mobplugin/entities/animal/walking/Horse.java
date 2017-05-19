@@ -54,9 +54,6 @@ public class Horse extends WalkingAnimal {
         return new Item[0];
     }
 
-    /* (@Override)
-     * @see de.kniffo80.mobplugin.entities.BaseEntity#getKillExperience()
-     */
     @Override
     public int getKillExperience() {
         return Utils.rand(1, 4);

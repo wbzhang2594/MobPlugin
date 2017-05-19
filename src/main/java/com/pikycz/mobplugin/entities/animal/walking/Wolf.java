@@ -36,12 +36,12 @@ public class Wolf extends TameableMonster {
 
     @Override
     public float getWidth() {
-        return 0.72f;
+        return 0.6f;
     }
 
     @Override
     public float getHeight() {
-        return 0.9f;
+        return 0.8f;
     }
 
     @Override
@@ -53,14 +53,13 @@ public class Wolf extends TameableMonster {
     protected void initEntity() {
         super.initEntity();
 
-        if (this.namedTag.contains(NBT_KEY_ANGRY)) {
+        /*if (this.namedTag.contains(NBT_KEY_ANGRY)) {
             this.angry = this.namedTag.getInt(NBT_KEY_ANGRY);
         }
 
         if (this.namedTag.contains(NBT_KEY_COLLAR_COLOR)) {
             this.collarColor = DyeColor.getByDyeData(this.namedTag.getInt(NBT_KEY_COLLAR_COLOR));
-        }
-
+        }*/
         this.setMaxHealth(4);
         this.fireProof = true;
         this.setDamage(new int[]{0, 3, 4, 5});

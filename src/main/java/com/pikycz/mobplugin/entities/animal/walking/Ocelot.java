@@ -23,12 +23,12 @@ public class Ocelot extends WalkingAnimal {
 
     @Override
     public float getWidth() {
-        return 0.72f;
+        return 0.6f;
     }
 
     @Override
     public float getHeight() {
-        return 0.9f;
+        return 0.8f;
     }
 
     @Override
@@ -42,6 +42,7 @@ public class Ocelot extends WalkingAnimal {
         this.setMaxHealth(10);
     }
 
+    @Override
     public boolean targetOption(EntityCreature creature, double distance) {
         if (creature instanceof Player) {
             Player player = (Player) creature;
@@ -50,10 +51,12 @@ public class Ocelot extends WalkingAnimal {
         return false;
     }
 
+    @Override
     public Item[] getDrops() {
         return new Item[0];
     }
 
+    @Override
     public int getKillExperience() {
         return Utils.rand(1, 4); // gain 1-3 experience
     }

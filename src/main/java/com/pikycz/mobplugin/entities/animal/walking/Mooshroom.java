@@ -27,19 +27,21 @@ public class Mooshroom extends WalkingAnimal {
 
     @Override
     public float getWidth() {
-        return 1.45f;
+        return 0.9f;
     }
 
     @Override
     public float getHeight() {
-        return 1.12f;
+        return 1.4f;
     }
 
+    @Override
     public void initEntity() {
         super.initEntity();
         this.setMaxHealth(10);
     }
 
+    @Override
     public boolean targetOption(EntityCreature creature, double distance) {
         if (creature instanceof Player) {
             Player player = (Player) creature;
@@ -48,6 +50,7 @@ public class Mooshroom extends WalkingAnimal {
         return false;
     }
 
+    @Override
     public Item[] getDrops() {
         List<Item> drops = new ArrayList<>();
         if (this.lastDamageCause instanceof EntityDamageByEntityEvent) {

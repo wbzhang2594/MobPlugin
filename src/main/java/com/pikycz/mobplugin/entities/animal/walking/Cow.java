@@ -35,7 +35,7 @@ public class Cow extends WalkingAnimal {
         if (this.isBaby()) {
             return 0.65f;
         }
-        return 1.3f;
+        return 1.4f;
     }
 
     @Override
