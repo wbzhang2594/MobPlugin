@@ -36,7 +36,7 @@ public class SkeletonSpawner extends AbstractEntitySpawner {
 
         int blockLightLevel = level.getBlockLightAt((int) pos.x, (int) pos.y, (int) pos.z);
 
-        if (blockLightLevel > 7) { // lightlevel not working for now, but as lightlevel is always zero that should work
+        if (blockLightLevel > 7 || (level.getTime() < Level.TIME_NIGHT && !level.isThundering() && !level.isRaining() && level.canBlockSeeSky(pos))) { // lightlevel not working for now, but as lightlevel is always zero that should work
             result = SpawnResult.WRONG_LIGHTLEVEL;
         } else if (pos.y > 127 || pos.y < 1 || level.getBlockIdAt((int) pos.x, (int) pos.y, (int) pos.z) == Block.AIR) { // cannot spawn on AIR block
             result = SpawnResult.POSITION_MISMATCH;

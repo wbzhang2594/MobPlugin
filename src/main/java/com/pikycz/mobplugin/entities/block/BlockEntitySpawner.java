@@ -25,6 +25,8 @@ public class BlockEntitySpawner extends BlockEntitySpawnable {
     private int minSpawnDelay;
     private int maxSpawnDelay;
 
+    private int spawnCount;
+
     public BlockEntitySpawner(FullChunk chunk, CompoundTag nbt) {
         super(chunk, nbt);
 
@@ -52,11 +54,16 @@ public class BlockEntitySpawner extends BlockEntitySpawnable {
             this.namedTag.putShort("RequiredPlayerRange", 20);
         }
 
+        if (!this.namedTag.contains("SpawnCount") || !(this.namedTag.get("SpawnCount") instanceof ShortTag)) {
+            this.namedTag.putShort("SpawnCount", 4);
+        }
+
         this.spawnRange = this.namedTag.getShort("SpawnRange");
         this.minSpawnDelay = this.namedTag.getInt("MinSpawnDelay");
         this.maxSpawnDelay = this.namedTag.getInt("MaxSpawnDelay");
         this.maxNearbyEntities = this.namedTag.getShort("MaxNearbyEntities");
         this.requiredPlayerRange = this.namedTag.getShort("RequiredPlayerRange");
+        this.spawnCount = this.namedTag.getShort("SpawnCount");
 
         this.scheduleUpdate();
     }
@@ -82,15 +89,14 @@ public class BlockEntitySpawner extends BlockEntitySpawnable {
             }
 
             if (isValid && list.size() <= this.maxNearbyEntities) {
-                Position pos = new Position(
-                        this.x + Utils.rand(-this.spawnRange, this.spawnRange),
-                        this.y,
-                        this.z + Utils.rand(-this.spawnRange, this.spawnRange),
-                        this.level
-                );
-                Entity entity = MobPlugin.create(this.entityId, pos);
-                if (entity != null) {
-                    entity.spawnToAll();
+                for (int i = 0; i < this.spawnCount; i++) {
+                    double x = this.getX() + (this.level.rand.nextDouble() - this.level.rand.nextDouble()) * (double) this.spawnRange + 0.5;
+                    double y = (this.getY() + this.level.rand.nextInt(2)/* - 1*/);
+                    double z = this.getZ() + (this.level.rand.nextDouble() - this.level.rand.nextDouble()) * (double) this.spawnRange + 0.5;
+                    Entity entity = MobPlugin.create(this.entityId, new Position(x, y, z, this.level));
+                    if (entity != null) {
+                        entity.spawnToAll();
+                    }
                 }
             }
         }

@@ -9,6 +9,7 @@ import cn.nukkit.IPlayer;
 import cn.nukkit.block.Block;
 import cn.nukkit.level.Level;
 import cn.nukkit.level.Position;
+import cn.nukkit.level.generator.biome.Biome;
 import cn.nukkit.utils.Config;
 import com.pikycz.mobplugin.AutoSpawnTask;
 import com.pikycz.mobplugin.FileLogger;
@@ -35,6 +36,10 @@ public class OcelotSpawner extends AbstractEntitySpawner {
         SpawnResult result = SpawnResult.OK;
 
         if (Utils.rand(0, 3) == 0) { // there's a 1/3 chance that spawn fails ...
+            return SpawnResult.SPAWN_DENIED;
+        }
+
+        if (level.getBiomeId(pos.getFloorX(), pos.getFloorZ()) != Biome.JUNGLE) {
             return SpawnResult.SPAWN_DENIED;
         }
 

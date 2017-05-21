@@ -2,6 +2,8 @@
 entities:
   mob-ai: true
   auto-spawn-tick: 300
+  spawn-animals: true
+  spawn-mobs: true
   worlds-spawn-disabled: 
 
 # max spawn settings

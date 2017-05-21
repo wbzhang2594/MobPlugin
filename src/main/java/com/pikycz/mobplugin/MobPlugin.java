@@ -49,6 +49,8 @@ import java.util.List;
 public class MobPlugin extends PluginBase implements Listener {
 
     public static boolean MOB_AI_ENABLED = true;
+    public static boolean spawnAnimals = true;
+    public static boolean spawnMobs = true;
 
     private int counter = 0;
 
@@ -72,7 +74,10 @@ public class MobPlugin extends PluginBase implements Listener {
         // we need this flag as it's controlled by the plugin's entities
         MOB_AI_ENABLED = pluginConfig.getBoolean("entities.mob-ai", true);
         int spawnDelay = pluginConfig.getInt("entities.auto-spawn-tick", 800);
+
         disabledWorlds = pluginConfig.getList("worlds-spawn-disabled", new ArrayList());
+        spawnAnimals = pluginConfig.getBoolean("entities.spawn-animals");
+        spawnMobs = pluginConfig.getBoolean("entities.spawn-mobs");
 
         for (Level level : getServer().getLevels().values()) {
             if (disabledWorlds.contains(level.getFolderName().toLowerCase())) {

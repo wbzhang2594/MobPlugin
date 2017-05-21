@@ -6,6 +6,7 @@
 package com.pikycz.mobplugin.entities.utils;
 
 import cn.nukkit.Server;
+import cn.nukkit.level.format.Chunk;
 import cn.nukkit.utils.TextFormat;
 
 import java.util.Random;
@@ -46,4 +47,32 @@ public class Utils {
         return random.nextBoolean();
     }
 
+    public static int roundUp(int number, int interval) {
+        if (interval == 0) {
+            return 0;
+        } else if (number == 0) {
+            return interval;
+        } else {
+            if (number < 0) {
+                interval *= -1;
+            }
+
+            int i = number % interval;
+            return i == 0 ? number : number + interval - i;
+        }
+    }
+
+    public static int getHIghestFilledChunkSection(Chunk chunk) {
+        int lastIndex = 0;
+
+        for (int i = 0; i < chunk.getSections().length; i++) {
+            if (chunk.getSection((float) i).isEmpty()) {
+                return i;
+            }
+
+            lastIndex = i;
+        }
+
+        return lastIndex;
+    }
 }

@@ -37,7 +37,7 @@ public class StraySpawner extends AbstractEntitySpawner {
         if (level.getTime() > Level.TIME_NIGHT) {
             int blockLightLevel = level.getBlockLightAt((int) pos.x, (int) pos.y, (int) pos.z);
 
-            if (blockLightLevel > 7) {
+            if (blockLightLevel > 7 || (level.getTime() < Level.TIME_NIGHT && !level.isThundering() && !level.isRaining() && level.canBlockSeeSky(pos))) {
                 result = SpawnResult.WRONG_LIGHTLEVEL;
             } else if (pos.y > 127 || pos.y < 1 || level.getBlockIdAt((int) pos.x, (int) pos.y, (int) pos.z) == Block.AIR) { // cannot spawn on AIR block
                 result = SpawnResult.POSITION_MISMATCH;
