@@ -234,11 +234,17 @@ public abstract class BaseEntity extends EntityCreature {
 
     @Override
     public boolean entityBaseTick(int tickDiff) {
-
         boolean hasUpdate = false;
 
         this.blocksAround = null;
         this.justCreated = false;
+
+        if (!this.isAlive()) {
+            this.removeAllEffects();
+            this.despawnFromAll();
+            this.close();
+            return false;
+        }
 
         if (!this.effects.isEmpty()) {
             for (Effect effect : this.effects.values()) {

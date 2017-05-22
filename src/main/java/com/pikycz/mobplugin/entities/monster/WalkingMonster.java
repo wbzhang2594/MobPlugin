@@ -229,10 +229,8 @@ public abstract class WalkingMonster extends WalkingEntity implements Monster {
 
     @Override
     public boolean entityBaseTick(int tickDiff) {
-
-        boolean hasUpdate = false;
-
         Timings.entityBaseTickTimer.startTiming();
+        boolean hasUpdate = false;
 
         hasUpdate = super.entityBaseTick(tickDiff);
 
