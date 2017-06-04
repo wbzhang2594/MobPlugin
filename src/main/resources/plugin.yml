@@ -9,14 +9,25 @@ commands:
     description: Spawn a simple mob to the player, that is using this command
     aliases: ["mob"]
     usage: "/mob spawn <mob_name>"
-    permission: mob-plugin.command
+    permission: mob-plugin.mob
   removemobs:
     description: Remove all living mobs
     aliases: ["removeall"]
     usage: "/mob removeall"
-    permission: mob-plugin.command
+    permission: mob-plugin.removemobs
+  removeitems:
+    description: Remove all items from all levels (ground)
+    aliases: ["removeitems"]
+    usage: "/mob removeitems"
+    permission: mob-plugin.removeitems
     
 permissions:
-  mob-plugin.command:
+  mob-plugin.mob:
+    description: ""
+    default: op
+  mob.plugin.removemobs:
+    description: ""
+    default: op
+  mob-plugin.removeitems:
     description: ""
     default: op
