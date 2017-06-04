@@ -27,11 +27,17 @@ public class Mooshroom extends WalkingAnimal {
 
     @Override
     public float getWidth() {
+        if (this.isBaby()) {
+            return 0.45f;
+        }
         return 0.9f;
     }
 
     @Override
     public float getHeight() {
+        if (this.isBaby()) {
+            return 0.7f;
+        }
         return 1.4f;
     }
 

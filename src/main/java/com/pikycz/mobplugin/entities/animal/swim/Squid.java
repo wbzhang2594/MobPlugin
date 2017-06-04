@@ -8,6 +8,7 @@ import cn.nukkit.nbt.tag.CompoundTag;
 import cn.nukkit.utils.DyeColor;
 
 import com.pikycz.mobplugin.entities.SwimmingEntity;
+import com.pikycz.mobplugin.entities.utils.Utils;
 
 public class Squid extends SwimmingEntity {
 
@@ -54,6 +55,11 @@ public class Squid extends SwimmingEntity {
         if (this.lastDamageCause instanceof EntityDamageByEntityEvent) {
         }
         return new Item[]{new ItemDye(DyeColor.BLACK.getDyeData())};
+    }
+
+    @Override
+    public int getKillExperience() {
+        return Utils.rand(1, 3);
     }
 
 }

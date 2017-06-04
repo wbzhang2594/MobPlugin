@@ -6,7 +6,7 @@ import cn.nukkit.Server;
 import cn.nukkit.level.Level;
 import cn.nukkit.level.Position;
 import cn.nukkit.utils.Config;
-import com.pikycz.mobplugin.AutoSpawnTask;
+import com.pikycz.mobplugin.entities.task.AutoSpawnTask;
 import com.pikycz.mobplugin.FileLogger;
 import com.pikycz.mobplugin.entities.utils.Utils;
 
@@ -42,6 +42,7 @@ public abstract class AbstractEntitySpawner implements IEntitySpawner {
      * (@Override)
      * @see cn.nukkit.entity.ai.IEntitySpawner#spawn(java.util.List, java.util.List)
      */
+    @Override
     public void spawn(Collection<Player> onlinePlayers) {
         // first spawn everything for online players ...
         if (isSpawnAllowedByDifficulty()) {
@@ -76,15 +77,6 @@ public abstract class AbstractEntitySpawner implements IEntitySpawner {
     }
 
     protected SpawnResult spawn(IPlayer iPlayer) {
-        // boolean offlinePlayer = iPlayer instanceof OfflinePlayer;
-        //
-        // Level level = offlinePlayer ? ((OfflinePlayer) iPlayer).getLevel() : ((Player) iPlayer).getLevel();
-        //
-        // if (!isEntitySpawnAllowed(level)) {
-        // return SpawnResult.MAX_SPAWN_REACHED;
-        // }
-        //
-        // Position pos = offlinePlayer ? ((OfflinePlayer) iPlayer).getLastKnownPosition() : ((Player) iPlayer).getPosition();
         Position pos = ((Player) iPlayer).getPosition();
         Level level = ((Player) iPlayer).getLevel();
 
@@ -107,7 +99,8 @@ public abstract class AbstractEntitySpawner implements IEntitySpawner {
     }
 
     /**
-     * A simple method that evaluates based on the difficulty set in server if a spawn is allowed or not
+     * A simple method that evaluates based on the difficulty set in server if a
+     * spawn is allowed or not
      *
      * @return
      */

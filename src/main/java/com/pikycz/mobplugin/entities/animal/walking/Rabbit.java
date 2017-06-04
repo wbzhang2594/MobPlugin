@@ -7,13 +7,13 @@ import cn.nukkit.item.Item;
 import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.nbt.tag.CompoundTag;
 
-import com.pikycz.mobplugin.entities.JumpingEntity;
+import com.pikycz.mobplugin.entities.WalkingEntity;
 import com.pikycz.mobplugin.entities.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Rabbit extends JumpingEntity {
+public class Rabbit extends WalkingEntity {
 
     public static final int NETWORK_ID = 18;
 
@@ -28,22 +28,24 @@ public class Rabbit extends JumpingEntity {
 
     @Override
     public float getWidth() {
-        return 0.6f;
+        return 0.5f;
     }
 
     @Override
     public float getHeight() {
-        return 0.7f;
+        return 0.5f;
     }
 
+    @Override
     public double getSpeed() {
-        return 1.5;
+        return 1.2;
     }
 
     @Override
     public void initEntity() {
         super.initEntity();
         this.setMaxHealth(3);
+        this.setHealth(3);
     }
 
     /**
@@ -52,13 +54,14 @@ public class Rabbit extends JumpingEntity {
      * @param distance
      * @return
      */
-    public boolean targetOption(EntityCreature creature, double distance) {
+    /*public boolean targetOption(EntityCreature creature, double distance) { //TODO TAMING 
         if (creature instanceof Player) {
             Player player = (Player) creature;
             return player.spawned && player.isAlive() && !player.closed && player.getInventory().getItemInHand().getId() == Item.CARROT && distance <= 49;
         }
         return false;
-    }
+    }*/
+    
 
     @Override
     public Item[] getDrops() {

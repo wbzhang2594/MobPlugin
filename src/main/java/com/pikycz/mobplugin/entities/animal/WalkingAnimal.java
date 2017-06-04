@@ -42,6 +42,7 @@ public abstract class WalkingAnimal extends WalkingEntity implements Animal {
     @Override
     public boolean entityBaseTick(int tickDiff) {
         boolean hasUpdate;
+        
         Timings.entityBaseTickTimer.startTiming();
 
         hasUpdate = super.entityBaseTick(tickDiff);
@@ -68,6 +69,7 @@ public abstract class WalkingAnimal extends WalkingEntity implements Animal {
         }
 
         Timings.entityBaseTickTimer.stopTiming();
+        
         return hasUpdate;
     }
 

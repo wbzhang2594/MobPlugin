@@ -12,6 +12,9 @@ import cn.nukkit.nbt.tag.CompoundTag;
 import com.pikycz.mobplugin.entities.animal.WalkingAnimal;
 import com.pikycz.mobplugin.entities.utils.Utils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Implementation of a horse
  *
@@ -32,11 +35,17 @@ public class Horse extends WalkingAnimal {
 
     @Override
     public float getWidth() {
-        return 1.4f;
+        if (this.isBaby()) {
+            return 0.6982f;
+        }
+        return  1.3965f;
     }
 
     @Override
     public float getHeight() {
+        if (this.isBaby()) {
+            return 0.8f;
+        }
         return 1.6f;
     }
 
@@ -48,10 +57,15 @@ public class Horse extends WalkingAnimal {
 
     @Override
     public Item[] getDrops() {
+        List<Item> drops = new ArrayList<>();
         if (this.lastDamageCause instanceof EntityDamageByEntityEvent) {
-            return new Item[]{Item.get(Item.LEATHER, Utils.rand(0, 2), 1)};
+            int leather = Utils.rand(0, 3); // drops 0-2 leather
+
+            for (int i = 0; i < leather; i++) {
+                drops.add(Item.get(Item.LEATHER, 0, 1));
+            }
         }
-        return new Item[0];
+        return drops.toArray(new Item[drops.size()]);
     }
 
     @Override

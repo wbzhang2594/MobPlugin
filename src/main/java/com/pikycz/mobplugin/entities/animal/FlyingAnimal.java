@@ -9,6 +9,7 @@ import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.math.Vector3;
 import cn.nukkit.nbt.tag.CompoundTag;
 import cn.nukkit.potion.Effect;
+import co.aikar.timings.Timings;
 import com.pikycz.mobplugin.entities.FlyingEntity;
 
 public abstract class FlyingAnimal extends FlyingEntity implements EntityAgeable {
@@ -21,11 +22,14 @@ public abstract class FlyingAnimal extends FlyingEntity implements EntityAgeable
     protected void initEntity() {
         super.initEntity();
 
+        if (this.getDataFlag(DATA_FLAG_BABY, 0)) {
+            this.setDataFlag(DATA_FLAG_BABY, DATA_TYPE_BYTE);
+        }
     }
 
     @Override
     public boolean isBaby() {
-        return false;
+        return this.getDataFlag(DATA_FLAG_BABY, 0);
     }
 
     @Override
@@ -33,7 +37,7 @@ public abstract class FlyingAnimal extends FlyingEntity implements EntityAgeable
 
         boolean hasUpdate = false;
 
-        // Timings.timerEntityBaseTick.startTiming();
+        Timings.entityBaseTickTimer.startTiming();
 
         hasUpdate = super.entityBaseTick(tickDiff);
 
@@ -48,7 +52,7 @@ public abstract class FlyingAnimal extends FlyingEntity implements EntityAgeable
         } else {
             this.setDataProperty(new ShortEntityData(DATA_AIR, 300));
         }
-        // Timings.timerEntityBaseTick.stopTiming();
+         Timings.entityBaseTickTimer.stopTiming();
         return hasUpdate;
     }
 

@@ -37,13 +37,16 @@ public class Sheep extends WalkingAnimal {
 
     @Override
     public float getWidth() {
+        if (this.isBaby()) {
+            return 0.45f;
+        }
         return 0.9f;
     }
 
     @Override
     public float getHeight() {
         if (isBaby()) {
-            return 0.9f; // No have information
+            return 0.65f;
         }
         return 1.3f;
     }
@@ -51,9 +54,9 @@ public class Sheep extends WalkingAnimal {
     @Override
     public float getEyeHeight() {
         if (isBaby()) {
-            return 0.95f * 0.9f; // No have information
+            return 0.65f;
         }
-        return 0.95f * getHeight();
+        return 1.1f;
     }
 
     @Override
