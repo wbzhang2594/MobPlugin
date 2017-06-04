@@ -17,4 +17,6 @@ public interface Tameable {
 
     void setOwner(Player player);
 
+    String getName();
+
 }

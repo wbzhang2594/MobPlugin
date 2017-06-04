@@ -25,7 +25,8 @@ public class Utils {
     private static final Random random = new Random(System.currentTimeMillis());
 
     /**
-     * Returns a random number between min (inkl.) and max (excl.) If you want a number between 1 and 4 (inkl) you need to call rand (1, 5)
+     * Returns a random number between min (inkl.) and max (excl.) If you want a
+     * number between 1 and 4 (inkl) you need to call rand (1, 5)
      *
      * @param min min inklusive value
      * @param max max exclusive value
@@ -41,7 +42,8 @@ public class Utils {
     /**
      * Returns random boolean
      *
-     * @return a boolean random value either <code>true</code> or <code>false</code>
+     * @return a boolean random value either <code>true</code> or
+     * <code>false</code>
      */
     public static boolean rand() {
         return random.nextBoolean();
@@ -75,4 +77,5 @@ public class Utils {
 
         return lastIndex;
     }
+
 }

@@ -15,10 +15,13 @@ import cn.nukkit.math.AxisAlignedBB;
 import cn.nukkit.math.NukkitMath;
 import cn.nukkit.math.Vector3;
 import cn.nukkit.nbt.tag.CompoundTag;
+import cn.nukkit.nbt.tag.IntTag;
 import cn.nukkit.network.protocol.AddEntityPacket;
 import cn.nukkit.potion.Effect;
+import co.aikar.timings.Timings;
 import com.pikycz.mobplugin.MobPlugin;
 import com.pikycz.mobplugin.entities.monster.Monster;
+import com.pikycz.mobplugin.entities.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -34,10 +37,6 @@ public abstract class BaseEntity extends EntityCreature {
 
     protected Entity followTarget = null;
 
-    protected List<Block> blocksAround = new ArrayList<>();
-    
-    protected List<Block> collisionBlocks = new ArrayList<>();
-
     private boolean movement = true;
 
     private boolean friendly = false;
@@ -51,6 +50,23 @@ public abstract class BaseEntity extends EntityCreature {
     public boolean inLava = false;
 
     public boolean onClimbable = false;
+    
+    protected boolean fireProof = false;
+    
+    private int maxJumpHeight = 1; // default: 1 block jump height - this should be 2 for horses e.g.
+    
+    public float speed = 1.0f;
+    
+    protected boolean panicCounter = false;
+
+    protected boolean idlingComponent;
+    protected boolean panicEnabled = true;
+    protected int panicTicks = 100;
+    protected int maxAge = 0;
+    
+    protected List<Block> blocksAround = new ArrayList<>();
+
+    protected List<Block> collisionBlocks = new ArrayList<>();
 
     public BaseEntity(FullChunk chunk, CompoundTag nbt) {
         super(chunk, nbt);
@@ -89,7 +105,11 @@ public abstract class BaseEntity extends EntityCreature {
     }
 
     public double getSpeed() {
-        return 1;
+        return this.speed;
+    }
+    
+    public int getMaxJumpHeight() {
+        return this.maxJumpHeight;
     }
 
     public Entity getTarget() {
@@ -116,7 +136,13 @@ public abstract class BaseEntity extends EntityCreature {
         if (this.namedTag.contains("WallCheck")) {
             this.setWallCheck(this.namedTag.getBoolean("WallCheck"));
         }
+        
+        /*if (this.namedtag.contains("AgeInTicks")) {
+            this.age = this.namedtag.getInt("AgeInTicks");
+        }*/
         this.setDataProperty(new ByteEntityData(DATA_FLAG_NO_AI, (byte) 1));
+        
+        //this.idlingComponent.loadFromNBT();
     }
 
     @Override
@@ -124,6 +150,7 @@ public abstract class BaseEntity extends EntityCreature {
         super.saveNBT();
         this.namedTag.putBoolean("Movement", this.isMovement());
         this.namedTag.putBoolean("WallCheck", this.isWallCheck());
+        //this.namedtag.AgeInTicks = new IntTag("AgeInTicks", this.age); TODO
     }
 
     @Override
@@ -234,6 +261,9 @@ public abstract class BaseEntity extends EntityCreature {
 
     @Override
     public boolean entityBaseTick(int tickDiff) {
+
+        Timings.entityMoveTimer.startTiming();
+
         boolean hasUpdate = false;
 
         this.blocksAround = null;
@@ -308,6 +338,8 @@ public abstract class BaseEntity extends EntityCreature {
         this.age += tickDiff;
         this.ticksLived += tickDiff;
 
+        Timings.entityMoveTimer.stopTiming();
+
         return hasUpdate;
     }
 
@@ -326,11 +358,12 @@ public abstract class BaseEntity extends EntityCreature {
 
         super.attack(source);
 
+        this.stayTime = 0;
         this.target = null;
         this.attackTime = 7;
         return true;
     }
-    
+
     public List<Block> getCollisionBlocks() {
         return collisionBlocks;
     }
@@ -371,7 +404,7 @@ public abstract class BaseEntity extends EntityCreature {
     @Override
     public boolean move(double dx, double dy, double dz) {
         if (MobPlugin.MOB_AI_ENABLED) {
-            // Timings.entityMoveTimer.startTiming();
+            Timings.entityMoveTimer.startTiming();
 
             double movX = dx * moveMultifier;
             double movY = dy;
@@ -400,7 +433,7 @@ public abstract class BaseEntity extends EntityCreature {
             this.checkGroundState(movX, movY, movZ, dx, dy, dz);
             this.updateFallState(this.onGround);
 
-            // Timings.entityMoveTimer.stopTiming();
+            Timings.entityMoveTimer.stopTiming();
         }
         return true;
     }

@@ -39,4 +39,9 @@ public class ElderGuardian extends SwimmingEntity {
         this.setMaxHealth(80);
     }
 
+    @Override
+    public int getKillExperience() {
+        return 0;
+    }
+
 }

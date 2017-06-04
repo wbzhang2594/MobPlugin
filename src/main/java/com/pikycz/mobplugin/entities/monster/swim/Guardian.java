@@ -39,4 +39,9 @@ public class Guardian extends SwimmingEntity {
 
         this.setMaxHealth(30);
     }
+
+    @Override
+    public int getKillExperience() {
+        return 0;
+    }
 }

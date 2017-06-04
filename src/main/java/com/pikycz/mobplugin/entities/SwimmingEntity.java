@@ -14,24 +14,19 @@ public abstract class SwimmingEntity extends BaseEntity {
         super(chunk, nbt);
     }
 
-    public void checkTarget() {
-        /////////lul
-    }
-
     @Override
     public Vector3 updateMove(int tickDiff) {
+        if (!this.isMovement()) {
+            return null;
+        }
+
+        if (this.isKnockback()) {
+            this.move(this.motionX * tickDiff, this.motionY * tickDiff, this.motionZ * tickDiff);
+            this.motionY -= 0.2 * tickDiff;
+            this.updateMovement();
+            return null;
+        }
         return null;
-        //todo
-    }
-
-    @Override
-    public int getKillExperience() {
-        return 0;
-    }
-
-    @Override
-    public int getNetworkId() {
-        return NETWORK_ID;
     }
 
 }

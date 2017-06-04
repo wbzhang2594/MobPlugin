@@ -8,6 +8,7 @@ import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.level.particle.CriticalParticle;
 import cn.nukkit.nbt.tag.CompoundTag;
 import cn.nukkit.network.protocol.AddEntityPacket;
+import co.aikar.timings.Timings;
 import com.pikycz.mobplugin.entities.utils.Utils;
 
 /**
@@ -69,7 +70,8 @@ public class BlazeFireBall extends EntityProjectile {
             return false;
         }
 
-        // this.timings.startTiming();
+        Timings.entityMoveTimer.startTiming();
+
         boolean hasUpdate = super.onUpdate(currentTick);
 
         if (!this.hadCollision && this.critical) {
@@ -95,7 +97,8 @@ public class BlazeFireBall extends EntityProjectile {
             hasUpdate = true;
         }
 
-        // this.timings.stopTiming();
+        Timings.entityMoveTimer.stopTiming();
+
         return hasUpdate;
     }
 

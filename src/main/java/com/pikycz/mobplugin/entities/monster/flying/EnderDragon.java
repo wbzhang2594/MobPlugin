@@ -40,8 +40,9 @@ public class EnderDragon extends FlyingMonster {
     public void initEntity() {
         super.initEntity();
         this.fireProof = true;
-        this.setMaxHealth(200);
+        this.setMaxHealth(250);
         this.setDamage(new int[]{0, 0, 0, 0});
+        this.kill();
     }
 
     @Override

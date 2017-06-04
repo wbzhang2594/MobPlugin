@@ -88,7 +88,7 @@ public abstract class TameableMonster extends WalkingMonster implements Tameable
     }
 
 
-    private void setTamed(boolean tamed) {
+    public boolean setTamed(boolean tamed) {
         this.setDataFlag(DATA_FLAGS, DATA_FLAG_TAMED, tamed);
         // following code isn't working
 //        int var = getDataPropertyByte(DATA_TAMED_FLAG);
@@ -98,6 +98,7 @@ public abstract class TameableMonster extends WalkingMonster implements Tameable
 //        } else {
 //            setDataProperty(new ByteEntityData(DATA_TAMED_FLAG, Byte.valueOf((byte) (var & -5))));
 //        }
+        return false;
     }
 
     private void setSittingDataProperty(boolean sit) {
