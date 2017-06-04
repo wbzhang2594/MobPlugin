@@ -51,7 +51,7 @@ max-spawns:
 | Command | Usage | Description |
 | ------- |  ----- | ----------- |
 | `/mob` | `/mob` | Display list of commands|
-| `/mob spawn <mob_name>` | `/mob spawn <mob_name>` | Spawn mob (mob_name write always with a capital letter)
+| `/mob spawn <mob_name>` | `/mob spawn <mob_name>` | Spawn mob (mob_name write always with a capital letter.. For example: Pig,Zombie)
 | `/mob removemobs` | `/mob removemobs` | Remove all living mobs|
 | `/mob removeitems` | `/mob removeitems` | Remove all items from all levels (ground)|
 
