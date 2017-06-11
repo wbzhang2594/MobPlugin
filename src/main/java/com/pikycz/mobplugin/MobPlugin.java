@@ -116,7 +116,7 @@ public class MobPlugin extends PluginBase implements Listener {
             String output = "";
 
         if (sub.length == 0) {
-            output += "use /mob spawn <mob>";
+            output += "use /mob spawn,removemobs,removeitems";
         } else {
             switch (sub[0]) {
                 case "spawn":
@@ -143,11 +143,11 @@ public class MobPlugin extends PluginBase implements Listener {
                         output += "Unknown player " + (sub.length == 3 ? sub[2] : ((Player) commandSender).getName());
                     }
                     break;
-                case "removeall":
+                case "removemobs":
                     int count = 0;
                     for (Level level : getServer().getLevels().values()) {
                         for (Entity entity : level.getEntities()) {
-                            if (entity instanceof BaseEntity && !entity.closed && entity.isAlive()) {
+                            if (entity instanceof BaseEntity) {
                                 entity.close();
                                 count++;
                             }
