@@ -59,10 +59,6 @@ max-spawns:
 ```yml
  mob-plugin.mob:
     default: op
-  mob.plugin.removemobs:  
-    default: op
-  mob-plugin.removeitems:
-    default: op  
   ```
 
 # Download
