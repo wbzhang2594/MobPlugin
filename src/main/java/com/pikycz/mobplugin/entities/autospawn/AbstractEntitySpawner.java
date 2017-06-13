@@ -6,12 +6,13 @@ import cn.nukkit.Server;
 import cn.nukkit.level.Level;
 import cn.nukkit.level.Position;
 import cn.nukkit.utils.Config;
-import com.pikycz.mobplugin.entities.task.AutoSpawnTask;
+import com.pikycz.mobplugin.task.AutoSpawnTask;
 import com.pikycz.mobplugin.FileLogger;
 import com.pikycz.mobplugin.entities.utils.Utils;
 
 import java.util.*;
 
+//TODO: REWRITE 
 /**
  * @author <a href="mailto:kniffman@googlemail.com">Michael Gertz</a>
  */
@@ -21,14 +22,14 @@ public abstract class AbstractEntitySpawner implements IEntitySpawner {
 
     protected Server server;
 
-    protected List<String> disabledSpawnWorlds = new ArrayList<>();
+    protected List<String> disabledSpawnWorlds;
 
     protected static Random random = new Random();
 
-    public AbstractEntitySpawner(AutoSpawnTask spawnTask, Config pluginConfig) {
+    public AbstractEntitySpawner(AutoSpawnTask spawnTask, Config config) {
         this.spawnTask = spawnTask;
         this.server = Server.getInstance();
-        String disabledWorlds = pluginConfig.getString("entities.worlds-spawn-disabled");
+        String disabledWorlds = config.getString("entities.worlds-spawn-disabled");
         if (disabledWorlds != null && !disabledWorlds.trim().isEmpty()) {
             StringTokenizer tokenizer = new StringTokenizer(disabledWorlds, ",");
             while (tokenizer.hasMoreTokens()) {
@@ -75,7 +76,7 @@ public abstract class AbstractEntitySpawner implements IEntitySpawner {
         }
         return true;
     }
-
+    
     protected SpawnResult spawn(IPlayer iPlayer) {
         Position pos = ((Player) iPlayer).getPosition();
         Level level = ((Player) iPlayer).getLevel();

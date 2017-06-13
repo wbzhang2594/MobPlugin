@@ -3,7 +3,6 @@ package com.pikycz.mobplugin.entities.animal.walking;
 /**
  *
  * @author PikyCZ
- *
  */
 import cn.nukkit.item.Item;
 import cn.nukkit.level.format.FullChunk;

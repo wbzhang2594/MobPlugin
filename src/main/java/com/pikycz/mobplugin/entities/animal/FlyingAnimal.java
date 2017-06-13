@@ -52,7 +52,7 @@ public abstract class FlyingAnimal extends FlyingEntity implements EntityAgeable
         } else {
             this.setDataProperty(new ShortEntityData(DATA_AIR, 300));
         }
-         Timings.entityBaseTickTimer.stopTiming();
+        Timings.entityBaseTickTimer.stopTiming();
         return hasUpdate;
     }
 

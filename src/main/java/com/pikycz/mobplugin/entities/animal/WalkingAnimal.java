@@ -25,24 +25,27 @@ public abstract class WalkingAnimal extends WalkingEntity implements Animal {
 
     @Override
     public double getSpeed() {
-        return 0.8;
+        return 1.0;
     }
 
     @Override
     protected void initEntity() {
         super.initEntity();
 
+        if (this.getDataFlag(DATA_FLAG_BABY, 0)) {
+            this.setDataFlag(DATA_FLAG_BABY, DATA_TYPE_BYTE);
+        }
     }
 
     @Override
     public boolean isBaby() {
-        return false;
+        return this.getDataFlag(DATA_FLAG_BABY, 0);
     }
 
     @Override
     public boolean entityBaseTick(int tickDiff) {
         boolean hasUpdate;
-        
+
         Timings.entityBaseTickTimer.startTiming();
 
         hasUpdate = super.entityBaseTick(tickDiff);
@@ -69,7 +72,7 @@ public abstract class WalkingAnimal extends WalkingEntity implements Animal {
         }
 
         Timings.entityBaseTickTimer.stopTiming();
-        
+
         return hasUpdate;
     }
 

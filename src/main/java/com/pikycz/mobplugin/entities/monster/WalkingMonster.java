@@ -265,6 +265,7 @@ public abstract class WalkingMonster extends WalkingEntity implements Monster {
         }
 
         Timings.entityBaseTickTimer.stopTiming();
+        
         return hasUpdate;
     }
 

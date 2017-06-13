@@ -27,13 +27,16 @@ public class Cow extends WalkingAnimal {
 
     @Override
     public float getWidth() {
+        if (this.isBaby()) {
+            return 0.45f;
+        }
         return 0.9f;
     }
 
     @Override
     public float getHeight() {
         if (this.isBaby()) {
-            return 0.65f;
+            return 0.7f;
         }
         return 1.4f;
     }
@@ -56,7 +59,7 @@ public class Cow extends WalkingAnimal {
     public boolean targetOption(EntityCreature creature, double distance) {
         if (creature instanceof Player) {
             Player player = (Player) creature;
-            return player.isAlive() && !player.closed && player.getInventory().getItemInHand().getId() == Item.WHEAT && distance <= 49;
+            return player.isSurvival() && player.spawned && player.isAlive() && !player.closed && player.getInventory().getItemInHand().getId() == Item.WHEAT && distance <= 49;
         }
         return false;
     }

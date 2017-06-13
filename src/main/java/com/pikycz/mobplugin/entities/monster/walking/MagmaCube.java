@@ -1,6 +1,5 @@
 package com.pikycz.mobplugin.entities.monster.walking;
 
-import cn.nukkit.item.Item;
 import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.nbt.tag.CompoundTag;
 //import com.pikycz.mobplugin.entities.JumpingEntity;
@@ -10,24 +9,13 @@ import com.pikycz.mobplugin.entities.utils.Utils;
 /**
  *
  * @author PikyCZ
- *
  */
-public class Slime extends WalkingEntity {
-
-    public static final int NETWORK_ID = 37;
-
-    public Slime(FullChunk chunk, CompoundTag nbt) {
-        super(chunk, nbt);
-    }
+public class MagmaCube extends WalkingEntity {
     
-    @Override
-    public float getWidth() {
-        return 1.02f;
-    }
+    public static final int NETWORK_ID = 42;
 
-    @Override
-    public float getHeight() {
-        return 1.02f;
+    public MagmaCube(FullChunk chunk, CompoundTag nbt) {
+        super(chunk, nbt);
     }
 
     @Override
@@ -36,20 +24,23 @@ public class Slime extends WalkingEntity {
     }
 
     @Override
-    public void initEntity() {
-        super.initEntity();
-
-        this.setMaxHealth(4);
+    public float getWidth() {
+        return 2.04f;
     }
 
     @Override
-    public Item[] getDrops() {
-        return new Item[]{Item.get(Item.SLIMEBALL)};
+    public float getHeight() {
+        return 2.04f;
     }
 
+    @Override
+    public void initEntity() {
+        this.setMaxHealth(16);
+        super.initEntity();
+    }
 
     public int getKillExperience() {
-        return Utils.rand(1, 4);
+        return Utils.rand(1, 5);
     }
 
 }

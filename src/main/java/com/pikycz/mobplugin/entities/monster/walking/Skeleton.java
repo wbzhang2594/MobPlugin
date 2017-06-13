@@ -17,6 +17,7 @@ import cn.nukkit.level.sound.LaunchSound;
 import cn.nukkit.math.Vector3;
 import cn.nukkit.nbt.tag.CompoundTag;
 import cn.nukkit.network.protocol.MobEquipmentPacket;
+import co.aikar.timings.Timings;
 import com.pikycz.mobplugin.MobPlugin;
 import com.pikycz.mobplugin.entities.monster.WalkingMonster;
 import com.pikycz.mobplugin.entities.utils.Utils;
@@ -50,11 +51,6 @@ public class Skeleton extends WalkingMonster {
     }
 
     @Override
-    public float getLength() {
-        return 0.6f;
-    }
-
-    @Override
     public float getHeight() {
         return 1.8f;
     }
@@ -75,6 +71,7 @@ public class Skeleton extends WalkingMonster {
             }
 
             EntityArrow arrow = (EntityArrow) k;
+            arrow.canCollide();
             arrow.setMotion(new Vector3(-Math.sin(Math.toRadians(yaw)) * Math.cos(Math.toRadians(pitch)) * f * f, -Math.sin(Math.toRadians(pitch)) * f * f,
                     Math.cos(Math.toRadians(yaw)) * Math.cos(Math.toRadians(pitch)) * f * f));
 
@@ -112,7 +109,8 @@ public class Skeleton extends WalkingMonster {
     @Override
     public boolean entityBaseTick(int tickDiff) {
         boolean hasUpdate = false;
-        // Timings.timerEntityBaseTick.startTiming();
+        
+        Timings.entityBaseTickTimer.startTiming();
 
         hasUpdate = super.entityBaseTick(tickDiff);
 
@@ -121,7 +119,7 @@ public class Skeleton extends WalkingMonster {
             this.setOnFire(100);
         }
 
-        // Timings.timerEntityBaseTick.stopTiming();
+        Timings.entityBaseTickTimer.stopTiming();
         return hasUpdate;
     }
 

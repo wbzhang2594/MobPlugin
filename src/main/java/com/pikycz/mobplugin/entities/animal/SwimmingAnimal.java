@@ -1,7 +1,6 @@
 package com.pikycz.mobplugin.entities.animal;
 
 import cn.nukkit.Player;
-import cn.nukkit.entity.Entity;
 import static cn.nukkit.entity.Entity.DATA_AIR;
 import cn.nukkit.entity.data.ShortEntityData;
 import cn.nukkit.event.entity.EntityDamageEvent;

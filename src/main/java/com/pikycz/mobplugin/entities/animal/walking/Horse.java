@@ -48,6 +48,10 @@ public class Horse extends WalkingAnimal {
         }
         return 1.6f;
     }
+    
+    public int getMaxJumpHeight() {
+        return 2;
+    }
 
     @Override
     public void initEntity() {

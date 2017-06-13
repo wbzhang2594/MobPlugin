@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 
  * @author PikyCZ
  */
 public class Husk extends WalkingMonster implements EntityAgeable {

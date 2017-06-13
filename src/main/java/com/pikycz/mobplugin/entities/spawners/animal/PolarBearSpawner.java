@@ -10,7 +10,7 @@ import com.pikycz.mobplugin.FileLogger;
 import com.pikycz.mobplugin.entities.animal.walking.PolarBear;
 import com.pikycz.mobplugin.entities.autospawn.AbstractEntitySpawner;
 import com.pikycz.mobplugin.entities.autospawn.SpawnResult;
-import com.pikycz.mobplugin.entities.task.AutoSpawnTask;
+import com.pikycz.mobplugin.task.AutoSpawnTask;
 
 /**
  *

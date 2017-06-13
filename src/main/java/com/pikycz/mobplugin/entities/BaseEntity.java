@@ -50,20 +50,20 @@ public abstract class BaseEntity extends EntityCreature {
     public boolean inLava = false;
 
     public boolean onClimbable = false;
-    
-    protected boolean fireProof = false;
-    
-    private int maxJumpHeight = 1; // default: 1 block jump height - this should be 2 for horses e.g.
-    
-    public float speed = 1.0f;
-    
-    protected boolean panicCounter = false;
 
-    protected boolean idlingComponent;
+    protected boolean fireProof = false;
+
+    private int maxJumpHeight = 1; // default: 1 block jump height - this should be 2 for horses e.g.
+
+    public float speed = 1.0f;
+
+    /*protected boolean panicCounter = false;
+
     protected boolean panicEnabled = true;
-    protected int panicTicks = 100;
-    protected int maxAge = 0;
     
+    protected int panicTicks = 100;
+    
+    protected int maxAge = 0;*/
     protected List<Block> blocksAround = new ArrayList<>();
 
     protected List<Block> collisionBlocks = new ArrayList<>();
@@ -107,7 +107,7 @@ public abstract class BaseEntity extends EntityCreature {
     public double getSpeed() {
         return this.speed;
     }
-    
+
     public int getMaxJumpHeight() {
         return this.maxJumpHeight;
     }
@@ -136,12 +136,12 @@ public abstract class BaseEntity extends EntityCreature {
         if (this.namedTag.contains("WallCheck")) {
             this.setWallCheck(this.namedTag.getBoolean("WallCheck"));
         }
-        
+
         /*if (this.namedtag.contains("AgeInTicks")) {
             this.age = this.namedtag.getInt("AgeInTicks");
         }*/
         this.setDataProperty(new ByteEntityData(DATA_FLAG_NO_AI, (byte) 1));
-        
+
         //this.idlingComponent.loadFromNBT();
     }
 
@@ -192,9 +192,9 @@ public abstract class BaseEntity extends EntityCreature {
         if (this instanceof Monster) {
             if (creature instanceof Player) {
                 Player player = (Player) creature;
-                return !player.closed && player.spawned && player.isAlive() && player.isSurvival() && distance <= 100;
+                return player.isSurvival() && player.spawned && player.isAlive() && !player.closed && distance <= 49;
             }
-            return creature.isAlive() && !creature.closed && distance <= 81;
+            return creature.isAlive() && !creature.closed && distance <= 50;
         }
         return false;
     }
@@ -299,6 +299,10 @@ public abstract class BaseEntity extends EntityCreature {
         if (this.y <= -16 && this.isAlive()) {
             hasUpdate = true;
             this.attack(new EntityDamageEvent(this, DamageCause.VOID, 10));
+        }
+
+        if (this.y < 10) {
+            this.close();
         }
 
         if (this.fireTicks > 0) {

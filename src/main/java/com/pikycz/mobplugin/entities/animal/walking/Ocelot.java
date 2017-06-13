@@ -23,12 +23,18 @@ public class Ocelot extends WalkingAnimal {
 
     @Override
     public float getWidth() {
+        if (this.isBaby()) {
+            return 0.3f;
+        }
         return 0.6f;
     }
 
     @Override
     public float getHeight() {
-        return 0.8f;
+        if (this.isBaby()) {
+            return 0.35f;
+        }
+        return 0.7f;
     }
 
     @Override

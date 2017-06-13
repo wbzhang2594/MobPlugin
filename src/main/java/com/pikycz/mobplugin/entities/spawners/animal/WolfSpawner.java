@@ -11,7 +11,7 @@ import cn.nukkit.level.Level;
 import cn.nukkit.level.Position;
 import cn.nukkit.level.generator.biome.Biome;
 import cn.nukkit.utils.Config;
-import com.pikycz.mobplugin.entities.task.AutoSpawnTask;
+import com.pikycz.mobplugin.task.AutoSpawnTask;
 import com.pikycz.mobplugin.FileLogger;
 import com.pikycz.mobplugin.entities.monster.walking.Wolf;
 import com.pikycz.mobplugin.entities.autospawn.AbstractEntitySpawner;

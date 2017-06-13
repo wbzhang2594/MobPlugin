@@ -52,6 +52,11 @@ public class Chicken extends WalkingAnimal {
     }
 
     @Override
+    public float getGravity() {
+        return 0.04f;
+    }
+
+    @Override
     public void initEntity() {
         super.initEntity();
 
@@ -62,7 +67,7 @@ public class Chicken extends WalkingAnimal {
     public boolean targetOption(EntityCreature creature, double distance) {
         if (creature instanceof Player) {
             Player player = (Player) creature;
-            return player.isAlive() && !player.closed && player.getInventory().getItemInHand().getId() == Item.SEEDS && distance <= 49;
+            return player.isSurvival() && player.spawned && player.isAlive() && !player.closed && player.getInventory().getItemInHand().getId() == Item.SEEDS && distance <= 49;
         }
         return false;
     }

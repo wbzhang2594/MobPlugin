@@ -88,7 +88,7 @@ public class Sheep extends WalkingAnimal {
     public boolean targetOption(EntityCreature creature, double distance) {
         if (creature instanceof Player) {
             Player player = (Player) creature;
-            return player.spawned && player.isAlive() && !player.closed && player.getInventory().getItemInHand().getId() == Item.SEEDS && distance <= 49;
+            return player.isSurvival() && player.spawned && player.isAlive() && player.getInventory().getItemInHand().getId() == Item.SEEDS && !player.closed && distance <= 49;
         }
         return false;
     }
