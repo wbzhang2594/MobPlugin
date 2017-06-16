@@ -1,8 +1,3 @@
-/**
- * CreeperSpawner.java
- * <p>
- * Created on 10:39:49
- */
 package com.pikycz.mobplugin.entities.spawners.monster;
 
 import cn.nukkit.IPlayer;
@@ -10,24 +5,25 @@ import cn.nukkit.block.Block;
 import cn.nukkit.level.Level;
 import cn.nukkit.level.Position;
 import cn.nukkit.utils.Config;
-import com.pikycz.mobplugin.task.AutoSpawnTask;
 import com.pikycz.mobplugin.FileLogger;
-import com.pikycz.mobplugin.entities.autospawn.AbstractEntitySpawner;
+import com.pikycz.mobplugin.task.AutoSpawnTask;
 import com.pikycz.mobplugin.entities.autospawn.SpawnResult;
 import com.pikycz.mobplugin.entities.monster.walking.Creeper;
+import com.pikycz.mobplugin.entities.spawners.BaseSpawner;
 
 /**
  * Each entity get it's own spawner class.
  *
  * @author <a href="mailto:kniffman@googlemail.com">Michael Gertz</a>
  */
-public class CreeperSpawner extends AbstractEntitySpawner {
+public class CreeperSpawner extends BaseSpawner {
 
     /**
      * @param spawnTask
+     * @param config
      */
-    public CreeperSpawner(AutoSpawnTask spawnTask, Config pluginConfig) {
-        super(spawnTask, pluginConfig);
+    public CreeperSpawner(AutoSpawnTask spawnTask, Config config) {
+        super(spawnTask, config);
     }
 
     public SpawnResult spawn(IPlayer iPlayer, Position pos, Level level) {
@@ -51,25 +47,16 @@ public class CreeperSpawner extends AbstractEntitySpawner {
         return result;
     }
 
-    /* (@Override)
-     * @see cn.nukkit.entity.ai.IEntitySpawner#getEntityNetworkId()
-     */
     @Override
     public int getEntityNetworkId() {
         return Creeper.NETWORK_ID;
     }
 
-    /* (@Override)
-     * @see cn.nukkit.entity.ai.IEntitySpawner#getEntityName()
-     */
     @Override
     public String getEntityName() {
         return "Creeper";
     }
 
-    /* (@Override)
-     * @see de.kniffo80.mobplugin.entities.autospawn.AbstractEntitySpawner#getLogprefix()
-     */
     @Override
     protected String getLogprefix() {
         return this.getClass().getSimpleName();

@@ -7,9 +7,9 @@ import cn.nukkit.level.Position;
 import cn.nukkit.level.generator.biome.Biome;
 import cn.nukkit.utils.Config;
 import com.pikycz.mobplugin.FileLogger;
-import com.pikycz.mobplugin.entities.autospawn.AbstractEntitySpawner;
 import com.pikycz.mobplugin.entities.autospawn.SpawnResult;
 import com.pikycz.mobplugin.entities.monster.walking.Slime;
+import com.pikycz.mobplugin.entities.spawners.BaseSpawner;
 import com.pikycz.mobplugin.task.AutoSpawnTask;
 import com.pikycz.mobplugin.entities.utils.Utils;
 
@@ -18,10 +18,10 @@ import com.pikycz.mobplugin.entities.utils.Utils;
  * @author PikyCZ
  */
 
-public class SlimeSpawner extends AbstractEntitySpawner{
+public class SlimeSpawner extends BaseSpawner{
 
-    public SlimeSpawner(AutoSpawnTask spawnTask, Config pluginConfig) {
-        super(spawnTask, pluginConfig);
+    public SlimeSpawner(AutoSpawnTask spawnTask, Config config) {
+        super(spawnTask, config);
     }
 
     @Override

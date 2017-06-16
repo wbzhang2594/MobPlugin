@@ -15,13 +15,11 @@ import cn.nukkit.math.AxisAlignedBB;
 import cn.nukkit.math.NukkitMath;
 import cn.nukkit.math.Vector3;
 import cn.nukkit.nbt.tag.CompoundTag;
-import cn.nukkit.nbt.tag.IntTag;
 import cn.nukkit.network.protocol.AddEntityPacket;
 import cn.nukkit.potion.Effect;
 import co.aikar.timings.Timings;
 import com.pikycz.mobplugin.MobPlugin;
 import com.pikycz.mobplugin.entities.monster.Monster;
-import com.pikycz.mobplugin.entities.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -57,13 +55,6 @@ public abstract class BaseEntity extends EntityCreature {
 
     public float speed = 1.0f;
 
-    /*protected boolean panicCounter = false;
-
-    protected boolean panicEnabled = true;
-    
-    protected int panicTicks = 100;
-    
-    protected int maxAge = 0;*/
     protected List<Block> blocksAround = new ArrayList<>();
 
     protected List<Block> collisionBlocks = new ArrayList<>();
@@ -137,12 +128,11 @@ public abstract class BaseEntity extends EntityCreature {
             this.setWallCheck(this.namedTag.getBoolean("WallCheck"));
         }
 
-        /*if (this.namedtag.contains("AgeInTicks")) {
+        /*if (this.namedtag.contains("AgeInTicks")) { //TODO
             this.age = this.namedtag.getInt("AgeInTicks");
         }*/
         this.setDataProperty(new ByteEntityData(DATA_FLAG_NO_AI, (byte) 1));
 
-        //this.idlingComponent.loadFromNBT();
     }
 
     @Override
@@ -192,10 +182,15 @@ public abstract class BaseEntity extends EntityCreature {
         if (this instanceof Monster) {
             if (creature instanceof Player) {
                 Player player = (Player) creature;
-                return player.isSurvival() && player.spawned && player.isAlive() && !player.closed && distance <= 49;
+                return player.isSurvival() && player.spawned && player.isAlive() && !player.closed && distance <= 80;
+
             }
-            return creature.isAlive() && !creature.closed && distance <= 50;
+            return creature.isAlive() && !creature.closed && distance <= 81;
         }
+        return false;
+    }
+
+    public boolean isCurrentBlockOfInterest() {
         return false;
     }
 
@@ -241,12 +236,21 @@ public abstract class BaseEntity extends EntityCreature {
                 block.addVelocityToEntity(this, vector);
             }
 
-            if (block.getId() == Block.WATER || block.getId() == Block.STILL_WATER) {
-                inWater = true;
-            } else if (block.getId() == Block.LAVA || block.getId() == Block.STILL_LAVA) {
-                inLava = true;
-            } else if (block.getId() == Block.LADDER || block.getId() == Block.VINE) {
-                onClimbable = true;
+            switch (block.getId()) {
+                case Block.WATER:
+                case Block.STILL_WATER:
+                    inWater = true;
+                    break;
+                case Block.LAVA:
+                case Block.STILL_LAVA:
+                    inLava = true;
+                    break;
+                case Block.LADDER:
+                case Block.VINE:
+                    onClimbable = true;
+                    break;
+                default:
+                    break;
             }
         }
 
@@ -277,16 +281,17 @@ public abstract class BaseEntity extends EntityCreature {
         }
 
         if (!this.effects.isEmpty()) {
-            for (Effect effect : this.effects.values()) {
+            this.effects.values().stream().map((effect) -> {
                 if (effect.canTick()) {
                     effect.applyEffect(this);
                 }
+                return effect;
+            }).map((effect) -> {
                 effect.setDuration(effect.getDuration() - tickDiff);
-
-                if (effect.getDuration() <= 0) {
-                    this.removeEffect(effect.getId());
-                }
-            }
+                return effect;
+            }).filter((effect) -> (effect.getDuration() <= 0)).forEachOrdered((effect) -> {
+                this.removeEffect(effect.getId());
+            });
         }
 
         this.checkBlockCollision();
@@ -441,4 +446,5 @@ public abstract class BaseEntity extends EntityCreature {
         }
         return true;
     }
+
 }

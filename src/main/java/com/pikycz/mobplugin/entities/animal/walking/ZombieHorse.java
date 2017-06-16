@@ -7,6 +7,7 @@ package com.pikycz.mobplugin.entities.animal.walking;
 
 import cn.nukkit.Player;
 import cn.nukkit.entity.EntityCreature;
+import cn.nukkit.entity.EntityRideable;
 import cn.nukkit.event.entity.EntityDamageByEntityEvent;
 import cn.nukkit.item.Item;
 import cn.nukkit.level.format.FullChunk;
@@ -14,7 +15,7 @@ import cn.nukkit.nbt.tag.CompoundTag;
 import com.pikycz.mobplugin.entities.animal.WalkingAnimal;
 import com.pikycz.mobplugin.entities.utils.Utils;
 
-public class ZombieHorse extends WalkingAnimal {
+public class ZombieHorse extends WalkingAnimal implements EntityRideable {
 
     public static final int NETWORK_ID = 27;
 

@@ -7,9 +7,9 @@ import cn.nukkit.level.Position;
 import cn.nukkit.level.generator.biome.Biome;
 import cn.nukkit.utils.Config;
 import com.pikycz.mobplugin.FileLogger;
-import com.pikycz.mobplugin.entities.autospawn.AbstractEntitySpawner;
 import com.pikycz.mobplugin.entities.autospawn.SpawnResult;
 import com.pikycz.mobplugin.entities.monster.walking.PigZombie;
+import com.pikycz.mobplugin.entities.spawners.BaseSpawner;
 import com.pikycz.mobplugin.entities.utils.Utils;
 import com.pikycz.mobplugin.task.AutoSpawnTask;
 
@@ -17,10 +17,10 @@ import com.pikycz.mobplugin.task.AutoSpawnTask;
  *
  * @author PikyCZ
  */
-public class PigZombieSpawner extends AbstractEntitySpawner {
+public class PigZombieSpawner extends BaseSpawner {
 
-    public PigZombieSpawner(AutoSpawnTask spawnTask, Config pluginConfig) {
-        super(spawnTask, pluginConfig);
+    public PigZombieSpawner(AutoSpawnTask spawnTask, Config config) {
+        super(spawnTask, config);
     }
 
     @Override

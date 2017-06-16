@@ -28,7 +28,6 @@ public abstract class JumpingEntity extends BaseEntity {
 
     public void updateMove() {
         // TODO
-
     }
 
 }

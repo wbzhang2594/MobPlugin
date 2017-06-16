@@ -1,4 +1,4 @@
-package com.pikycz.mobplugin.entities.spawners;
+/*package com.pikycz.mobplugin.entities.spawners;
 
 import cn.nukkit.block.Block;
 import cn.nukkit.entity.Entity;
@@ -13,7 +13,7 @@ import java.util.Set;
 /**
  * Created by CreeperFace on 10.5.2017.
  */
-public class EntitySpawner {
+/*public class EntitySpawner {
 
     private static final int MOB_COUNT_DIV = (int) Math.pow(17.0D, 2.0D);
     private final Set<BlockVector3> eligibleChunksForSpawning = Sets.newHashSet();
@@ -187,7 +187,7 @@ public class EntitySpawner {
         }
     }*/
 
-    public enum SpawnPlacementType {
+    /*public enum SpawnPlacementType {
         ON_GROUND,
         IN_AIR,
         IN_WATER;
@@ -204,12 +204,12 @@ public class EntitySpawner {
         /**
          * A flag indicating whether this creature type is peaceful.
          */
-        private final boolean isPeacefulCreature;
+       /* private final boolean isPeacefulCreature;
 
         /**
          * Whether this creature type is an animal.
          */
-        private final boolean isAnimal;
+        /*private final boolean isAnimal;
 
         CreatureType(Class<?> creatureClassIn, int maxNumberOfCreatureIn, int creatureMaterialIn, boolean isPeacefulCreatureIn, boolean isAnimalIn) {
             this.creatureClass = creatureClassIn;
@@ -230,14 +230,14 @@ public class EntitySpawner {
         /**
          * Gets whether or not this creature type is peaceful.
          */
-        public boolean getPeacefulCreature() {
+       /* public boolean getPeacefulCreature() {
             return this.isPeacefulCreature;
         }
 
         /**
          * Return whether this creature type is an animal.
          */
-        public boolean getAnimal() {
+        /*public boolean getAnimal() {
             return this.isAnimal;
         }
     }
@@ -253,4 +253,4 @@ public class EntitySpawner {
 
         return count;
     }
-}
+}*/

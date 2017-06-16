@@ -1,8 +1,3 @@
-/**
- * CreeperSpawner.java
- * <p>
- * Created on 10:39:49
- */
 package com.pikycz.mobplugin.entities.spawners.animal;
 
 import cn.nukkit.IPlayer;
@@ -14,8 +9,8 @@ import cn.nukkit.utils.Config;
 import com.pikycz.mobplugin.task.AutoSpawnTask;
 import com.pikycz.mobplugin.FileLogger;
 import com.pikycz.mobplugin.entities.animal.walking.Ocelot;
-import com.pikycz.mobplugin.entities.autospawn.AbstractEntitySpawner;
 import com.pikycz.mobplugin.entities.autospawn.SpawnResult;
+import com.pikycz.mobplugin.entities.spawners.BaseSpawner;
 import com.pikycz.mobplugin.entities.utils.Utils;
 
 /**
@@ -23,13 +18,14 @@ import com.pikycz.mobplugin.entities.utils.Utils;
  *
  * @author <a href="mailto:kniffman@googlemail.com">Michael Gertz</a>
  */
-public class OcelotSpawner extends AbstractEntitySpawner {
+public class OcelotSpawner extends BaseSpawner {
 
     /**
      * @param spawnTask
+     * @param config
      */
-    public OcelotSpawner(AutoSpawnTask spawnTask, Config pluginConfig) {
-        super(spawnTask, pluginConfig);
+    public OcelotSpawner(AutoSpawnTask spawnTask, Config config) {
+        super(spawnTask, config);
     }
 
     public SpawnResult spawn(IPlayer iPlayer, Position pos, Level level) {
@@ -61,25 +57,16 @@ public class OcelotSpawner extends AbstractEntitySpawner {
         return result;
     }
 
-    /* (@Override)
-     * @see cn.nukkit.entity.ai.IEntitySpawner#getEntityNetworkId()
-     */
     @Override
     public int getEntityNetworkId() {
         return Ocelot.NETWORK_ID;
     }
 
-    /* (@Override)
-     * @see cn.nukkit.entity.ai.IEntitySpawner#getEntityName()
-     */
     @Override
     public String getEntityName() {
         return "Ocelot";
     }
 
-    /* (@Override)
-     * @see de.kniffo80.mobplugin.entities.autospawn.AbstractEntitySpawner#getLogprefix()
-     */
     @Override
     protected String getLogprefix() {
         return this.getClass().getSimpleName();

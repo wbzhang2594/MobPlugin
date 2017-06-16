@@ -8,18 +8,18 @@ import cn.nukkit.level.generator.biome.Biome;
 import cn.nukkit.utils.Config;
 import com.pikycz.mobplugin.FileLogger;
 import com.pikycz.mobplugin.entities.animal.swim.Squid;
-import com.pikycz.mobplugin.entities.autospawn.AbstractEntitySpawner;
 import com.pikycz.mobplugin.entities.autospawn.SpawnResult;
+import com.pikycz.mobplugin.entities.spawners.BaseSpawner;
 import com.pikycz.mobplugin.task.AutoSpawnTask;
 
 /**
  *
  * @author PikyCZ
  */
-public class SquidSpawner extends AbstractEntitySpawner {
+public class SquidSpawner extends BaseSpawner {
 
-    public SquidSpawner(AutoSpawnTask spawnTask, Config pluginConfig) {
-        super(spawnTask, pluginConfig);
+    public SquidSpawner(AutoSpawnTask spawnTask, Config config) {
+        super(spawnTask, config);
     }
 
     @Override

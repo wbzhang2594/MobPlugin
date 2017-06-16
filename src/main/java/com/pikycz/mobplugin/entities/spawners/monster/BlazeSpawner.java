@@ -1,15 +1,14 @@
 package com.pikycz.mobplugin.entities.spawners.monster;
 
 import cn.nukkit.IPlayer;
-import cn.nukkit.block.Block;
 import cn.nukkit.level.Level;
 import cn.nukkit.level.Position;
 import cn.nukkit.level.generator.biome.Biome;
 import cn.nukkit.utils.Config;
 import com.pikycz.mobplugin.FileLogger;
-import com.pikycz.mobplugin.entities.autospawn.AbstractEntitySpawner;
 import com.pikycz.mobplugin.entities.autospawn.SpawnResult;
 import com.pikycz.mobplugin.entities.monster.flying.Blaze;
+import com.pikycz.mobplugin.entities.spawners.BaseSpawner;
 import com.pikycz.mobplugin.task.AutoSpawnTask;
 import com.pikycz.mobplugin.entities.utils.Utils;
 
@@ -17,10 +16,10 @@ import com.pikycz.mobplugin.entities.utils.Utils;
  *
  * @author PikyCZ
  */
-public class BlazeSpawner extends AbstractEntitySpawner {
+public class BlazeSpawner extends BaseSpawner {
 
-    public BlazeSpawner(AutoSpawnTask spawnTask, Config pluginConfig) {
-        super(spawnTask, pluginConfig);
+    public BlazeSpawner(AutoSpawnTask spawnTask, Config config) {
+        super(spawnTask, config);
     }
 
     @Override

@@ -8,17 +8,17 @@ import cn.nukkit.level.generator.biome.Biome;
 import cn.nukkit.utils.Config;
 import com.pikycz.mobplugin.task.AutoSpawnTask;
 import com.pikycz.mobplugin.FileLogger;
-import com.pikycz.mobplugin.entities.autospawn.AbstractEntitySpawner;
 import com.pikycz.mobplugin.entities.autospawn.SpawnResult;
 import com.pikycz.mobplugin.entities.monster.walking.Husk;
+import com.pikycz.mobplugin.entities.spawners.BaseSpawner;
 
 /**
  * @author PikyCZ
  */
-public class HuskSpawner extends AbstractEntitySpawner {
+public class HuskSpawner extends BaseSpawner {
 
-    public HuskSpawner(AutoSpawnTask spawnTask, Config pluginConfig) {
-        super(spawnTask, pluginConfig);
+    public HuskSpawner(AutoSpawnTask spawnTask, Config config) {
+        super(spawnTask, config);
     }
 
     /**
@@ -37,7 +37,11 @@ public class HuskSpawner extends AbstractEntitySpawner {
         }
 
         int blockLightLevel = level.getBlockLightAt((int) pos.x, (int) pos.y, (int) pos.z);
+        int biomeId = level.getBiomeId((int) pos.x, (int) pos.z);
 
+        if (biomeId == Biome.DESERT) {
+            result = SpawnResult.WRONG_BLOCK;
+        }    
         if (blockLightLevel > 7 || (level.getTime() < Level.TIME_NIGHT && !level.isThundering() && !level.isRaining() && level.canBlockSeeSky(pos))) {
             result = SpawnResult.WRONG_LIGHTLEVEL;
         } else if (pos.y > 127 || pos.y < 1 || level.getBlockIdAt((int) pos.x, (int) pos.y, (int) pos.z) == Block.AIR) { // cannot spawn on AIR block
@@ -51,25 +55,16 @@ public class HuskSpawner extends AbstractEntitySpawner {
         return result;
     }
 
-    /* (@Override)
-     * @see cn.nukkit.entity.ai.IEntitySpawner#getEntityNetworkId()
-     */
     @Override
     public int getEntityNetworkId() {
         return Husk.NETWORK_ID;
     }
 
-    /* (@Override)
-     * @see cn.nukkit.entity.ai.IEntitySpawner#getEntityName()
-     */
     @Override
     public String getEntityName() {
         return "Husk";
     }
 
-    /* (@Override)
-     * @see de.kniffo80.mobplugin.entities.autospawn.AbstractEntitySpawner#getLogprefix()
-     */
     @Override
     protected String getLogprefix() {
         return this.getClass().getSimpleName();

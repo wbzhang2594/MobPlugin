@@ -1,5 +1,6 @@
 package com.pikycz.mobplugin.entities.animal.walking;
 
+import cn.nukkit.entity.EntityRideable;
 import cn.nukkit.event.entity.EntityDamageByEntityEvent;
 import cn.nukkit.item.Item;
 import cn.nukkit.level.format.FullChunk;
@@ -14,7 +15,7 @@ import java.util.List;
  * @author PikyCZ
  */
 
-public class Llama extends WalkingAnimal {
+public class Llama extends WalkingAnimal implements EntityRideable {
     
     public static final int NETWORK_ID = 29;
 

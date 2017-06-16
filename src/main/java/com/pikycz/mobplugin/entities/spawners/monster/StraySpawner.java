@@ -7,21 +7,21 @@ import cn.nukkit.level.Position;
 import cn.nukkit.utils.Config;
 import com.pikycz.mobplugin.task.AutoSpawnTask;
 import com.pikycz.mobplugin.FileLogger;
-import com.pikycz.mobplugin.entities.autospawn.AbstractEntitySpawner;
 import com.pikycz.mobplugin.entities.autospawn.SpawnResult;
 import com.pikycz.mobplugin.entities.monster.walking.Stray;
+import com.pikycz.mobplugin.entities.spawners.BaseSpawner;
 
 /**
  * @author PikyCZ
  */
-public class StraySpawner extends AbstractEntitySpawner {
+public class StraySpawner extends BaseSpawner {
 
     /**
      * @param spawnTask
-     * @param pluginConfig
+     * @param config
      */
-    public StraySpawner(AutoSpawnTask spawnTask, Config pluginConfig) {
-        super(spawnTask, pluginConfig);
+    public StraySpawner(AutoSpawnTask spawnTask, Config config) {
+        super(spawnTask, config);
     }
 
     /**
@@ -53,25 +53,16 @@ public class StraySpawner extends AbstractEntitySpawner {
         return result;
     }
 
-    /* (@Override)
-     * @see cn.nukkit.entity.ai.IEntitySpawner#getEntityNetworkId()
-     */
     @Override
     public int getEntityNetworkId() {
         return Stray.NETWORK_ID;
     }
 
-    /* (@Override)
-     * @see cn.nukkit.entity.ai.IEntitySpawner#getEntityName()
-     */
     @Override
     public String getEntityName() {
         return "Stray";
     }
 
-    /* (@Override)
-     * @see de.kniffo80.mobplugin.entities.autospawn.AbstractEntitySpawner#getLogprefix()
-     */
     @Override
     protected String getLogprefix() {
         return this.getClass().getSimpleName();

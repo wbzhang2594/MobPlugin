@@ -8,18 +8,18 @@ import cn.nukkit.level.generator.biome.Biome;
 import cn.nukkit.utils.Config;
 import com.pikycz.mobplugin.FileLogger;
 import com.pikycz.mobplugin.entities.animal.walking.Llama;
-import com.pikycz.mobplugin.entities.autospawn.AbstractEntitySpawner;
 import com.pikycz.mobplugin.entities.autospawn.SpawnResult;
+import com.pikycz.mobplugin.entities.spawners.BaseSpawner;
 import com.pikycz.mobplugin.task.AutoSpawnTask;
 
 /**
  *
  * @author PikyCZ
  */
-public class LlamaSpawner extends AbstractEntitySpawner {
+public class LlamaSpawner extends BaseSpawner {
 
-    public LlamaSpawner(AutoSpawnTask spawnTask, Config pluginConfig) {
-        super(spawnTask, pluginConfig);
+    public LlamaSpawner(AutoSpawnTask spawnTask, Config config) {
+        super(spawnTask, config);
     }
 
     @Override

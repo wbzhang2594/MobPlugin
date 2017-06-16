@@ -7,6 +7,7 @@ package com.pikycz.mobplugin.entities.animal.walking;
 
 import cn.nukkit.Player;
 import cn.nukkit.entity.EntityCreature;
+import cn.nukkit.entity.EntityRideable;
 import cn.nukkit.event.entity.EntityDamageByEntityEvent;
 import cn.nukkit.item.Item;
 import cn.nukkit.level.format.FullChunk;
@@ -22,7 +23,7 @@ import java.util.List;
  *
  * @author <a href="mailto:kniffman@googlemail.com">Michael Gertz</a>
  */
-public class Mule extends WalkingAnimal {
+public class Mule extends WalkingAnimal implements EntityRideable {
 
     public static final int NETWORK_ID = 25;
 

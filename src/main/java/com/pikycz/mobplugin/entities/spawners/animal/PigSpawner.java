@@ -1,8 +1,3 @@
-/**
- * CreeperSpawner.java
- * <p>
- * Created on 10:39:49
- */
 package com.pikycz.mobplugin.entities.spawners.animal;
 
 import cn.nukkit.IPlayer;
@@ -13,21 +8,22 @@ import cn.nukkit.utils.Config;
 import com.pikycz.mobplugin.task.AutoSpawnTask;
 import com.pikycz.mobplugin.FileLogger;
 import com.pikycz.mobplugin.entities.animal.walking.Pig;
-import com.pikycz.mobplugin.entities.autospawn.AbstractEntitySpawner;
 import com.pikycz.mobplugin.entities.autospawn.SpawnResult;
+import com.pikycz.mobplugin.entities.spawners.BaseSpawner;
 
 /**
  * Each entity get it's own spawner class.
  *
  * @author <a href="mailto:kniffman@googlemail.com">Michael Gertz</a>
  */
-public class PigSpawner extends AbstractEntitySpawner {
+public class PigSpawner extends BaseSpawner {
 
     /**
      * @param spawnTask
+     * @param config
      */
-    public PigSpawner(AutoSpawnTask spawnTask, Config pluginConfig) {
-        super(spawnTask, pluginConfig);
+    public PigSpawner(AutoSpawnTask spawnTask, Config config) {
+        super(spawnTask, config);
     }
 
     public SpawnResult spawn(IPlayer iPlayer, Position pos, Level level) {
@@ -51,25 +47,16 @@ public class PigSpawner extends AbstractEntitySpawner {
         return result;
     }
 
-    /* (@Override)
-     * @see cn.nukkit.entity.ai.IEntitySpawner#getEntityNetworkId()
-     */
     @Override
     public int getEntityNetworkId() {
         return Pig.NETWORK_ID;
     }
 
-    /* (@Override)
-     * @see cn.nukkit.entity.ai.IEntitySpawner#getEntityName()
-     */
     @Override
     public String getEntityName() {
         return "Pig";
     }
 
-    /* (@Override)
-     * @see de.kniffo80.mobplugin.entities.autospawn.AbstractEntitySpawner#getLogprefix()
-     */
     @Override
     protected String getLogprefix() {
         return this.getClass().getSimpleName();

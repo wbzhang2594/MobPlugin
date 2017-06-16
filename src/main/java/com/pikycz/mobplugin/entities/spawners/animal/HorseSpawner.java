@@ -7,18 +7,18 @@ import cn.nukkit.level.Position;
 import cn.nukkit.utils.Config;
 import com.pikycz.mobplugin.FileLogger;
 import com.pikycz.mobplugin.entities.animal.walking.Horse;
-import com.pikycz.mobplugin.entities.autospawn.AbstractEntitySpawner;
 import com.pikycz.mobplugin.entities.autospawn.SpawnResult;
+import com.pikycz.mobplugin.entities.spawners.BaseSpawner;
 import com.pikycz.mobplugin.task.AutoSpawnTask;
 
 /**
  *
  * @author PikyCZ
  */
-public class HorseSpawner extends AbstractEntitySpawner {
+public class HorseSpawner extends BaseSpawner {
 
-    public HorseSpawner(AutoSpawnTask spawnTask, Config pluginConfig) {
-        super(spawnTask, pluginConfig);
+    public HorseSpawner(AutoSpawnTask spawnTask, Config config) {
+        super(spawnTask, config);
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.pikycz.mobplugin.entities.animal;
 
 import cn.nukkit.Player;
 import static cn.nukkit.entity.Entity.DATA_AIR;
+import cn.nukkit.entity.EntityAgeable;
 import cn.nukkit.entity.data.ShortEntityData;
 import cn.nukkit.event.entity.EntityDamageEvent;
 import cn.nukkit.level.format.FullChunk;
@@ -15,7 +16,7 @@ import com.pikycz.mobplugin.entities.SwimmingEntity;
  *
  * @author PikyCZ
  */
-abstract class SwimmingAnimal extends SwimmingEntity implements Animal {
+abstract class SwimmingAnimal extends SwimmingEntity implements EntityAgeable {
 
     public SwimmingAnimal(FullChunk chunk, CompoundTag nbt) {
         super(chunk, nbt);

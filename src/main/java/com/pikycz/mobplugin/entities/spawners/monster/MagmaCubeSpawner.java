@@ -7,20 +7,20 @@ import cn.nukkit.level.Position;
 import cn.nukkit.level.generator.biome.Biome;
 import cn.nukkit.utils.Config;
 import com.pikycz.mobplugin.FileLogger;
-import com.pikycz.mobplugin.entities.autospawn.AbstractEntitySpawner;
 import com.pikycz.mobplugin.entities.autospawn.SpawnResult;
 import com.pikycz.mobplugin.entities.monster.walking.MagmaCube;
 import com.pikycz.mobplugin.task.AutoSpawnTask;
+import com.pikycz.mobplugin.entities.spawners.BaseSpawner;
 import com.pikycz.mobplugin.entities.utils.Utils;
 
 /**
  *
  * @author PikyCZ
  */
-public class MagmaCubeSpawner extends AbstractEntitySpawner {
+public class MagmaCubeSpawner extends BaseSpawner {
 
-    public MagmaCubeSpawner(AutoSpawnTask spawnTask, Config pluginConfig) {
-        super(spawnTask, pluginConfig);
+    public MagmaCubeSpawner(AutoSpawnTask spawnTask, Config config) {
+        super(spawnTask, config);
     }
 
     @Override
@@ -60,7 +60,7 @@ public class MagmaCubeSpawner extends AbstractEntitySpawner {
 
     @Override
     public String getEntityName() {
-        return "LavaSlime";
+        return "MagmaCube";
     }
 
 }

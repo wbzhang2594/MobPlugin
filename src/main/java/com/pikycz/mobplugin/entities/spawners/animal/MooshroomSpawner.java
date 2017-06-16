@@ -8,19 +8,18 @@ import cn.nukkit.level.generator.biome.Biome;
 import cn.nukkit.utils.Config;
 import com.pikycz.mobplugin.FileLogger;
 import com.pikycz.mobplugin.entities.animal.walking.Mooshroom;
-import com.pikycz.mobplugin.entities.autospawn.AbstractEntitySpawner;
 import com.pikycz.mobplugin.entities.autospawn.SpawnResult;
+import com.pikycz.mobplugin.entities.spawners.BaseSpawner;
 import com.pikycz.mobplugin.task.AutoSpawnTask;
 
 /**
  *
  * @author PikyCZ
  */
+public class MooshroomSpawner extends BaseSpawner {
 
-public class MooshroomSpawner extends AbstractEntitySpawner {
-
-    public MooshroomSpawner(AutoSpawnTask spawnTask, Config pluginConfig) {
-        super(spawnTask, pluginConfig);
+    public MooshroomSpawner(AutoSpawnTask spawnTask, Config config) {
+        super(spawnTask, config);
     }
 
     @Override
@@ -38,8 +37,8 @@ public class MooshroomSpawner extends AbstractEntitySpawner {
 
         if (biomeId != Biome.MUSHROOM_ISLAND) { // only spawns on gras
             result = SpawnResult.WRONG_BLOCK;
-        } else if (blockLightLevel > 9) { 
-            result = SpawnResult.WRONG_LIGHTLEVEL;    
+        } else if (blockLightLevel > 9) {
+            result = SpawnResult.WRONG_LIGHTLEVEL;
         } else if (pos.y > 127 || pos.y < 1 || level.getBlockIdAt((int) pos.x, (int) pos.y, (int) pos.z) == Block.AIR) { // cannot spawn on AIR block
             result = SpawnResult.POSITION_MISMATCH;
         } else {
@@ -60,5 +59,5 @@ public class MooshroomSpawner extends AbstractEntitySpawner {
     public String getEntityName() {
         return "Mooshroom";
     }
-    
+
 }

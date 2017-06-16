@@ -1,10 +1,6 @@
-/**
- * Horse.java
- * <p>
- * Created on 09:40:15
- */
 package com.pikycz.mobplugin.entities.animal.walking;
 
+import cn.nukkit.entity.EntityRideable;
 import cn.nukkit.event.entity.EntityDamageByEntityEvent;
 import cn.nukkit.item.Item;
 import cn.nukkit.level.format.FullChunk;
@@ -20,7 +16,7 @@ import java.util.List;
  *
  * @author <a href="mailto:kniffman@googlemail.com">Michael Gertz</a>
  */
-public class Horse extends WalkingAnimal {
+public class Horse extends WalkingAnimal implements EntityRideable {
 
     public static final int NETWORK_ID = 23;
 
@@ -38,7 +34,7 @@ public class Horse extends WalkingAnimal {
         if (this.isBaby()) {
             return 0.6982f;
         }
-        return  1.3965f;
+        return 1.3965f;
     }
 
     @Override
@@ -48,7 +44,7 @@ public class Horse extends WalkingAnimal {
         }
         return 1.6f;
     }
-    
+
     public int getMaxJumpHeight() {
         return 2;
     }

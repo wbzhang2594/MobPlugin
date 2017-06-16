@@ -2,6 +2,7 @@ package com.pikycz.mobplugin.entities.animal;
 
 import cn.nukkit.Player;
 import cn.nukkit.entity.Entity;
+import cn.nukkit.entity.EntityAgeable;
 import cn.nukkit.entity.data.ShortEntityData;
 import cn.nukkit.event.entity.EntityDamageEvent;
 import cn.nukkit.event.entity.EntityDamageEvent.DamageCause;
@@ -14,10 +15,14 @@ import cn.nukkit.potion.Effect;
 import co.aikar.timings.Timings;
 import com.pikycz.mobplugin.entities.WalkingEntity;
 
-public abstract class WalkingAnimal extends WalkingEntity implements Animal {
+public abstract class WalkingAnimal extends WalkingEntity implements EntityAgeable {
 
     protected int inLoveTicks = 0;
+    
     protected int spawnBabyDelay = 0; //TODO: spawn baby animal
+    
+    // for eating grass etc.
+    protected int blockInterestTime = 0;
 
     public WalkingAnimal(FullChunk chunk, CompoundTag nbt) {
         super(chunk, nbt);
@@ -25,7 +30,7 @@ public abstract class WalkingAnimal extends WalkingEntity implements Animal {
 
     @Override
     public double getSpeed() {
-        return 1.0;
+        return 0.7;
     }
 
     @Override
