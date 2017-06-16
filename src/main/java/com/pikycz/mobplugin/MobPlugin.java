@@ -31,8 +31,7 @@ import com.pikycz.mobplugin.entities.block.BlockEntitySpawner;
 //import com.pikycz.mobplugin.entities.monster.swim.*;
 import com.pikycz.mobplugin.entities.monster.walking.*;
 import com.pikycz.mobplugin.entities.projectile.*;
-//import com.pikycz.mobplugin.entities.projectile.*;
-import com.pikycz.mobplugin.entities.task.AutoSpawnTask;
+import com.pikycz.mobplugin.task.AutoSpawnTask;
 import com.pikycz.mobplugin.entities.utils.Utils;
 
 import java.util.ArrayList;
@@ -49,7 +48,7 @@ public class MobPlugin extends PluginBase implements Listener {
 
     private int counter = 0;
 
-    private Config pluginConfig = null;
+    private Config config;
 
     public final HashMap<Integer, Level> levelsToSpawn = new HashMap<>();
 
@@ -58,23 +57,24 @@ public class MobPlugin extends PluginBase implements Listener {
     @Override
     public void onLoad() {
         registerEntities();
-        Utils.logServerInfo(("Load MobPlugin"));
-        Utils.logServerInfo("Version - 1.1");
-        Utils.logServerInfo("Plugin loaded sucessfully.");
+        Utils.logServerInfo("Load MobPlugin");
+        Utils.logServerInfo("Version - 1.1-Dev");
     }
 
     @Override
     public void onEnable() {
         // Config reading and writing
-        saveDefaultConfig();
-        pluginConfig = getConfig();
+        this.getDataFolder().mkdirs();
+        this.saveResource("Config.yml");
+        this.config = new Config(this.getDataFolder() + "/Config.yml");
 
         // we need this flag as it's controlled by the plugin's entities
-        MOB_AI_ENABLED = pluginConfig.getBoolean("entities.mob-ai", true);
-        int spawnDelay = pluginConfig.getInt("entities.auto-spawn-tick", 300);
-        disabledWorlds = pluginConfig.getList("worlds-spawn-disabled", new ArrayList());
-        spawnAnimals = pluginConfig.getBoolean("entities.spawn-animals");
-        spawnMobs = pluginConfig.getBoolean("entities.spawn-mobs");
+        MOB_AI_ENABLED = config.getBoolean("entities.mob-ai", true);
+        int spawnDelay = config.getInt("entities.auto-spawn-tick", 300);
+
+        disabledWorlds = config.getList("worlds-spawn-disabled", new ArrayList());
+        spawnAnimals = config.getBoolean("entities.spawn-animals");
+        spawnMobs = config.getBoolean("entities.spawn-mobs");
 
         //disable Levels
         for (Level level : getServer().getLevels().values()) {
@@ -91,23 +91,13 @@ public class MobPlugin extends PluginBase implements Listener {
         if (spawnDelay > 0) {
             this.getServer().getScheduler().scheduleRepeatingTask(new AutoSpawnTask(this), spawnDelay, true);
         }
-
         Utils.logServerInfo(String.format("Plugin enabling successful [aiEnabled:%s] [autoSpawnTick:%d]", MOB_AI_ENABLED, spawnDelay));
+
     }
 
     @Override
     public void onDisable() {
         Utils.logServerInfo("Plugin disabled successful.");
-    }
-
-    /**
-     * Returns plugin specific yml configuration
-     *
-     *
-     * @return a {@link Config} instance
-     */
-    public Config getPluginConfig() {
-        return this.pluginConfig;
     }
 
     private void registerEntities() {
@@ -121,7 +111,7 @@ public class MobPlugin extends PluginBase implements Listener {
         Entity.registerEntity(Mule.class.getSimpleName(), Mule.class);
         Entity.registerEntity(Ocelot.class.getSimpleName(), Ocelot.class);
         Entity.registerEntity(Pig.class.getSimpleName(), Pig.class);
-        Entity.registerEntity(PolarBear.class.getSimpleName(), PolarBear.class); //TODO: Spawn in IceBiome
+        Entity.registerEntity(PolarBear.class.getSimpleName(), PolarBear.class);
         Entity.registerEntity(Rabbit.class.getSimpleName(), Rabbit.class);
         Entity.registerEntity(Sheep.class.getSimpleName(), Sheep.class);
         Entity.registerEntity(SkeletonHorse.class.getSimpleName(), SkeletonHorse.class);
@@ -140,8 +130,8 @@ public class MobPlugin extends PluginBase implements Listener {
         Entity.registerEntity(Creeper.class.getSimpleName(), Creeper.class);
         //Entity.registerEntity(Enderman.class.getSimpleName(), Enderman.class); //TODO: Move(teleport) , attack
         Entity.registerEntity(IronGolem.class.getSimpleName(), IronGolem.class);
-        //Entity.registerEntity(LavaSlime.class.getSimpleName(), LavaSlime.class);
-        //Entity.registerEntity(PigZombie.class.getSimpleName(), PigZombie.class);
+        Entity.registerEntity(MagmaCube.class.getSimpleName(), MagmaCube.class);
+        Entity.registerEntity(PigZombie.class.getSimpleName(), PigZombie.class);
         //Entity.registerEntity(Silverfish.class.getSimpleName(), Silverfish.class);
         Entity.registerEntity(Skeleton.class.getSimpleName(), Skeleton.class);
         //Entity.registerEntity(Slime.class.getSimpleName(), Slime.class); //TODO: Make random spawn Slime (Big,Small)
@@ -162,9 +152,9 @@ public class MobPlugin extends PluginBase implements Listener {
         // register the mob spawner (which is probably not needed anymore)
         BlockEntity.registerBlockEntity("MobSpawner", BlockEntitySpawner.class);
 
-        Utils.logServerInfo("registerEntites/Blocks: done.");
+        Utils.logServerInfo("Register: Entites/Blocks/Items - Done.");
     }
-    
+
     /**
      * @param commandSender
      * @param cmd
@@ -179,14 +169,13 @@ public class MobPlugin extends PluginBase implements Listener {
             String output = "";
 
             if (args.length == 0) {
-                commandSender.sendMessage(TextFormat.YELLOW + "MobPlugin 1.1");
-                commandSender.sendMessage(TextFormat.YELLOW + "command /mob spawn is now not working :/");
-                commandSender.sendMessage(TextFormat.YELLOW + "you can spawn mob use /mob spawn <mob>");
-                commandSender.sendMessage(TextFormat.YELLOW + "you can remove all mobs use /mob removeall");
-                commandSender.sendMessage(TextFormat.YELLOW + "you can remove items from mobs use /mob removeitems");
+                commandSender.sendMessage(TextFormat.GOLD + "--MobPlugin 1.1--");
+                commandSender.sendMessage(TextFormat.GREEN + "/mob summon <mob>" + TextFormat.YELLOW + "- Spawn Mob");
+                commandSender.sendMessage(TextFormat.GREEN + "/mob removemobs" + TextFormat.YELLOW + "- Remove all Mobs");
+                commandSender.sendMessage(TextFormat.GREEN + "/mob removeitems" + TextFormat.YELLOW + "- Remove all items on ground");
             } else {
-                switch (args[1]) {
-                    case "spawn":
+                switch (args[0]) {
+                    case "summon":
                         String mob = args[1];
                         Player playerThatSpawns = null;
 
@@ -210,11 +199,11 @@ public class MobPlugin extends PluginBase implements Listener {
                             output += "Unknown player " + (args.length == 3 ? args[2] : ((Player) commandSender).getName());
                         }
                         break;
-                    case "removeall":
+                    case "removemobs":
                         int count = 0;
                         for (Level level : getServer().getLevels().values()) {
                             for (Entity entity : level.getEntities()) {
-                                if (entity instanceof BaseEntity && !entity.closed && entity.isAlive()) {
+                                if (entity instanceof BaseEntity) {
                                     entity.close();
                                     count++;
                                 }
@@ -237,6 +226,8 @@ public class MobPlugin extends PluginBase implements Listener {
                     default:
                         output += "Unkown command.";
                         break;
+                    case "version":
+                        ((Player) commandSender).sendMessage(TextFormat.GREEN + "Version > 1.1 working with MCPE 1.1");
                 }
             }
 
@@ -247,6 +238,16 @@ public class MobPlugin extends PluginBase implements Listener {
     }
 
     /**
+     * Returns plugin specific yml configuration
+     *
+     *
+     * @return a {@link Config} instance
+     */
+    public Config getPluginConfig() {
+        return this.config;
+    }
+
+    /**
      * @param type
      * @param source
      * @param args
@@ -254,7 +255,7 @@ public class MobPlugin extends PluginBase implements Listener {
      */
     public static Entity create(Object type, Position source, Object... args) {
         FullChunk chunk = source.getLevel().getChunk((int) source.x >> 4, (int) source.z >> 4, true);
-        
+
         if (chunk.getEntities().size() > 10) {
             FileLogger.debug(String.format("Not spawning mob because the chunk already has too many mobs!"));
             return null;
@@ -263,7 +264,7 @@ public class MobPlugin extends PluginBase implements Listener {
         CompoundTag nbt = new CompoundTag().putList(new ListTag<DoubleTag>("Pos").add(new DoubleTag("", source.x)).add(new DoubleTag("", source.y)).add(new DoubleTag("", source.z)))
                 .putList(new ListTag<DoubleTag>("Motion").add(new DoubleTag("", 0)).add(new DoubleTag("", 0)).add(new DoubleTag("", 0)))
                 .putList(new ListTag<FloatTag>("Rotation").add(new FloatTag("", source instanceof Location ? (float) ((Location) source).yaw : 0))
-                .add(new FloatTag("", source instanceof Location ? (float) ((Location) source).pitch : 0)));
+                        .add(new FloatTag("", source instanceof Location ? (float) ((Location) source).pitch : 0)));
 
         return Entity.createEntity(type.toString(), chunk, nbt, args);
     }
