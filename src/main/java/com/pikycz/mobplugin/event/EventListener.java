@@ -1,7 +1,6 @@
 package com.pikycz.mobplugin.event;
 
 import cn.nukkit.Player;
-//import cn.nukkit.Server;
 import cn.nukkit.block.Block;
 import cn.nukkit.block.BlockAir;
 import cn.nukkit.blockentity.BlockEntity;
@@ -13,19 +12,11 @@ import cn.nukkit.event.entity.EntityDamageByEntityEvent;
 import cn.nukkit.event.entity.EntityDeathEvent;
 import cn.nukkit.event.player.PlayerInteractEvent;
 import cn.nukkit.event.player.PlayerInteractEvent.Action;
-//import cn.nukkit.event.player.PlayerMouseOverEntityEvent;
 import cn.nukkit.item.Item;
 import cn.nukkit.nbt.tag.CompoundTag;
-//import cn.nukkit.network.protocol.EntityEventPacket;
-//import cn.nukkit.utils.DyeColor;
-//import com.pikycz.mobplugin.FileLogger;
 import com.pikycz.mobplugin.MobPlugin;
-import static com.pikycz.mobplugin.MobPlugin.create;
 import com.pikycz.mobplugin.entities.BaseEntity;
-//import com.pikycz.mobplugin.entities.animal.walking.Wolf;
 import com.pikycz.mobplugin.entities.block.BlockEntitySpawner;
-//import com.pikycz.mobplugin.entities.monster.walking.Silverfish;
-//import com.pikycz.mobplugin.entities.utils.Utils;
 
 public class EventListener implements Listener {
 
@@ -89,7 +80,7 @@ public class EventListener implements Listener {
         Block block = ev.getBlock();
         if (block.getId() == Item.JACK_O_LANTERN || block.getId() == Item.PUMPKIN) {
             if (block.down().getId() == Item.SNOW_BLOCK && block.down(2).getId() == Item.SNOW_BLOCK) {
-                Entity entity = create("SnowGolem", block.add(0.5, -2, 0.5));
+                Entity entity = MobPlugin.create("SnowGolem", block.add(0.5, -2, 0.5));
                 if (entity != null) {
                     entity.spawnToAll();
                 }
@@ -121,38 +112,4 @@ public class EventListener implements Listener {
             }
         }
     }
-
-    /*@EventHandler //TODO: Taming
-    @SuppressWarnings("null")
-    public void PlayerMouseOverEntityEvent(PlayerMouseOverEntityEvent ev) {
-        if (this.counter > 10) {
-            counter = 0;
-            FileLogger.debug(String.format("Received PlayerMouseOverEntityEvent [entity:%s]", ev.getEntity()));
-            // wolves can be tamed using bones
-            if (ev != null && ev.getEntity() != null && ev.getPlayer() != null && ev.getEntity().getNetworkId() == Wolf.NETWORK_ID && ev.getPlayer().getInventory().getItemInHand().getId() == Item.BONE) {
-                // check if already owned and tamed ...
-                Wolf wolf = (Wolf) ev.getEntity();
-                if (!wolf.isAngry() && wolf.getOwner() == null) {
-                    // now try it out ...
-                    EntityEventPacket packet = new EntityEventPacket();
-                    packet.eid = ev.getEntity().getId();
-                    packet.event = EntityEventPacket.TAME_SUCCESS;
-
-                    Server.broadcastPacket(new Player[]{ev.getPlayer()}, packet);
-
-                    // set the owner
-                    //wolf.setOwner(ev.getPlayer());
-                    wolf.setCollarColor(DyeColor.BLUE);
-                    wolf.saveNBT();
-                }
-            }
-        } else {
-            counter++;
-        }
-    }
-
-    @EventHandler
-    public void PlayerMouseRightEntityEvent(PlayerMouseRightEntityEvent ev) {
-       FileLogger.debug(String.format("Received PlayerMouseRightEntityEvent [entity:%s]", ev.getEntity()));
-    }*/
 }
