@@ -1,6 +1,5 @@
 package com.pikycz.mobplugin.task;
 
-import cn.nukkit.Player;
 import cn.nukkit.Server;
 import cn.nukkit.block.Block;
 import cn.nukkit.level.Level;
@@ -23,18 +22,17 @@ public class SpawnTask implements Runnable {
         this.plugin = plugin;
     }
 
-
     @Override
     public void run() {
 
         // now that we have all online players, do it for each player online ...
-        for (Player player : Server.getInstance().getOnlinePlayers().values()) {
+        Server.getInstance().getOnlinePlayers().values().forEach((player) -> {
             Position pos = player.getPosition();
 
             // x - longitude, z - latitude, y - high/low (64 is sea level)
             Position spawnPosition = new Position(pos.x, pos.y, pos.z);
             getSpawnPosition(spawnPosition, new int[0], 2, 5, player.getLevel());
-        }
+        });
     }
 
     private Position getSpawnPosition(Position startSpawnPosition, int[] notAllowedBlockIds, int minAirAboveSpawnBlock, int maxFindingTries, Level level) {
