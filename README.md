@@ -1,8 +1,33 @@
 # MobPlugin 
 
+Development: **[PikyCZ](https://github.com/PikyCZ)**
+
 [![CircleCI](https://circleci.com/gh/PikyCZ/MobPlugin/tree/master.svg?style=shield&circle-token=)](https://circleci.com/gh/PikyCZ/MobPlugin/tree/master)
 
 ![mobplugin](https://github.com/PikyCZ/MobPlugin/blob/master/images/MobPlugin.png)
+
+MobPlugin is a plugin that implements the mob entities for MCPE including movement, aggression etc.
+
+## Notice
+This plug-in is in development.
+
+# Credits
+Credits go to Team-SW! They have a nice plugin already made. I used it and adapt it for 1.1.x
+
+# Plugin Example configuration
+Place this plugin jar file to your Nukkit's home directory "${NUKKIT_HOME}/plugin".
+#### Example:
+  /usr/share/nukkit/plugins/MobPlugin-1.1.0-SNAPSHOT.jar
+  
+Then you have to create a folder in plugin folder with the name of the plugin and place the config.yml there ("${NUKKIT_HOME}/plugin/MobPlugin").
+#### Example:
+  /usr/share/nukkit/plugins/MobPlugin/config.yml
+
+When Nukkit Server starts up and the plugin is activated, the config.yml is read and evaluated by the plugin.
+
+## config.yml example
+
+The following configuration sets mobs AI enabled and the auto spawn task will be triggered all 300 ticks.
 
 **Config**
 ```yml
@@ -19,8 +44,8 @@ max-spawns:
   bat: 0
   blaze: 0
   cave-spider: 0
-  chicken: 2
-  cow: 1
+  chicken: 0
+  cow: 0
   creeper: 0
   donkey: 0
   enderman: 0
@@ -30,19 +55,19 @@ max-spawns:
   iron-golem: 0
   mooshroom: 0
   mule: 0
-  ocelot: 1
-  pig: 2
+  ocelot: 0
+  pig: 0
   pig-zombie: 0
-  rabbit: 1
-  stray: 1
+  rabbit: 0
+  stray: 0
   silverfish: 0
-  sheep: 2
-  skeleton: 1
+  sheep: 0
+  skeleton: 0
   skeleton-horse: 0
   snow-golem: 0
   spider: 0
   wolf: 1
-  zombie: 1
+  zombie: 0
   zombie-horse: 0
   zombie-villager: 0
 ```
