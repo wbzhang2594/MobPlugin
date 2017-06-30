@@ -14,7 +14,6 @@ public abstract class SwimmingEntity extends BaseEntity {
         super(chunk, nbt);
     }
 
-    @Override
     public Vector3 updateMove(int tickDiff) {
         if (!this.isMovement()) {
             return null;

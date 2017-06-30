@@ -6,13 +6,13 @@ import cn.nukkit.block.BlockFenceGate;
 import cn.nukkit.block.BlockLiquid;
 import cn.nukkit.entity.Entity;
 import cn.nukkit.entity.EntityCreature;
+import cn.nukkit.entity.passive.EntityAnimal;
 import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.math.NukkitMath;
 import cn.nukkit.math.Vector2;
 import cn.nukkit.math.Vector3;
 import cn.nukkit.nbt.tag.CompoundTag;
 import com.pikycz.mobplugin.MobPlugin;
-import com.pikycz.mobplugin.entities.animal.Animal;
 import com.pikycz.mobplugin.entities.utils.Utils;
 
 public abstract class WalkingEntity extends BaseEntity {
@@ -35,7 +35,7 @@ public abstract class WalkingEntity extends BaseEntity {
             double near = Integer.MAX_VALUE;
 
             for (Entity entity : this.getLevel().getEntities()) {
-                if (entity == this || !(entity instanceof EntityCreature) || entity instanceof Animal) {
+                if (entity == this || !(entity instanceof EntityCreature) || entity instanceof EntityAnimal) {
                     continue;
                 }
 
@@ -115,7 +115,6 @@ public abstract class WalkingEntity extends BaseEntity {
         return false;
     }
 
-    @Override
     public Vector3 updateMove(int tickDiff) {
         if (MobPlugin.MOB_AI_ENABLED) {
             if (!this.isMovement()) {
@@ -198,5 +197,7 @@ public abstract class WalkingEntity extends BaseEntity {
         }
         return null;
     }
+    
+    
 
 }
