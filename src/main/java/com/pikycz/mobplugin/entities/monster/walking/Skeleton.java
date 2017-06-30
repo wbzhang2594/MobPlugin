@@ -71,7 +71,6 @@ public class Skeleton extends WalkingMonster {
             }
 
             EntityArrow arrow = (EntityArrow) k;
-            arrow.canCollide();
             arrow.setMotion(new Vector3(-Math.sin(Math.toRadians(yaw)) * Math.cos(Math.toRadians(pitch)) * f * f, -Math.sin(Math.toRadians(pitch)) * f * f,
                     Math.cos(Math.toRadians(yaw)) * Math.cos(Math.toRadians(pitch)) * f * f));
 

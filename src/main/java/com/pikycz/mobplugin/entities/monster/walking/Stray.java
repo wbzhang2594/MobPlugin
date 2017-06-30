@@ -69,7 +69,7 @@ public class Stray extends WalkingMonster {
             double pitch = this.pitch + Utils.rand(-120, 120) / 10;
             Location pos = new Location(this.x - Math.sin(Math.toRadians(yaw)) * Math.cos(Math.toRadians(pitch)) * 0.5, this.y + this.getHeight() - 0.18,
                     this.z + Math.cos(Math.toRadians(yaw)) * Math.cos(Math.toRadians(pitch)) * 0.5, yaw, pitch, this.level);
-            Entity k = MobPlugin.create("Arrow", pos, this);
+            Entity k = MobPlugin.create("Arrow", pos, this, this.chunk);
             if (!(k instanceof EntityArrow)) {
                 return;
             }

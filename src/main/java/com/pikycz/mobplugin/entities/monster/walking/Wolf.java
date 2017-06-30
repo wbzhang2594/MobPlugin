@@ -75,7 +75,7 @@ public class Wolf extends TameableMonster {
             this.collarColor = DyeColor.getByDyeData(this.namedTag.getInt(NBT_KEY_COLLAR_COLOR));
         }*/
         this.setMaxHealth(8);
-        this.fireProof = true;
+        this.fireProof = false;
         this.setDamage(new int[]{0, 3, 4, 5});
 
     }

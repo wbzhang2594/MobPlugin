@@ -48,14 +48,13 @@ public class Husk extends WalkingMonster implements EntityAgeable {
     @Override
     protected void initEntity() {
         super.initEntity();
-        this.setDamage(new int[]{0, 2, 3, 4});
+        this.setDamage(new int[]{0, 3, 4, 6});
         setMaxHealth(20);
     }
 
     @Override
     public boolean isBaby() {
         return false;
-//        return this.getDataFlag(DATA_AGEABLE_FLAGS, DATA_FLAG_BABY);
     }
 
     public void setHealth(int health) {
