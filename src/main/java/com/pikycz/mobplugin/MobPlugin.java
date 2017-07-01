@@ -18,6 +18,7 @@ import cn.nukkit.event.entity.EntityDeathEvent;
 import cn.nukkit.event.level.LevelLoadEvent;
 import cn.nukkit.event.level.LevelUnloadEvent;
 import cn.nukkit.event.player.PlayerInteractEvent;
+import cn.nukkit.event.player.PlayerInteractEvent.Action;
 import cn.nukkit.event.player.PlayerMouseOverEntityEvent;
 import cn.nukkit.item.Item;
 import cn.nukkit.level.Level;
@@ -291,7 +292,7 @@ public class MobPlugin extends PluginBase implements Listener {
 
     @EventHandler
     public void PlayerInteractEvent(PlayerInteractEvent ev) {
-        if (ev.getFace() == null || ev.getAction() != PlayerInteractEvent.RIGHT_CLICK_BLOCK) {
+        if (ev.getFace() == null || ev.getAction() != Action.RIGHT_CLICK_BLOCK) {
             return;
         }
 
