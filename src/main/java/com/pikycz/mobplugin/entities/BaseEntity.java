@@ -19,44 +19,23 @@ import cn.nukkit.network.protocol.AddEntityPacket;
 import cn.nukkit.potion.Effect;
 import co.aikar.timings.Timings;
 import com.pikycz.mobplugin.MobPlugin;
-import com.pikycz.mobplugin.ai.EntityAITasks;
 import com.pikycz.mobplugin.entities.monster.Monster;
-import com.pikycz.mobplugin.pathfinding.Path;
-import com.pikycz.mobplugin.pathfinding.PathNavigate;
-import com.pikycz.mobplugin.pathfinding.PathNavigateGround;
-import com.pikycz.mobplugin.pathfinding.PathNodeType;
-import com.pikycz.mobplugin.pathfinding.util.EntityJumpHelper;
-import com.pikycz.mobplugin.pathfinding.util.EntityLookHelper;
-import com.pikycz.mobplugin.pathfinding.util.EntityMoveHelper;
 
 import java.util.ArrayList;
-import java.util.EnumMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 public abstract class BaseEntity extends EntityCreature {
-    
-    public float headYaw = 0;
 
     protected int stayTime = 0;
 
     protected int moveTime = 0;
-    
-    private int jumpTicks;
 
     protected Vector3 target = null;
 
+    public abstract Vector3 updateMove(int tickDiff);
+
     protected Entity followTarget = null;
-
-    protected PathNavigate navigator;
-
-    private final Map<PathNodeType, Float> mapPathPriority = new EnumMap<>(PathNodeType.class);
-    
-    protected boolean isJumping = false;
-    public float moveStrafing;
-    public float moveForward;
-    public float randomYawVelocity;
 
     public boolean inWater = false;
 
@@ -65,21 +44,13 @@ public abstract class BaseEntity extends EntityCreature {
     public boolean inLava = false;
 
     public boolean onClimbable = false;
-    
-    public float stepHeight = 0.6f;
-
-    public Path currentPath = null;
-    
-    private EntityLookHelper lookHelper;
-    protected EntityMoveHelper moveHelper;
-    protected EntityJumpHelper jumpHelper;
 
     protected boolean fireProof = false;
-    
+
     private boolean friendly = false;
-    
+
     private boolean movement = true;
-    
+
     private boolean wallcheck = true;
 
     private int maxJumpHeight = 1; // default: 1 block jump height - this should be 2 for horses e.g.
@@ -89,23 +60,9 @@ public abstract class BaseEntity extends EntityCreature {
     protected List<Block> blocksAround = new ArrayList<>();
 
     protected List<Block> collisionBlocks = new ArrayList<>();
-    
-    protected int maxHomeDistance = -1;
-    
-    private float landMovementFactor;
-    
-    protected final EntityAITasks tasks;
-    
-    protected final EntityAITasks targetTasks;
 
     public BaseEntity(FullChunk chunk, CompoundTag nbt) {
         super(chunk, nbt);
-        this.tasks = new EntityAITasks();
-        this.targetTasks = new EntityAITasks();
-        this.lookHelper = new EntityLookHelper(this);
-        this.moveHelper = new EntityMoveHelper(this);
-        this.jumpHelper = new EntityJumpHelper(this);
-        this.navigator = this.getNewNavigator(this.level);
     }
 
     public abstract int getKillExperience();
@@ -149,7 +106,7 @@ public abstract class BaseEntity extends EntityCreature {
     public Entity getTarget() {
         return this.followTarget != null ? this.followTarget : (this.target instanceof Entity ? (Entity) this.target : null);
     }
-    
+
     public int getAge() {
         return this.age;
     }
@@ -178,11 +135,8 @@ public abstract class BaseEntity extends EntityCreature {
         if (this.namedTag.contains("Age")) {
             this.age = this.namedTag.getShort("Age");
         }
-        
+
         this.setDataProperty(new ByteEntityData(DATA_FLAG_NO_AI, (byte) 1));
-    }
-    
-    protected void initEntityAI() {
     }
 
     @Override
@@ -282,21 +236,12 @@ public abstract class BaseEntity extends EntityCreature {
                 block.addVelocityToEntity(this, vector);
             }
 
-            switch (block.getId()) {
-                case Block.WATER:
-                case Block.STILL_WATER:
-                    inWater = true;
-                    break;
-                case Block.LAVA:
-                case Block.STILL_LAVA:
-                    inLava = true;
-                    break;
-                case Block.LADDER:
-                case Block.VINE:
-                    onClimbable = true;
-                    break;
-                default:
-                    break;
+            if (block.getId() == Block.WATER || block.getId() == Block.STILL_WATER) {
+                inWater = true;
+            } else if (block.getId() == Block.LAVA || block.getId() == Block.STILL_LAVA) {
+                inLava = true;
+            } else if (block.getId() == Block.LADDER || block.getId() == Block.VINE) {
+                onClimbable = true;
             }
         }
 
@@ -492,87 +437,5 @@ public abstract class BaseEntity extends EntityCreature {
         }
         return true;
     }
-    
-    public float getPathPriority(PathNodeType nodeType) {
-        Float f = (Float) this.mapPathPriority.get(nodeType);
-        return f == null ? nodeType.getPriority() : f;
-    }
 
-    public void setPathPriority(PathNodeType nodeType, float priority) {
-        this.mapPathPriority.put(nodeType, priority);
-    }
- 
-    public PathNavigate getNavigator() {
-        return this.navigator;
-    }
-    
-    public EntityLookHelper getLookHelper() {
-        return this.lookHelper;
-    }
-
-    public EntityMoveHelper getMoveHelper() {
-        return this.moveHelper;
-    }
-
-    public EntityJumpHelper getJumpHelper() {
-        return this.jumpHelper;
-    }
-    
-    public int getMaxHomeDistance() {
-        return maxHomeDistance;
-    }
-
-    public void setMaxHomeDistance(int distance) {
-        this.maxHomeDistance = distance;
-    }
-
-    public boolean hasMaxHomeDistance() {
-        return this.maxHomeDistance != -1;
-    }
-
-    public boolean isWithinHomeDistance(Vector3 pos) {
-        return this.maxHomeDistance == -1.0F ? true : this.distanceSquared(pos) < (double) (this.maxHomeDistance * this.maxHomeDistance);
-    }
-
-    public float getBlockPathWeight(Vector3 pos) {
-        return 0;
-    }
-
-    public boolean isBaby() {
-        return false;
-    }
-
-    public void eatGrassBonus() {
-    }
-
-    public void updateAITasks() {
-    }
-    
-    public void setJumping(boolean jumping) {
-        this.isJumping = jumping;
-    }
-
-    public void setMoveForward(float amount) {
-        this.moveForward = amount;
-    }
-
-    public void setMoveStrafing(float amount) {
-         this.moveStrafing = amount;
-    }
-
-    /**
-     * set the movespeed used for the new AI system
-    */
-    public void setAIMoveSpeed(float speedIn) {
-        this.landMovementFactor = speedIn;
-        this.setMoveForward(speedIn);
-    }
-
-    protected PathNavigate getNewNavigator(Level level) {
-        return new PathNavigateGround(this, level);
-    }
-
-    public float getAIMoveSpeed() {
-        return this.landMovementFactor;
-    }
 }
