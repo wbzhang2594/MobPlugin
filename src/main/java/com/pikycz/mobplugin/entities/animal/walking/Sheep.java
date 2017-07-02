@@ -14,9 +14,6 @@ import cn.nukkit.item.ItemDye;
 import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.nbt.tag.CompoundTag;
 import cn.nukkit.utils.DyeColor;
-import com.pikycz.mobplugin.ai.EntityAIEatGrass;
-import com.pikycz.mobplugin.ai.EntityAISwimming;
-import com.pikycz.mobplugin.ai.EntityAIWander;
 import com.pikycz.mobplugin.entities.animal.WalkingAnimal;
 import com.pikycz.mobplugin.entities.utils.Utils;
 
@@ -28,9 +25,6 @@ public class Sheep extends WalkingAnimal {
 
     public boolean sheared = false;
     public int color = 0;
-    
-    private int sheepTimer;
-    private EntityAIEatGrass entityAIEatGrass;
 
     public Sheep(FullChunk chunk, CompoundTag nbt) {
         super(chunk, nbt);
@@ -81,26 +75,6 @@ public class Sheep extends WalkingAnimal {
         }
 
         this.setDataFlag(0, 26, this.sheared);
-    }
-    
-    @Override
-     protected void initEntityAI() {
-        this.entityAIEatGrass = new EntityAIEatGrass(this);
-        this.tasks.addTask(0, new EntityAISwimming(this));
-        //this.tasks.addTask(1, new EntityAIPanic(this, 1.25D));
-        //this.tasks.addTask(2, new EntityAIMate(this, 1.0D));
-        //this.tasks.addTask(3, new EntityAITempt(this, 1.1D, Items.WHEAT, false));
-        //this.tasks.addTask(4, new EntityAIFollowParent(this, 1.1D));
-        this.tasks.addTask(5, this.entityAIEatGrass);
-        this.tasks.addTask(6, new EntityAIWander(this, 1.0D));
-        //this.tasks.addTask(7, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0F));
-        //this.tasks.addTask(8, new EntityAILookIdle(this));
-    }
-
-    @Override
-    public void updateAITasks() {
-        this.sheepTimer = this.entityAIEatGrass.getEatingGrassTimer();
-        super.updateAITasks();
     }
 
     @Override
@@ -211,15 +185,6 @@ public class Sheep extends WalkingAnimal {
     @Override
     public int getKillExperience() {
         return Utils.rand(1, 4); // gain 1-3 experience
-    }
-    
-    @Override
-    public void eatGrassBonus() {
-        this.setSheared(false);
-
-        if (isBaby()) {
-            //TODO add age
-        }
     }
 
 }
