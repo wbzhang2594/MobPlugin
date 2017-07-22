@@ -9,7 +9,7 @@ import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.nbt.tag.CompoundTag;
 import cn.nukkit.nbt.tag.ShortTag;
 import com.pikycz.mobplugin.MobPlugin;
-import com.pikycz.mobplugin.entities.utils.Utils;
+import com.pikycz.mobplugin.utils.Utils;
 
 import java.util.ArrayList;
 
@@ -54,16 +54,11 @@ public class BlockEntitySpawner extends BlockEntitySpawnable {
             this.namedTag.putShort("RequiredPlayerRange", 20);
         }
 
-        if (!this.namedTag.contains("SpawnCount") || !(this.namedTag.get("SpawnCount") instanceof ShortTag)) {
-            this.namedTag.putShort("SpawnCount", 4);
-        }
-
         this.spawnRange = this.namedTag.getShort("SpawnRange");
         this.minSpawnDelay = this.namedTag.getInt("MinSpawnDelay");
         this.maxSpawnDelay = this.namedTag.getInt("MaxSpawnDelay");
         this.maxNearbyEntities = this.namedTag.getShort("MaxNearbyEntities");
         this.requiredPlayerRange = this.namedTag.getShort("RequiredPlayerRange");
-        this.spawnCount = this.namedTag.getShort("SpawnCount");
 
         this.scheduleUpdate();
     }

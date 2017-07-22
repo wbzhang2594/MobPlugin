@@ -9,7 +9,7 @@ import cn.nukkit.level.particle.CriticalParticle;
 import cn.nukkit.nbt.tag.CompoundTag;
 import cn.nukkit.network.protocol.AddEntityPacket;
 import co.aikar.timings.Timings;
-import com.pikycz.mobplugin.entities.utils.Utils;
+import com.pikycz.mobplugin.utils.Utils;
 
 /**
  *
