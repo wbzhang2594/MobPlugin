@@ -18,7 +18,7 @@ import cn.nukkit.nbt.tag.CompoundTag;
 import cn.nukkit.network.protocol.AddEntityPacket;
 import cn.nukkit.potion.Effect;
 import co.aikar.timings.Timings;
-import com.pikycz.mobplugin.MobPlugin;
+
 import com.pikycz.mobplugin.entities.monster.Monster;
 
 import java.util.ArrayList;
@@ -111,7 +111,6 @@ public abstract class BaseEntity extends EntityCreature {
         return this.age;
     }
 
-    // TODO
     public void setTarget(Entity target) {
         this.followTarget = target;
 
@@ -169,16 +168,14 @@ public abstract class BaseEntity extends EntityCreature {
 
     @Override
     protected void updateMovement() {
-        if (MobPlugin.MOB_AI_ENABLED) {
-            if (this.lastX != this.x || this.lastY != this.y || this.lastZ != this.z || this.lastYaw != this.yaw || this.lastPitch != this.pitch) {
-                this.lastX = this.x;
-                this.lastY = this.y;
-                this.lastZ = this.z;
-                this.lastYaw = this.yaw;
-                this.lastPitch = this.pitch;
+        if (this.lastX != this.x || this.lastY != this.y || this.lastZ != this.z || this.lastYaw != this.yaw || this.lastPitch != this.pitch) {
+            this.lastX = this.x;
+            this.lastY = this.y;
+            this.lastZ = this.z;
+            this.lastYaw = this.yaw;
+            this.lastPitch = this.pitch;
 
-                this.addMovement(this.x, this.y, this.z, this.yaw, this.pitch, this.yaw);
-            }
+            this.addMovement(this.x, this.y, this.z, this.yaw, this.pitch, this.yaw);
         }
     }
 
@@ -385,56 +382,52 @@ public abstract class BaseEntity extends EntityCreature {
 
     @Override
     public boolean setMotion(Vector3 motion) {
-        if (MobPlugin.MOB_AI_ENABLED) {
-            if (!this.justCreated) {
-                EntityMotionEvent ev = new EntityMotionEvent(this, motion);
-                this.server.getPluginManager().callEvent(ev);
-                if (ev.isCancelled()) {
-                    return false;
-                }
+        if (!this.justCreated) {
+            EntityMotionEvent ev = new EntityMotionEvent(this, motion);
+            this.server.getPluginManager().callEvent(ev);
+            if (ev.isCancelled()) {
+                return false;
             }
-
-            this.motionX = motion.x;
-            this.motionY = motion.y;
-            this.motionZ = motion.z;
         }
+
+        this.motionX = motion.x;
+        this.motionY = motion.y;
+        this.motionZ = motion.z;
         return true;
     }
 
     @Override
     public boolean move(double dx, double dy, double dz) {
-        if (MobPlugin.MOB_AI_ENABLED) {
-            Timings.entityMoveTimer.startTiming();
+        Timings.entityMoveTimer.startTiming();
 
-            double movX = dx * moveMultifier;
-            double movY = dy;
-            double movZ = dz * moveMultifier;
+        double movX = dx * moveMultifier;
+        double movY = dy;
+        double movZ = dz * moveMultifier;
 
-            AxisAlignedBB[] list = this.level.getCollisionCubes(this, this.level.getTickRate() > 1 ? this.boundingBox.getOffsetBoundingBox(dx, dy, dz) : this.boundingBox.addCoord(dx, dy, dz));
-            if (this.isWallCheck()) {
-                for (AxisAlignedBB bb : list) {
-                    dx = bb.calculateXOffset(this.boundingBox, dx);
-                }
-                this.boundingBox.offset(dx, 0, 0);
-
-                for (AxisAlignedBB bb : list) {
-                    dz = bb.calculateZOffset(this.boundingBox, dz);
-                }
-                this.boundingBox.offset(0, 0, dz);
-            }
+        AxisAlignedBB[] list = this.level.getCollisionCubes(this, this.level.getTickRate() > 1 ? this.boundingBox.getOffsetBoundingBox(dx, dy, dz) : this.boundingBox.addCoord(dx, dy, dz));
+        if (this.isWallCheck()) {
             for (AxisAlignedBB bb : list) {
-                dy = bb.calculateYOffset(this.boundingBox, dy);
+                dx = bb.calculateXOffset(this.boundingBox, dx);
             }
-            this.boundingBox.offset(0, dy, 0);
+            this.boundingBox.offset(dx, 0, 0);
 
-            this.setComponents(this.x + dx, this.y + dy, this.z + dz);
-            this.checkChunks();
-
-            this.checkGroundState(movX, movY, movZ, dx, dy, dz);
-            this.updateFallState(this.onGround);
-
-            Timings.entityMoveTimer.stopTiming();
+            for (AxisAlignedBB bb : list) {
+                dz = bb.calculateZOffset(this.boundingBox, dz);
+            }
+            this.boundingBox.offset(0, 0, dz);
         }
+        for (AxisAlignedBB bb : list) {
+            dy = bb.calculateYOffset(this.boundingBox, dy);
+        }
+        this.boundingBox.offset(0, dy, 0);
+
+        this.setComponents(this.x + dx, this.y + dy, this.z + dz);
+        this.checkChunks();
+
+        this.checkGroundState(movX, movY, movZ, dx, dy, dz);
+        this.updateFallState(this.onGround);
+
+        Timings.entityMoveTimer.stopTiming();
         return true;
     }
 

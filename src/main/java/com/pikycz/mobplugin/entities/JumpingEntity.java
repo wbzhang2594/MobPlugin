@@ -1,6 +1,7 @@
 package com.pikycz.mobplugin.entities;
 
 import cn.nukkit.level.format.FullChunk;
+import cn.nukkit.math.Vector3;
 import cn.nukkit.nbt.tag.CompoundTag;
 
 /**
@@ -26,7 +27,9 @@ public abstract class JumpingEntity extends BaseEntity {
         //TODO
     }
 
-    public void updateMove() {
+    @Override
+    public Vector3 updateMove(int tickDiff) {
+        return null;
         // TODO
     }
 
