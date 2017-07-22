@@ -13,9 +13,10 @@ import cn.nukkit.math.Vector3;
 import cn.nukkit.nbt.tag.CompoundTag;
 import cn.nukkit.potion.Effect;
 import cn.nukkit.potion.Potion;
+
 import com.pikycz.mobplugin.MobPlugin;
 import com.pikycz.mobplugin.entities.monster.WalkingMonster;
-import com.pikycz.mobplugin.entities.utils.Utils;
+import com.pikycz.mobplugin.utils.Utils;
 
 public class Witch extends WalkingMonster {
 
@@ -30,6 +31,11 @@ public class Witch extends WalkingMonster {
     @Override
     public int getNetworkId() {
         return NETWORK_ID;
+    }
+    
+    @Override
+    public String getName() {
+        return "Witch";
     }
 
     @Override
@@ -68,7 +74,6 @@ public class Witch extends WalkingMonster {
      */
     @Override
     public void attackEntity(Entity player) {
-        if (MobPlugin.MOB_AI_ENABLED) {
             if (this.attackDelay > ATTACK_TICKS && this.distanceSquared(player) <= 8) { // they attack only beginning from 8 blocks away ...
                 this.attackDelay = 0;
                 if (player.isAlive() && !player.closed) {
@@ -105,7 +110,6 @@ public class Witch extends WalkingMonster {
             } else {
                 this.attackDelay++;
             }
-        }
     }
 
     @Override

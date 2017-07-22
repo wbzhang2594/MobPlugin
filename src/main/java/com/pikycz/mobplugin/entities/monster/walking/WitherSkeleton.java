@@ -6,6 +6,7 @@ import cn.nukkit.item.ItemSwordIron;
 import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.nbt.tag.CompoundTag;
 import cn.nukkit.network.protocol.MobEquipmentPacket;
+
 import com.pikycz.mobplugin.entities.monster.WalkingMonster;
 
 /**
@@ -23,6 +24,11 @@ public class WitherSkeleton extends WalkingMonster {
     public WitherSkeleton(FullChunk chunk, CompoundTag nbt) {
         super(chunk, nbt);
     }
+    
+    @Override
+    public String getName() {
+        return "WitherSkeleton";
+    }
 
     @Override
     protected void initEntity() {
@@ -37,11 +43,6 @@ public class WitherSkeleton extends WalkingMonster {
     @Override
     public float getHeight() {
         return 1.8f;
-    }
-
-    @Override
-    public String getName() {
-        return "WitherSkeleton";
     }
 
     @Override

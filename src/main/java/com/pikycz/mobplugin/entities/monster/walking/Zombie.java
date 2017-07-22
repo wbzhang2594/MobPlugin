@@ -9,9 +9,11 @@ import cn.nukkit.item.ItemSkull;
 import cn.nukkit.level.Level;
 import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.nbt.tag.CompoundTag;
+
 import co.aikar.timings.Timings;
+
 import com.pikycz.mobplugin.entities.monster.WalkingMonster;
-import com.pikycz.mobplugin.entities.utils.Utils;
+import com.pikycz.mobplugin.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +30,12 @@ public class Zombie extends WalkingMonster implements EntityAgeable {
     public int getNetworkId() {
         return NETWORK_ID;
     }
-
+    
+    @Override
+    public String getName() {
+        return "Zombie";
+    }
+    
     @Override
     public float getWidth() {
         return 0.72f;

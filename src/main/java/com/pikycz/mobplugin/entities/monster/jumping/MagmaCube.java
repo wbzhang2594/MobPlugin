@@ -1,20 +1,20 @@
-package com.pikycz.mobplugin.entities.monster.swim;
+package com.pikycz.mobplugin.entities.monster.jumping;
+
+import cn.nukkit.level.format.FullChunk;
+import cn.nukkit.nbt.tag.CompoundTag;
+
+import com.pikycz.mobplugin.entities.JumpingEntity;
+import com.pikycz.mobplugin.utils.Utils;
 
 /**
  *
  * @author PikyCZ
- *
  */
-import cn.nukkit.level.format.FullChunk;
-import cn.nukkit.nbt.tag.CompoundTag;
+public class MagmaCube extends JumpingEntity {
+    
+    public static final int NETWORK_ID = 42;
 
-import com.pikycz.mobplugin.entities.monster.SwimmingMonster;
-
-public class Guardian extends SwimmingMonster {
-
-    public static final int NETWORK_ID = 49;
-
-    public Guardian(FullChunk chunk, CompoundTag nbt) {
+    public MagmaCube(FullChunk chunk, CompoundTag nbt) {
         super(chunk, nbt);
     }
 
@@ -25,28 +25,27 @@ public class Guardian extends SwimmingMonster {
     
     @Override
     public String getName() {
-        return "Guardian";
+        return "MagmaCube";
     }
 
     @Override
     public float getWidth() {
-        return 0.7f;
+        return 2.04f;
     }
 
     @Override
     public float getHeight() {
-        return 2.4f;
+        return 2.04f;
     }
 
     @Override
     public void initEntity() {
+        this.setMaxHealth(16);
         super.initEntity();
-
-        this.setMaxHealth(30);
     }
 
-    @Override
     public int getKillExperience() {
-        return 10;
+        return Utils.rand(1, 5);
     }
+
 }

@@ -25,6 +25,11 @@ public class EnderDragon extends FlyingMonster {
     public int getNetworkId() {
         return NETWORK_ID;
     }
+    
+    @Override
+    public String getName() {
+        return "EnderDragon";
+    }
 
     @Override
     public float getWidth() {

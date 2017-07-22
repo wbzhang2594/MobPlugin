@@ -1,19 +1,10 @@
 package com.pikycz.mobplugin.entities.monster;
 
-import cn.nukkit.Player;
-import cn.nukkit.Server;
-import cn.nukkit.block.BlockWater;
 import cn.nukkit.entity.Entity;
-import cn.nukkit.entity.data.ShortEntityData;
-import cn.nukkit.event.entity.EntityDamageEvent;
 import cn.nukkit.level.format.FullChunk;
-import cn.nukkit.math.NukkitMath;
-import cn.nukkit.math.Vector3;
 import cn.nukkit.nbt.tag.CompoundTag;
-import cn.nukkit.potion.Effect;
-import co.aikar.timings.Timings;
+
 import com.pikycz.mobplugin.entities.SwimmingEntity;
-import com.pikycz.mobplugin.entities.utils.Utils;
 
 /**
  *
@@ -21,182 +12,8 @@ import com.pikycz.mobplugin.entities.utils.Utils;
  */
 public abstract class SwimmingMonster extends SwimmingEntity implements Monster {
 
-    private int[] minDamage;
-
-    private int[] maxDamage;
-
-    protected int attackDelay = 0;
-
-    private boolean canAttack = true;
-
     public SwimmingMonster(FullChunk chunk, CompoundTag nbt) {
         super(chunk, nbt);
-    }
-
-    @Override
-    public void setTarget(Entity target) {
-        this.setTarget(target, true);
-    }
-
-    public void setTarget(Entity target, boolean attack) {
-        super.setTarget(target);
-        this.canAttack = attack;
-    }
-
-    @Override
-    public int getNetworkId() {
-        return NETWORK_ID;
-    }
-
-    public abstract void attackEntity(Entity player);
-
-    @Override
-    public int getDamage() {
-        return getDamage(null);
-    }
-
-    @Override
-    public int getDamage(Integer difficulty) {
-        return Utils.rand(this.getMinDamage(difficulty), this.getMaxDamage(difficulty));
-    }
-
-    @Override
-    public int getMinDamage() {
-        return getMinDamage(null);
-    }
-
-    /**
-     * @param difficulty
-     * @return
-     */
-    @Override
-    public int getMinDamage(Integer difficulty) {
-        if (difficulty == null || difficulty > 3 || difficulty < 0) {
-            difficulty = Server.getInstance().getDifficulty();
-        }
-        return this.minDamage[difficulty];
-    }
-
-    @Override
-    public int getMaxDamage() {
-        return getMaxDamage(null);
-    }
-
-    @Override
-    public int getMaxDamage(Integer difficulty) {
-        if (difficulty == null || difficulty > 3 || difficulty < 0) {
-            difficulty = Server.getInstance().getDifficulty();
-        }
-        return this.maxDamage[difficulty];
-    }
-
-    /**
-     * @param damage
-     */
-    @Override
-    public void setDamage(int damage) {
-        this.setDamage(damage, Server.getInstance().getDifficulty());
-    }
-
-    /**
-     * @param damage
-     * @param difficulty
-     */
-    @Override
-    public void setDamage(int damage, int difficulty) {
-        if (difficulty >= 1 && difficulty <= 3) {
-            this.minDamage[difficulty] = damage;
-            this.maxDamage[difficulty] = damage;
-        }
-    }
-
-    /**
-     * @param damage
-     */
-    @Override
-    public void setDamage(int[] damage) {
-        if (damage.length < 4) {
-            return;
-        }
-
-        if (minDamage == null || minDamage.length < 4) {
-            minDamage = new int[]{0, 0, 0, 0};
-        }
-
-        if (maxDamage == null || maxDamage.length < 4) {
-            maxDamage = new int[]{0, 0, 0, 0};
-        }
-
-        for (int i = 0; i < 4; i++) {
-            this.minDamage[i] = damage[i];
-            this.maxDamage[i] = damage[i];
-        }
-    }
-
-    /**
-     * @param damage
-     */
-    @Override
-    public void setMinDamage(int[] damage) {
-        if (damage.length < 4) {
-            return;
-        }
-
-        for (int i = 0; i < 4; i++) {
-            this.setMinDamage(Math.min(damage[i], this.getMaxDamage(i)), i);
-        }
-    }
-
-    /**
-     * @param damage
-     */
-    @Override
-    public void setMinDamage(int damage) {
-        this.setMinDamage(damage, Server.getInstance().getDifficulty());
-    }
-
-    /**
-     * @param damage
-     * @param difficulty
-     */
-    @Override
-    public void setMinDamage(int damage, int difficulty) {
-        if (difficulty >= 1 && difficulty <= 3) {
-            this.minDamage[difficulty] = Math.min(damage, this.getMaxDamage(difficulty));
-        }
-    }
-
-    /**
-     * @param damage
-     */
-    @Override
-    public void setMaxDamage(int[] damage) {
-        if (damage.length < 4) {
-            return;
-        }
-
-        for (int i = 0; i < 4; i++) {
-            this.setMaxDamage(Math.max(damage[i], this.getMinDamage(i)), i);
-        }
-    }
-
-    /**
-     * @param damage
-     */
-    @Override
-    public void setMaxDamage(int damage) {
-        setMinDamage(damage, Server.getInstance().getDifficulty());
-    }
-
-    /**
-     * @param damage
-     * @param difficulty
-     */
-    @Override
-    public void setMaxDamage(int damage, int difficulty) {
-        if (difficulty >= 1 && difficulty <= 3) {
-            this.maxDamage[difficulty] = Math.max(damage, this.getMinDamage(difficulty));
-        }
     }
 
     @Override
@@ -205,75 +22,88 @@ public abstract class SwimmingMonster extends SwimmingEntity implements Monster 
     }
 
     @Override
-    public boolean onUpdate(int currentTick) {
-        if (this.server.getDifficulty() < 1) {
-            this.close();
-            return false;
-        }
-
-        if (!this.isAlive()) {
-            if (++this.deadTicks >= 23) {
-                this.close();
-                return false;
-            }
-            return true;
-        }
-
-        int tickDiff = currentTick - this.lastUpdate;
-        this.lastUpdate = currentTick;
-        this.entityBaseTick(tickDiff);
-
-        target = this.updateMove(tickDiff);
-        if (this.isFriendly()) {
-            if (!(target instanceof Player)) {
-                if (target instanceof Entity) {
-                    this.attackEntity((Entity) target);
-                } else if (target != null && (Math.pow(this.x - target.x, 2) + Math.pow(this.z - target.z, 2)) <= 1) {
-                    this.moveTime = 0;
-                }
-            }
-        } else {
-            if (target instanceof Entity) {
-                this.attackEntity((Entity) target);
-            } else if (target != null && (Math.pow(this.x - target.x, 2) + Math.pow(this.z - target.z, 2)) <= 1) {
-                {
-                    this.moveTime = 0;
-                }
-            }
-
-        }
-        return true;
+    public int getNetworkId() {
+        return NETWORK_ID;
     }
 
     @Override
-    public boolean entityBaseTick(int tickDiff) {
-        boolean hasUpdate = false;
+    public void attackEntity(Entity player) {
+        //TODO
+    }
 
-        Timings.entityBaseTickTimer.startTiming();
+    @Override
+    public int getDamage() {
+        return 0;
+    }
 
-        hasUpdate = super.entityBaseTick(tickDiff);
+    @Override
+    public int getDamage(Integer difficulty) {
+        return 0;
+    }
 
-        this.attackDelay += tickDiff;
-        if (this.level.getBlock(new Vector3(NukkitMath.floorDouble(this.x), (int) this.y, NukkitMath.floorDouble(this.z))) instanceof BlockWater) {
-            this.attack(new EntityDamageEvent(this, EntityDamageEvent.DamageCause.DROWNING, 2));
-            this.move(Utils.rand(-20, 20), Utils.rand(-20, 20), Utils.rand(-20, 20));
-        } else {
-            if (!this.hasEffect(Effect.WATER_BREATHING) && this.isInsideOfWater()) {
-                hasUpdate = true;
-                int airTicks = this.getDataPropertyShort(DATA_AIR) - tickDiff;
-                if (airTicks <= -20) {
-                    airTicks = 0;
-                    this.attack(new EntityDamageEvent(this, EntityDamageEvent.DamageCause.DROWNING, 2));
-                }
-                this.setDataProperty(new ShortEntityData(DATA_AIR, airTicks));
-            } else {
-                this.setDataProperty(new ShortEntityData(DATA_AIR, 300));
-            }
-        }
+    @Override
+    public int getMinDamage() {
+        return 0;
+    }
 
-        Timings.entityBaseTickTimer.stopTiming();
-        return hasUpdate;
+    @Override
+    public int getMinDamage(Integer difficulty) {
+        return 0;
+    }
 
+    @Override
+    public int getMaxDamage() {
+        return 0;
+    }
+
+    @Override
+    public int getMaxDamage(Integer difficulty) {
+        return 0;
+    }
+
+    @Override
+    public void setDamage(int damage) {
+        //TODO
+    }
+
+    @Override
+    public void setDamage(int[] damage) {
+        //TODO
+    }
+
+    @Override
+    public void setDamage(int damage, int difficulty) {
+        //TODO
+    }
+
+    @Override
+    public void setMinDamage(int damage) {
+        //TODO
+    }
+
+    @Override
+    public void setMinDamage(int[] damage) {
+        //TODO
+    }
+
+    @Override
+    public void setMinDamage(int damage, int difficulty) {
+        //TODO
+    }
+
+    @Override
+    public void setMaxDamage(int damage) {
+        //TODO
+    }
+
+    @Override
+    public void setMaxDamage(int[] damage) {
+        //TODO
+    }
+
+    @Override
+    public void setMaxDamage(int damage, int difficulty) {
+        //TODO
     }
 
 }

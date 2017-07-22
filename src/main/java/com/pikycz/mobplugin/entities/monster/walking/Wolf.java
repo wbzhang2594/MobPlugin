@@ -2,7 +2,6 @@ package com.pikycz.mobplugin.entities.monster.walking;
 
 import cn.nukkit.entity.Entity;
 import cn.nukkit.entity.EntityCreature;
-import cn.nukkit.entity.data.IntEntityData;
 import cn.nukkit.event.entity.EntityDamageByEntityEvent;
 import cn.nukkit.event.entity.EntityDamageEvent;
 import cn.nukkit.event.entity.EntityDamageEvent.DamageCause;
@@ -10,35 +9,19 @@ import cn.nukkit.item.Item;
 import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.nbt.tag.CompoundTag;
 import cn.nukkit.utils.DyeColor;
-import com.pikycz.mobplugin.MobPlugin;
-import com.pikycz.mobplugin.entities.monster.TameableMonster;
 
-public class Wolf extends TameableMonster {
+import com.pikycz.mobplugin.entities.monster.WalkingMonster;
+
+public class Wolf extends WalkingMonster {
 
     public static final int NETWORK_ID = 14;
 
     private static final String NBT_KEY_ANGRY = "Angry"; //0 - not angry, > 0 angry
 
-    //private static final String NBT_KEY_SITTING = "Sitting"; // 1 or 0 (true/false)
-    private static final String NBT_KEY_COLLAR_COLOR = "CollarColor"; // 0 -14 (14 - RED)
-
-    //private static final String NBT_SERVER_KEY_OWNER_NAME = "OwnerName"; // this is our own tag - only for server side ...
     private int angry = 0;
 
-    /*private int teleportDistance = 12;
-    
-    private int followDistance = 10;
-    
-    private boolean tamed = false;
-    
-    private int angryValue = 0;
-    
-    private Player owner = null;*/
     private DyeColor collarColor = DyeColor.RED; // red is default
 
-    /*private boolean sitting = false;
-    
-    private Player ownerName = null;*/
     public Wolf(FullChunk chunk, CompoundTag nbt) {
         super(chunk, nbt);
     }
@@ -46,6 +29,11 @@ public class Wolf extends TameableMonster {
     @Override
     public int getNetworkId() {
         return NETWORK_ID;
+    }
+    
+    @Override
+    public String getName() {
+        return "Wolf";
     }
 
     @Override
@@ -66,14 +54,6 @@ public class Wolf extends TameableMonster {
     @Override
     protected void initEntity() {
         super.initEntity();
-
-        /*if (this.namedTag.contains(NBT_KEY_ANGRY)) {
-            this.angry = this.namedTag.getInt(NBT_KEY_ANGRY);
-        }
-
-        if (this.namedTag.contains(NBT_KEY_COLLAR_COLOR)) {
-            this.collarColor = DyeColor.getByDyeData(this.namedTag.getInt(NBT_KEY_COLLAR_COLOR));
-        }*/
         this.setMaxHealth(8);
         this.fireProof = false;
         this.setDamage(new int[]{0, 3, 4, 5});
@@ -84,7 +64,6 @@ public class Wolf extends TameableMonster {
     public void saveNBT() {
         super.saveNBT();
         this.namedTag.putInt(NBT_KEY_ANGRY, this.angry);
-        this.namedTag.putInt(NBT_KEY_COLLAR_COLOR, this.collarColor.getDyeData());
     }
 
     @Override
@@ -113,12 +92,10 @@ public class Wolf extends TameableMonster {
 
     @Override
     public void attackEntity(Entity player) {
-        if (MobPlugin.MOB_AI_ENABLED) {
             if (this.attackDelay > 10 && this.distanceSquared(player) < 1.6) {
                 this.attackDelay = 0;
                 player.attack(new EntityDamageByEntityEvent(this, player, DamageCause.ENTITY_ATTACK, getDamage()));
             }
-        }
     }
 
     @Override
@@ -129,17 +106,6 @@ public class Wolf extends TameableMonster {
     @Override
     public int getKillExperience() {
         return 3; // gain 3 experience
-    }
-
-    /**
-     * Sets the color of the wolves collar (default is 14)
-     *
-     * @param color
-     */
-    public void setCollarColor(DyeColor color) {
-        this.namedTag.putInt(NBT_KEY_COLLAR_COLOR, color.getDyeData());
-        this.setDataProperty(new IntEntityData(DATA_COLOUR, color.getColor().getRGB()));
-        this.collarColor = color;
     }
 
 }

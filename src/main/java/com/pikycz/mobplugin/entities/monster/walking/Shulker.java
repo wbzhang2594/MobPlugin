@@ -3,6 +3,7 @@ package com.pikycz.mobplugin.entities.monster.walking;
 import cn.nukkit.entity.Entity;
 import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.nbt.tag.CompoundTag;
+
 import com.pikycz.mobplugin.entities.monster.WalkingMonster;
 
 /**
@@ -21,6 +22,11 @@ public class Shulker extends WalkingMonster {
     @Override
     public int getNetworkId() {
         return NETWORK_ID;
+    }
+    
+    @Override
+    public String getName() {
+        return "Shulker";
     }
     
     @Override

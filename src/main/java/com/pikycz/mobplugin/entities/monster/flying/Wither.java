@@ -11,10 +11,12 @@ import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.level.sound.LaunchSound;
 import cn.nukkit.math.Vector3;
 import cn.nukkit.nbt.tag.CompoundTag;
+
 import com.pikycz.mobplugin.MobPlugin;
 import com.pikycz.mobplugin.entities.monster.FlyingMonster;
 import com.pikycz.mobplugin.entities.projectile.BlueWitherSkull;
-import com.pikycz.mobplugin.entities.utils.Utils;
+import com.pikycz.mobplugin.utils.Utils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +35,11 @@ public class Wither extends FlyingMonster {
     @Override
     public int getNetworkId() {
         return NETWORK_ID;
+    }
+    
+    @Override
+    public String getName() {
+        return "Wither";
     }
 
     @Override

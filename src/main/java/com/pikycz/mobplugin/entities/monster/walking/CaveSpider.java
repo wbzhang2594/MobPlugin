@@ -6,7 +6,9 @@ import cn.nukkit.event.entity.EntityDamageEvent.DamageCause;
 import cn.nukkit.item.Item;
 import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.nbt.tag.CompoundTag;
-import com.pikycz.mobplugin.entities.utils.Utils;
+import cn.nukkit.potion.Effect;
+
+import com.pikycz.mobplugin.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +24,11 @@ public class CaveSpider extends Spider {
     @Override
     public int getNetworkId() {
         return NETWORK_ID;
+    }
+    
+    @Override
+    public String getName() {
+        return "CaveSpider";
     }
 
     @Override
@@ -51,7 +58,8 @@ public class CaveSpider extends Spider {
     public void attackEntity(Entity player) {
         if (this.attackDelay > 10 && this.distanceSquared(player) < 1.32) {
             this.attackDelay = 0;
-            player.attack(new EntityDamageByEntityEvent(this, player, DamageCause.ENTITY_ATTACK, getDamage()));
+            EntityDamageByEntityEvent ev = (new EntityDamageByEntityEvent(this, player, DamageCause.ENTITY_ATTACK, getDamage()));
+            ev.getEntity().addEffect(Effect.getEffectByName("posion"));
         }
     }
 

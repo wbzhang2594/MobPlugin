@@ -17,10 +17,12 @@ import cn.nukkit.level.sound.LaunchSound;
 import cn.nukkit.math.Vector3;
 import cn.nukkit.nbt.tag.CompoundTag;
 import cn.nukkit.network.protocol.MobEquipmentPacket;
+
 import co.aikar.timings.Timings;
+
 import com.pikycz.mobplugin.MobPlugin;
 import com.pikycz.mobplugin.entities.monster.WalkingMonster;
-import com.pikycz.mobplugin.entities.utils.Utils;
+import com.pikycz.mobplugin.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +33,11 @@ public class Skeleton extends WalkingMonster {
 
     public Skeleton(FullChunk chunk, CompoundTag nbt) {
         super(chunk, nbt);
+    }
+
+    @Override
+    public String getName() {
+        return "Skeleton";
     }
 
     @Override
