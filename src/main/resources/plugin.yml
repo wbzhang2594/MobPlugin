@@ -13,7 +13,7 @@ commands:
     description: Spawn a simple mob to the player, that is using this command
     aliases: ["mob"]
     usage: ""
-    permission: mob-plugin.mob  
+    permission: mob-plugin.mob
     
 permissions:
   mob-plugin.mob:
