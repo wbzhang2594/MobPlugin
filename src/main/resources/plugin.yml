@@ -4,7 +4,7 @@ version: "1.1"
 api: ["1.0.0"]
 
 load: STARTUP
-author: PikyCZ,CreeperFace,kniffo80
+author: PikyCZ.CreeperFace.kniffo80
 description: Implement Entity AI from scratch beginning with 1.1.x
 website: https://github.com/PikyCZ/MobPlugin
 
@@ -13,10 +13,10 @@ commands:
     description: Spawn a simple mob to the player, that is using this command
     aliases: ["mob"]
     usage: ""
-    permission: mob-plugin.mob
+    permission: mob-plugin.mob  
     
 permissions:
-  mob-plugin.summon:
+  mob-plugin.mob:
     description: ""
     default: op
     
