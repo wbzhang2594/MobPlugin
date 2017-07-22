@@ -1,98 +1,53 @@
 package com.pikycz.mobplugin;
 
 import cn.nukkit.Player;
+import cn.nukkit.Server;
 import cn.nukkit.blockentity.BlockEntity;
 import cn.nukkit.command.Command;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.entity.Entity;
 import cn.nukkit.entity.item.EntityItem;
-import cn.nukkit.event.EventHandler;
 import cn.nukkit.event.Listener;
-import cn.nukkit.event.level.LevelLoadEvent;
-import cn.nukkit.event.level.LevelUnloadEvent;
 import cn.nukkit.level.Level;
 import cn.nukkit.level.Location;
 import cn.nukkit.level.Position;
 import cn.nukkit.level.format.FullChunk;
+import cn.nukkit.math.NukkitMath;
 import cn.nukkit.nbt.tag.CompoundTag;
 import cn.nukkit.nbt.tag.DoubleTag;
 import cn.nukkit.nbt.tag.FloatTag;
 import cn.nukkit.nbt.tag.ListTag;
 import cn.nukkit.plugin.PluginBase;
-import cn.nukkit.utils.Config;
 import cn.nukkit.utils.TextFormat;
+
 import com.pikycz.mobplugin.entities.BaseEntity;
 import com.pikycz.mobplugin.entities.monster.walking.Wolf;
-//import com.pikycz.mobplugin.entities.animal.flying.Bat;
-//import com.pikycz.mobplugin.entities.animal.swim.Squid;
 import com.pikycz.mobplugin.entities.animal.walking.*;
+import com.pikycz.mobplugin.entities.animal.flying.*;
+import com.pikycz.mobplugin.entities.animal.swim.*;
 import com.pikycz.mobplugin.entities.block.BlockEntitySpawner;
-//import com.pikycz.mobplugin.entities.monster.flying.*;
-//import com.pikycz.mobplugin.entities.monster.swim.*;
 import com.pikycz.mobplugin.entities.monster.walking.*;
+import com.pikycz.mobplugin.entities.monster.flying.*;
+import com.pikycz.mobplugin.entities.monster.jumping.*;
+import com.pikycz.mobplugin.entities.monster.swim.*;
 import com.pikycz.mobplugin.entities.projectile.*;
-import com.pikycz.mobplugin.task.AutoSpawnTask;
-import com.pikycz.mobplugin.entities.utils.Utils;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import com.pikycz.mobplugin.utils.Utils;
 
 public class MobPlugin extends PluginBase implements Listener {
 
-    public static boolean MOB_AI_ENABLED = true;
-
-    public static boolean spawnAnimals = true;
-
-    public static boolean spawnMobs = true;
-
     private int counter = 0;
-
-    private Config config;
-
-    public final HashMap<Integer, Level> levelsToSpawn = new HashMap<>();
-
-    private List<String> disabledWorlds;
 
     @Override
     public void onLoad() {
         registerEntities();
-        Utils.logServerInfo("Load MobPlugin");
+        Utils.logServerInfo("Loading MobPlugin");
         Utils.logServerInfo("Version - 1.1-Dev");
     }
 
     @Override
     public void onEnable() {
-        // Config reading and writing
-        this.getDataFolder().mkdirs();
-        this.saveResource("Config.yml");
-        this.config = new Config(this.getDataFolder() + "/Config.yml");
-
-        // we need this flag as it's controlled by the plugin's entities
-        MOB_AI_ENABLED = config.getBoolean("entities.mob-ai", true);
-        int spawnDelay = config.getInt("entities.auto-spawn-tick", 300);
-
-        disabledWorlds = config.getList("worlds-spawn-disabled", new ArrayList());
-        spawnAnimals = config.getBoolean("entities.spawn-animals");
-        spawnMobs = config.getBoolean("entities.spawn-mobs");
-
-        //disable Levels
-        for (Level level : getServer().getLevels().values()) {
-            if (disabledWorlds.contains(level.getFolderName().toLowerCase())) {
-                continue;
-            }
-
-            levelsToSpawn.put(level.getId(), level);
-        }
-
         // register as listener to plugin events
         this.getServer().getPluginManager().registerEvents(this, this);
-
-        if (spawnDelay > 0) {
-            this.getServer().getScheduler().scheduleRepeatingTask(new AutoSpawnTask(this), spawnDelay, true);
-        }
-        Utils.logServerInfo(String.format("Plugin enabling successful [aiEnabled:%s] [autoSpawnTick:%d]", MOB_AI_ENABLED, spawnDelay));
-
     }
 
     @Override
@@ -102,7 +57,7 @@ public class MobPlugin extends PluginBase implements Listener {
 
     private void registerEntities() {
         // register Passive entities
-        //Entity.registerEntity(Bat.class.getSimpleName(), Bat.class); /Fly too high
+        Entity.registerEntity(Bat.class.getSimpleName(), Bat.class); //Fly too high
         Entity.registerEntity(Chicken.class.getSimpleName(), Chicken.class);
         Entity.registerEntity(Cow.class.getSimpleName(), Cow.class);
         Entity.registerEntity(Donkey.class.getSimpleName(), Donkey.class);
@@ -115,26 +70,27 @@ public class MobPlugin extends PluginBase implements Listener {
         Entity.registerEntity(Rabbit.class.getSimpleName(), Rabbit.class);
         Entity.registerEntity(Sheep.class.getSimpleName(), Sheep.class);
         Entity.registerEntity(SkeletonHorse.class.getSimpleName(), SkeletonHorse.class);
-        //Entity.registerEntity(Squid.class.getSimpleName(), Squid.class); //TODO: Spawning in Water and swim
+        Entity.registerEntity(Squid.class.getSimpleName(), Squid.class); //TODO: Spawning in Water and swim
         Entity.registerEntity(Villager.class.getSimpleName(), Villager.class);
         Entity.registerEntity(Wolf.class.getSimpleName(), Wolf.class);
         Entity.registerEntity(ZombieHorse.class.getSimpleName(), ZombieHorse.class);
 
         //register Monster entities
-        //Entity.registerEntity(Blaze.class.getSimpleName(), Blaze.class);
-        //Entity.registerEntity(EnderDragon.class.getSimpleName(), EnderDragon.class); TODO: Spawn in End
-        //Entity.registerEntity(ElderGuardian.class.getSimpleName(), ElderGuardian.class); //TODO: Spawn in Ocean palace swim , attack
-        //Entity.registerEntity(Ghast.class.getSimpleName(), Ghast.class);
-        //Entity.registerEntity(Guardian.class.getSimpleName(), Guardian.class); //TODO: Spawn in Ocean palace swim , attack
+        Entity.registerEntity(Blaze.class.getSimpleName(), Blaze.class);
+        Entity.registerEntity(EnderDragon.class.getSimpleName(), EnderDragon.class); //TODO: Spawn in End
+        Entity.registerEntity(Wither.class.getSimpleName(), Wither.class);
+        Entity.registerEntity(ElderGuardian.class.getSimpleName(), ElderGuardian.class); //TODO: Spawn in Ocean palace swim , attack
+        Entity.registerEntity(Ghast.class.getSimpleName(), Ghast.class); //TODO: Spawn in Nether
+        Entity.registerEntity(Guardian.class.getSimpleName(), Guardian.class); //TODO: Spawn in Ocean palace swim , attack
         Entity.registerEntity(CaveSpider.class.getSimpleName(), CaveSpider.class);
         Entity.registerEntity(Creeper.class.getSimpleName(), Creeper.class);
-        //Entity.registerEntity(Enderman.class.getSimpleName(), Enderman.class); //TODO: Move(teleport) , attack
+        Entity.registerEntity(Enderman.class.getSimpleName(), Enderman.class); //TODO: Move(teleport) , attack
         Entity.registerEntity(IronGolem.class.getSimpleName(), IronGolem.class);
-        Entity.registerEntity(MagmaCube.class.getSimpleName(), MagmaCube.class);
-        Entity.registerEntity(PigZombie.class.getSimpleName(), PigZombie.class);
-        //Entity.registerEntity(Silverfish.class.getSimpleName(), Silverfish.class);
+        Entity.registerEntity(MagmaCube.class.getSimpleName(), MagmaCube.class);//Spawn In Nether
+        Entity.registerEntity(PigZombie.class.getSimpleName(), PigZombie.class);//Spawn in Nether
+        Entity.registerEntity(Silverfish.class.getSimpleName(), Silverfish.class); //TODO: Spawn random from stone
         Entity.registerEntity(Skeleton.class.getSimpleName(), Skeleton.class);
-        //Entity.registerEntity(Slime.class.getSimpleName(), Slime.class); //TODO: Make random spawn Slime (Big,Small)
+        Entity.registerEntity(Slime.class.getSimpleName(), Slime.class); //TODO: Make random spawn Slime (Big,Small)
         Entity.registerEntity(SnowGolem.class.getSimpleName(), SnowGolem.class);
         Entity.registerEntity(Spider.class.getSimpleName(), Spider.class);
         Entity.registerEntity(Stray.class.getSimpleName(), Stray.class);
@@ -148,7 +104,7 @@ public class MobPlugin extends PluginBase implements Listener {
         Entity.registerEntity("BlazeFireBall", BlazeFireBall.class);
         Entity.registerEntity("DragonFireBall", DragonFireBall.class);
         Entity.registerEntity("GhastDireBall", GhastFireBall.class);
-        //TODO: fix mobs
+
         // register the mob spawner (which is probably not needed anymore)
         BlockEntity.registerBlockEntity("MobSpawner", BlockEntitySpawner.class);
 
@@ -173,6 +129,7 @@ public class MobPlugin extends PluginBase implements Listener {
                 commandSender.sendMessage(TextFormat.GREEN + "/mob summon <mob>" + TextFormat.YELLOW + "- Spawn Mob");
                 commandSender.sendMessage(TextFormat.GREEN + "/mob removemobs" + TextFormat.YELLOW + "- Remove all Mobs");
                 commandSender.sendMessage(TextFormat.GREEN + "/mob removeitems" + TextFormat.YELLOW + "- Remove all items on ground");
+                commandSender.sendMessage(TextFormat.RED + "/mob version" + TextFormat.YELLOW + "- Show MobPlugin Version");
             } else {
                 switch (args[0]) {
                     case "summon":
@@ -223,11 +180,38 @@ public class MobPlugin extends PluginBase implements Listener {
                         }
                         output += "Removed " + count + " items on ground from all levels.";
                         break;
+                    case "version":
+                        commandSender.sendMessage(TextFormat.GREEN + "Version > 1.1 working with MCPE 1.1");//Todo Automatic Updater?
+                        break;
+                    case "info":
+                        int chunksCollected = 0;
+                        int entitiesCollected = 0;
+                        int tilesCollected = 0;
+                        long memory = Runtime.getRuntime().freeMemory();
+
+                        for (Level level : Server.getInstance().getLevels().values()) {
+                            int chunksCount = level.getChunks().size();
+                            int entitiesCount = level.getEntities().length;
+                            int tilesCount = level.getBlockEntities().size();
+                            level.doChunkGarbageCollection();
+                            level.unloadChunks(true);
+                            chunksCollected += chunksCount - level.getChunks().size();
+                            entitiesCollected += entitiesCount - level.getEntities().length;
+                            tilesCollected += tilesCount - level.getBlockEntities().size();
+                            level.clearCache(true);
+                        }
+
+                        System.gc();
+
+                        long freedMemory = Runtime.getRuntime().freeMemory() - memory;
+                        commandSender.sendMessage(TextFormat.GREEN + "---- " + TextFormat.WHITE + "Info result (last 5 mins)" + TextFormat.GREEN + " ----");
+                        commandSender.sendMessage(TextFormat.GOLD + "Chunks: " + TextFormat.RED + chunksCollected);
+                        commandSender.sendMessage(TextFormat.GOLD + "Entities: " + TextFormat.RED + entitiesCollected);
+                        commandSender.sendMessage(TextFormat.GOLD + "Block Entities: " + TextFormat.RED + tilesCollected);
+                        commandSender.sendMessage(TextFormat.GOLD + "RAM freed: " + TextFormat.RED + NukkitMath.round((freedMemory / 1024d / 1024d), 2) + " MB");
                     default:
                         output += "Unkown command.";
                         break;
-                    case "version":
-                        ((Player) commandSender).sendMessage(TextFormat.GREEN + "Version > 1.1 working with MCPE 1.1");
                 }
             }
 
@@ -235,16 +219,6 @@ public class MobPlugin extends PluginBase implements Listener {
         }
         return true;
 
-    }
-
-    /**
-     * Returns plugin specific yml configuration
-     *
-     *
-     * @return a {@link Config} instance
-     */
-    public Config getPluginConfig() {
-        return this.config;
     }
 
     /**
@@ -267,26 +241,6 @@ public class MobPlugin extends PluginBase implements Listener {
                         .add(new FloatTag("", source instanceof Location ? (float) ((Location) source).pitch : 0)));
 
         return Entity.createEntity(type.toString(), chunk, nbt, args);
-    }
-
-    @EventHandler
-    public void onLevelLoad(LevelLoadEvent e) {
-        Level level = e.getLevel();
-
-        if (!disabledWorlds.contains(level.getFolderName())) {
-            levelsToSpawn.put(level.getId(), level);
-        }
-    }
-
-    /**
-     *
-     * @param e
-     */
-    @EventHandler
-    public void onLevelUnload(LevelUnloadEvent e) {
-        Level level = e.getLevel();
-
-        levelsToSpawn.remove(level.getId());
     }
 
 }
