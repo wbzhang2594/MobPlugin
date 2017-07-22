@@ -1,12 +1,11 @@
 package com.pikycz.mobplugin.entities.animal.walking;
 
 import cn.nukkit.entity.Entity;
-import static cn.nukkit.entity.Entity.DATA_FLAGS;
 import static cn.nukkit.entity.passive.EntityVillager.PROFESSION_GENERIC;
 import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.nbt.tag.CompoundTag;
 import com.pikycz.mobplugin.entities.animal.WalkingAnimal;
-import com.pikycz.mobplugin.entities.utils.Utils;
+import com.pikycz.mobplugin.utils.Utils;
 
 public class Villager extends WalkingAnimal {
 
@@ -19,6 +18,11 @@ public class Villager extends WalkingAnimal {
     @Override
     public int getNetworkId() {
         return NETWORK_ID;
+    }
+    
+    @Override
+    public String getName() {
+        return "Villager";
     }
 
     @Override

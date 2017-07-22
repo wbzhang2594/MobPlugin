@@ -14,8 +14,9 @@ import cn.nukkit.item.ItemDye;
 import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.nbt.tag.CompoundTag;
 import cn.nukkit.utils.DyeColor;
+
 import com.pikycz.mobplugin.entities.animal.WalkingAnimal;
-import com.pikycz.mobplugin.entities.utils.Utils;
+import com.pikycz.mobplugin.utils.Utils;
 
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -33,6 +34,11 @@ public class Sheep extends WalkingAnimal {
     @Override
     public int getNetworkId() {
         return NETWORK_ID;
+    }
+    
+    @Override
+    public String getName() {
+        return "Sheep";
     }
 
     @Override
@@ -57,6 +63,11 @@ public class Sheep extends WalkingAnimal {
             return 0.65f;
         }
         return 1.1f;
+    }
+    
+    @Override
+    public boolean isBaby() {
+        return this.getDataFlag(DATA_FLAGS, Entity.DATA_FLAG_BABY);
     }
 
     @Override
@@ -142,13 +153,13 @@ public class Sheep extends WalkingAnimal {
         if (sheared) {
             return false;
         }
-        
+
         this.setSheared(true);
 
         this.level.dropItem(this, new ItemBlock(new BlockWool(this.getColor()), 0, this.level.rand.nextInt(2) + 1));
         return true;
     }
-    
+
     public void setSheared(boolean value) {
         this.sheared = value;
         this.setDataFlag(DATA_FLAGS, DATA_FLAG_SHEARED, value);

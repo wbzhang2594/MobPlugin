@@ -1,5 +1,7 @@
 package com.pikycz.mobplugin.entities.animal;
 
-public interface Animal {
+import cn.nukkit.entity.EntityAgeable;
+
+public interface Animal extends EntityAgeable {
 
 }

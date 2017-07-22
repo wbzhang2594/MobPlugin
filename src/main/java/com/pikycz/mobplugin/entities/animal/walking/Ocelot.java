@@ -1,12 +1,13 @@
 package com.pikycz.mobplugin.entities.animal.walking;
 
 import cn.nukkit.Player;
+import cn.nukkit.entity.Entity;
 import cn.nukkit.entity.EntityCreature;
 import cn.nukkit.item.Item;
 import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.nbt.tag.CompoundTag;
 import com.pikycz.mobplugin.entities.animal.WalkingAnimal;
-import com.pikycz.mobplugin.entities.utils.Utils;
+import com.pikycz.mobplugin.utils.Utils;
 
 public class Ocelot extends WalkingAnimal {
 
@@ -19,6 +20,11 @@ public class Ocelot extends WalkingAnimal {
     @Override
     public int getNetworkId() {
         return NETWORK_ID;
+    }
+    
+    @Override
+    public String getName() {
+        return "Ocelot";
     }
 
     @Override
@@ -40,6 +46,11 @@ public class Ocelot extends WalkingAnimal {
     @Override
     public double getSpeed() {
         return 1.4;
+    }
+    
+    @Override
+    public boolean isBaby() {
+        return this.getDataFlag(DATA_FLAGS, Entity.DATA_FLAG_BABY);
     }
 
     @Override

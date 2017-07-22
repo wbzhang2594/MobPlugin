@@ -1,12 +1,15 @@
 package com.pikycz.mobplugin.entities.animal.walking;
 
+import cn.nukkit.entity.Entity;
 import cn.nukkit.entity.EntityRideable;
 import cn.nukkit.event.entity.EntityDamageByEntityEvent;
 import cn.nukkit.item.Item;
 import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.nbt.tag.CompoundTag;
+
 import com.pikycz.mobplugin.entities.animal.WalkingAnimal;
-import com.pikycz.mobplugin.entities.utils.Utils;
+import com.pikycz.mobplugin.utils.Utils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,9 +17,8 @@ import java.util.List;
  *
  * @author PikyCZ
  */
-
 public class Llama extends WalkingAnimal implements EntityRideable {
-    
+
     public static final int NETWORK_ID = 29;
 
     public Llama(FullChunk chunk, CompoundTag nbt) {
@@ -28,6 +30,11 @@ public class Llama extends WalkingAnimal implements EntityRideable {
         return NETWORK_ID;
     }
     
+    @Override
+    public String getName() {
+        return "Llama";
+    }
+
     @Override
     public float getWidth() {
         if (this.isBaby()) {
@@ -51,13 +58,18 @@ public class Llama extends WalkingAnimal implements EntityRideable {
         }
         return 1.2f;
     }
+    
+    @Override
+    public boolean isBaby() {
+        return this.getDataFlag(DATA_FLAGS, Entity.DATA_FLAG_BABY);
+    }
 
     @Override
     public void initEntity() {
         super.initEntity();
         this.setMaxHealth(15);
     }
-    
+
     @Override
     public Item[] getDrops() {
         List<Item> drops = new ArrayList<>();
@@ -70,10 +82,10 @@ public class Llama extends WalkingAnimal implements EntityRideable {
         }
         return drops.toArray(new Item[drops.size()]);
     }
-    
+
     @Override
     public int getKillExperience() {
         return Utils.rand(1, 3);
     }
-    
+
 }

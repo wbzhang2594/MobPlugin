@@ -9,14 +9,16 @@ import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.math.Vector3;
 import cn.nukkit.nbt.tag.CompoundTag;
 import cn.nukkit.potion.Effect;
+
 import co.aikar.timings.Timings;
+
 import com.pikycz.mobplugin.entities.SwimmingEntity;
 
 /**
  *
  * @author PikyCZ
  */
-abstract class SwimmingAnimal extends SwimmingEntity implements EntityAgeable {
+public abstract class SwimmingAnimal extends SwimmingEntity implements EntityAgeable {
 
     public SwimmingAnimal(FullChunk chunk, CompoundTag nbt) {
         super(chunk, nbt);
@@ -30,15 +32,6 @@ abstract class SwimmingAnimal extends SwimmingEntity implements EntityAgeable {
     @Override
     public void initEntity() {
         super.initEntity();
-
-        if (this.getDataFlag(DATA_FLAG_BABY, 0)) {
-            this.setDataFlag(DATA_FLAG_BABY, DATA_TYPE_BYTE);
-        }
-    }
-
-    @Override
-    public boolean isBaby() {
-        return this.getDataFlag(DATA_FLAG_BABY, 0);
     }
 
     @Override

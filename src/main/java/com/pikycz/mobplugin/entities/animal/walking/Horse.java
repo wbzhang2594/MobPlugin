@@ -1,21 +1,18 @@
 package com.pikycz.mobplugin.entities.animal.walking;
 
+import cn.nukkit.entity.Entity;
 import cn.nukkit.entity.EntityRideable;
 import cn.nukkit.event.entity.EntityDamageByEntityEvent;
 import cn.nukkit.item.Item;
 import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.nbt.tag.CompoundTag;
+
 import com.pikycz.mobplugin.entities.animal.WalkingAnimal;
-import com.pikycz.mobplugin.entities.utils.Utils;
+import com.pikycz.mobplugin.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Implementation of a horse
- *
- * @author <a href="mailto:kniffman@googlemail.com">Michael Gertz</a>
- */
 public class Horse extends WalkingAnimal implements EntityRideable {
 
     public static final int NETWORK_ID = 23;
@@ -27,6 +24,11 @@ public class Horse extends WalkingAnimal implements EntityRideable {
     @Override
     public int getNetworkId() {
         return NETWORK_ID;
+    }
+    
+    @Override
+    public String getName() {
+        return "Horse";
     }
 
     @Override
@@ -47,6 +49,11 @@ public class Horse extends WalkingAnimal implements EntityRideable {
 
     public int getMaxJumpHeight() {
         return 2;
+    }
+    
+    @Override
+    public boolean isBaby() {
+        return this.getDataFlag(DATA_FLAGS, Entity.DATA_FLAG_BABY);
     }
 
     @Override

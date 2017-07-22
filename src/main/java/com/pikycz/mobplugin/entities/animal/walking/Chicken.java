@@ -1,13 +1,16 @@
 package com.pikycz.mobplugin.entities.animal.walking;
 
 import cn.nukkit.Player;
+import cn.nukkit.entity.Entity;
+import static cn.nukkit.entity.Entity.DATA_FLAGS;
 import cn.nukkit.entity.EntityCreature;
 import cn.nukkit.event.entity.EntityDamageByEntityEvent;
 import cn.nukkit.item.Item;
 import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.nbt.tag.CompoundTag;
+
 import com.pikycz.mobplugin.entities.animal.WalkingAnimal;
-import com.pikycz.mobplugin.entities.utils.Utils;
+import com.pikycz.mobplugin.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +26,11 @@ public class Chicken extends WalkingAnimal {
     @Override
     public int getNetworkId() {
         return NETWORK_ID;
+    }
+    
+    @Override
+    public String getName() {
+        return "Chicken";
     }
 
     @Override
@@ -55,11 +63,15 @@ public class Chicken extends WalkingAnimal {
     public float getGravity() {
         return 0.04f;
     }
+    
+    @Override
+    public boolean isBaby() {
+        return this.getDataFlag(DATA_FLAGS, Entity.DATA_FLAG_BABY);
+    }
 
     @Override
     public void initEntity() {
         super.initEntity();
-
         this.setMaxHealth(4);
     }
 

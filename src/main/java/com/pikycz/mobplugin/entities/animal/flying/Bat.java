@@ -1,9 +1,9 @@
 package com.pikycz.mobplugin.entities.animal.flying;
 
-import cn.nukkit.entity.EntityCreature;
 import cn.nukkit.item.Item;
 import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.nbt.tag.CompoundTag;
+
 import com.pikycz.mobplugin.entities.animal.FlyingAnimal;
 
 public class Bat extends FlyingAnimal {
@@ -17,6 +17,11 @@ public class Bat extends FlyingAnimal {
     @Override
     public int getNetworkId() {
         return NETWORK_ID;
+    }
+    
+    @Override
+    public String getName() {
+        return "Bat";
     }
 
     @Override
@@ -32,13 +37,7 @@ public class Bat extends FlyingAnimal {
     @Override
     public void initEntity() {
         super.initEntity();
-
         this.setMaxHealth(6);
-    }
-
-    @Override
-    public boolean targetOption(EntityCreature creature, double distance) {
-        return false;
     }
 
     @Override

@@ -1,28 +1,20 @@
-/**
- * Horse.java
- * <p>
- * Created on 09:40:15
- */
 package com.pikycz.mobplugin.entities.animal.walking;
 
 import cn.nukkit.Player;
+import cn.nukkit.entity.Entity;
 import cn.nukkit.entity.EntityCreature;
 import cn.nukkit.entity.EntityRideable;
 import cn.nukkit.event.entity.EntityDamageByEntityEvent;
 import cn.nukkit.item.Item;
 import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.nbt.tag.CompoundTag;
+
 import com.pikycz.mobplugin.entities.animal.WalkingAnimal;
-import com.pikycz.mobplugin.entities.utils.Utils;
+import com.pikycz.mobplugin.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Implementation of a donkey
- *
- * @author <a href="mailto:kniffman@googlemail.com">Michael Gertz</a>
- */
 public class Donkey extends WalkingAnimal implements EntityRideable {
 
     public static final int NETWORK_ID = 24;
@@ -35,13 +27,18 @@ public class Donkey extends WalkingAnimal implements EntityRideable {
     public int getNetworkId() {
         return NETWORK_ID;
     }
+    
+    @Override
+    public String getName() {
+        return "Donkey";
+    }
 
     @Override
     public float getWidth() {
         if (this.isBaby()) {
             return 0.6982f;
         }
-        return  1.3965f;
+        return 1.3965f;
     }
 
     @Override
@@ -50,6 +47,11 @@ public class Donkey extends WalkingAnimal implements EntityRideable {
             return 0.8f;
         }
         return 1.6f;
+    }
+    
+    @Override
+    public boolean isBaby() {
+        return this.getDataFlag(DATA_FLAGS, Entity.DATA_FLAG_BABY);
     }
 
     @Override
@@ -66,7 +68,7 @@ public class Donkey extends WalkingAnimal implements EntityRideable {
         }
         return false;
     }
-    
+
     @Override
     public Item[] getDrops() {
         List<Item> drops = new ArrayList<>();
