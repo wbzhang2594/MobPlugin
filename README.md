@@ -8,6 +8,22 @@ Development: **[PikyCZ](https://github.com/PikyCZ)**
 
 MobPlugin is a plugin that implements the mob entities for MCPE including movement, aggression etc.
 
+# Commands
+| Command | Usage | Description |
+| ------- |  ----- | ----------- |
+| `/mob` | `/mob` | Display list of commands|
+| `/mob spawn <mob_name>` | `/mob spawn <mob_name>` | Spawn mob (mob_name write always with a capital letter.. For example: Pig,Zombie)
+| `/mob removemobs` | `/mob removemobs` | Remove all living mobs|
+| `/mob removeitems` | `/mob removeitems` | Remove all items from all levels (ground)|
+| `/mob version` | `/mob version` | Show moblugin version|
+| `/mob info` | `/mob info` | Show info result|
+
+# Permissions
+```yml
+ mob-plugin.mob:
+    default: op
+  ```
+
 __[Jar Download at Circle CI](https://circleci.com/gh/PikyCZ/MobPlugin/tree/master/)__ (**login required**)
 
 # Contributed code since 2016
