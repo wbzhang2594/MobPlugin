@@ -1,25 +1,16 @@
-/**
- * Horse.java
- * <p>
- * Created on 09:40:15
- */
 package com.pikycz.mobplugin.entities.animal.walking;
 
 import cn.nukkit.Player;
 import cn.nukkit.entity.EntityCreature;
+import cn.nukkit.entity.EntityRideable;
 import cn.nukkit.event.entity.EntityDamageByEntityEvent;
 import cn.nukkit.item.Item;
 import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.nbt.tag.CompoundTag;
 import com.pikycz.mobplugin.entities.animal.WalkingAnimal;
-import com.pikycz.mobplugin.entities.utils.Utils;
+import com.pikycz.mobplugin.utils.Utils;
 
-/**
- * Implementation of a skeleton horse
- *
- * @author <a href="mailto:kniffman@googlemail.com">Michael Gertz</a>
- */
-public class SkeletonHorse extends WalkingAnimal {
+public class SkeletonHorse extends WalkingAnimal implements EntityRideable {
 
     public static final int NETWORK_ID = 26;
 
@@ -30,6 +21,11 @@ public class SkeletonHorse extends WalkingAnimal {
     @Override
     public int getNetworkId() {
         return NETWORK_ID;
+    }
+    
+    @Override
+    public String getName() {
+        return "SkeletonHorse";
     }
 
     @Override
@@ -65,9 +61,6 @@ public class SkeletonHorse extends WalkingAnimal {
         return new Item[0];
     }
 
-    /* (@Override)
-     * @see de.kniffo80.mobplugin.entities.BaseEntity#getKillExperience()
-     */
     @Override
     public int getKillExperience() {
         return Utils.rand(1, 4);

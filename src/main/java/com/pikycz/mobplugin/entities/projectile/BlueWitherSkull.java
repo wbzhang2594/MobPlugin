@@ -1,10 +1,15 @@
 package com.pikycz.mobplugin.entities.projectile;
 
 import cn.nukkit.Player;
+import cn.nukkit.entity.Entity;
 import cn.nukkit.entity.projectile.EntityProjectile;
 import cn.nukkit.level.format.FullChunk;
+import cn.nukkit.level.particle.SmokeParticle;
 import cn.nukkit.nbt.tag.CompoundTag;
 import cn.nukkit.network.protocol.AddEntityPacket;
+import static cn.nukkit.potion.Effect.WITHER;
+import co.aikar.timings.Timings;
+import com.pikycz.mobplugin.entities.utils.Utils;
 
 /**
  *
@@ -13,6 +18,10 @@ import cn.nukkit.network.protocol.AddEntityPacket;
 public class BlueWitherSkull extends EntityProjectile {
 
     public static final int NETWORK_ID = 89;
+
+    protected boolean critical = false;
+
+    protected boolean canExplode = false;
 
     public BlueWitherSkull(FullChunk chunk, CompoundTag nbt) {
         super(chunk, nbt);
@@ -48,20 +57,52 @@ public class BlueWitherSkull extends EntityProjectile {
         return 0.01f;
     }
 
+    @Override
+    protected double getDamage() {
+        return 5;
+    }
+
+    public BlueWitherSkull(FullChunk chunk, CompoundTag nbt, Entity shootingEntity) {
+        this(chunk, nbt, shootingEntity, false);
+    }
+
+    public BlueWitherSkull(FullChunk chunk, CompoundTag nbt, Entity shootingEntity, boolean critical) {
+        super(chunk, nbt, shootingEntity);
+
+        this.critical = critical;
+    }
+
+    public boolean isExplode() {
+        return this.canExplode;
+    }
+
+    public void setExplode(boolean bool) {
+        this.canExplode = bool;
+    }
+
     public boolean onUpdate(int currentTick) {
         if (this.closed) {
             return false;
         }
 
-        // this.timings.startTiming();
+        Timings.entityMoveTimer.startTiming();
+
         boolean hasUpdate = super.onUpdate(currentTick);
+
+        if (!this.isCollided) {
+            this.level.addParticle(new SmokeParticle(
+                    this.add(this.getWidth() / 2 + Utils.rand(-100, 100) / 500, this.getHeight() / 2 + Utils.rand(-100, 100) / 500, this.getWidth() / 2 + Utils.rand(-100, 100) / 500)));
+        } else if (this.onGround) {
+            return false;
+        }
 
         if (this.age > 1200 && this.isCollided) {
             this.kill();
             hasUpdate = true;
         }
 
-        // this.timings.stopTiming();
+        Timings.entityMoveTimer.stopTiming();
+
         return hasUpdate;
 
     }

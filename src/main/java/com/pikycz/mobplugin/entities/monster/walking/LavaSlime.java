@@ -2,7 +2,8 @@ package com.pikycz.mobplugin.entities.monster.walking;
 
 import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.nbt.tag.CompoundTag;
-import com.pikycz.mobplugin.entities.JumpingEntity;
+//import com.pikycz.mobplugin.entities.JumpingEntity;
+import com.pikycz.mobplugin.entities.WalkingEntity;
 import com.pikycz.mobplugin.entities.utils.Utils;
 
 /**
@@ -10,7 +11,7 @@ import com.pikycz.mobplugin.entities.utils.Utils;
  * @author PikyCZ
  *
  */
-public class LavaSlime extends JumpingEntity {
+public class LavaSlime extends WalkingEntity {
     //>>>>In 1.1 mojang rename MagmaCube to LavaSlime<<<<
     public static final int NETWORK_ID = 42;
 

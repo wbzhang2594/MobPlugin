@@ -1,16 +1,16 @@
 package com.pikycz.mobplugin.entities.monster.swim;
 
+import cn.nukkit.level.format.FullChunk;
+import cn.nukkit.nbt.tag.CompoundTag;
+
+import com.pikycz.mobplugin.entities.monster.SwimmingMonster;
+
 /**
  *
  * @author PikyCZ
  *
  */
-import cn.nukkit.level.format.FullChunk;
-import cn.nukkit.nbt.tag.CompoundTag;
-
-import com.pikycz.mobplugin.entities.SwimmingEntity;
-
-public class ElderGuardian extends SwimmingEntity {
+public class ElderGuardian extends SwimmingMonster {
 
     public static final int NETWORK_ID = 50;
 
@@ -21,6 +21,11 @@ public class ElderGuardian extends SwimmingEntity {
     @Override
     public int getNetworkId() {
         return NETWORK_ID;
+    }
+    
+    @Override
+    public String getName() {
+        return "ElderGuardian";
     }
 
     @Override
@@ -37,6 +42,11 @@ public class ElderGuardian extends SwimmingEntity {
     public void initEntity() {
         super.initEntity();
         this.setMaxHealth(80);
+    }
+
+    @Override
+    public int getKillExperience() {
+        return 10;
     }
 
 }

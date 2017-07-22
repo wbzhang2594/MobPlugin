@@ -8,9 +8,9 @@ package com.pikycz.mobplugin.entities.monster.swim;
 import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.nbt.tag.CompoundTag;
 
-import com.pikycz.mobplugin.entities.SwimmingEntity;
+import com.pikycz.mobplugin.entities.monster.SwimmingMonster;
 
-public class Guardian extends SwimmingEntity {
+public class Guardian extends SwimmingMonster {
 
     public static final int NETWORK_ID = 49;
 
@@ -21,6 +21,11 @@ public class Guardian extends SwimmingEntity {
     @Override
     public int getNetworkId() {
         return NETWORK_ID;
+    }
+    
+    @Override
+    public String getName() {
+        return "Guardian";
     }
 
     @Override
@@ -38,5 +43,10 @@ public class Guardian extends SwimmingEntity {
         super.initEntity();
 
         this.setMaxHealth(30);
+    }
+
+    @Override
+    public int getKillExperience() {
+        return 10;
     }
 }

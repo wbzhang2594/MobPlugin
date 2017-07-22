@@ -9,8 +9,11 @@ import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.math.Vector3;
 import cn.nukkit.nbt.tag.CompoundTag;
 import cn.nukkit.potion.Effect;
+
+import co.aikar.timings.Timings;
+
 import com.pikycz.mobplugin.entities.FlyingEntity;
-import com.pikycz.mobplugin.entities.utils.Utils;
+import com.pikycz.mobplugin.utils.Utils;
 
 public abstract class FlyingMonster extends FlyingEntity implements Monster {
 
@@ -78,8 +81,9 @@ public abstract class FlyingMonster extends FlyingEntity implements Monster {
     }
 
     public void setDamage(int[] damage) {
-        if (damage.length < 4)
+        if (damage.length < 4) {
             return;
+        }
 
         if (minDamage == null || minDamage.length < 4) {
             minDamage = new int[]{0, 0, 0, 0};
@@ -167,7 +171,7 @@ public abstract class FlyingMonster extends FlyingEntity implements Monster {
 
     public boolean entityBaseTick(int tickDiff) {
         boolean hasUpdate = false;
-        // Timings.timerEntityBaseTick.startTiming();
+        Timings.entityBaseTickTimer.startTiming();
 
         hasUpdate = super.entityBaseTick(tickDiff);
 
@@ -184,7 +188,8 @@ public abstract class FlyingMonster extends FlyingEntity implements Monster {
             this.setDataProperty(new ShortEntityData(DATA_AIR, 300));
         }
 
-        // Timings.timerEntityBaseTick.stopTiming();
+        Timings.entityBaseTickTimer.stopTiming();
+        
         return hasUpdate;
     }
 

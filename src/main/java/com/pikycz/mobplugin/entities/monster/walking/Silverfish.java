@@ -6,6 +6,7 @@ import cn.nukkit.event.entity.EntityDamageEvent.DamageCause;
 import cn.nukkit.item.Item;
 import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.nbt.tag.CompoundTag;
+
 import com.pikycz.mobplugin.entities.monster.WalkingMonster;
 
 public class Silverfish extends WalkingMonster {
@@ -19,6 +20,11 @@ public class Silverfish extends WalkingMonster {
     @Override
     public int getNetworkId() {
         return NETWORK_ID;
+    }
+    
+    @Override
+    public String getName() {
+        return "SilverFish";
     }
 
     @Override

@@ -16,9 +16,10 @@ import cn.nukkit.level.sound.LaunchSound;
 import cn.nukkit.math.Vector3;
 import cn.nukkit.nbt.tag.CompoundTag;
 import cn.nukkit.network.protocol.MobEquipmentPacket;
+
 import com.pikycz.mobplugin.MobPlugin;
 import com.pikycz.mobplugin.entities.monster.WalkingMonster;
-import com.pikycz.mobplugin.entities.utils.Utils;
+import com.pikycz.mobplugin.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +46,11 @@ public class Stray extends WalkingMonster {
     public int getNetworkId() {
         return NETWORK_ID;
     }
+    
+    @Override
+    public String getName() {
+        return "Stray";
+    }
 
     @Override
     public float getWidth() {
@@ -69,7 +75,7 @@ public class Stray extends WalkingMonster {
             double pitch = this.pitch + Utils.rand(-120, 120) / 10;
             Location pos = new Location(this.x - Math.sin(Math.toRadians(yaw)) * Math.cos(Math.toRadians(pitch)) * 0.5, this.y + this.getHeight() - 0.18,
                     this.z + Math.cos(Math.toRadians(yaw)) * Math.cos(Math.toRadians(pitch)) * 0.5, yaw, pitch, this.level);
-            Entity k = MobPlugin.create("Arrow", pos, this);
+            Entity k = MobPlugin.create("Arrow", pos, this, this.chunk);
             if (!(k instanceof EntityArrow)) {
                 return;
             }

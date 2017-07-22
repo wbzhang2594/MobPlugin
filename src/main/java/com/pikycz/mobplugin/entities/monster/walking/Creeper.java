@@ -15,8 +15,9 @@ import cn.nukkit.math.NukkitMath;
 import cn.nukkit.math.Vector2;
 import cn.nukkit.math.Vector3;
 import cn.nukkit.nbt.tag.CompoundTag;
+
 import com.pikycz.mobplugin.entities.monster.WalkingMonster;
-import com.pikycz.mobplugin.entities.utils.Utils;
+import com.pikycz.mobplugin.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +41,11 @@ public class Creeper extends WalkingMonster implements EntityExplosive {
     @Override
     public int getNetworkId() {
         return NETWORK_ID;
+    }
+    
+    @Override
+    public String getName() {
+        return "Creeper";
     }
 
     @Override

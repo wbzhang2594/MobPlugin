@@ -3,14 +3,14 @@ package com.pikycz.mobplugin.entities.animal.walking;
 /**
  *
  * @author PikyCZ
- *
  */
+import cn.nukkit.entity.Entity;
 import cn.nukkit.item.Item;
 import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.nbt.tag.CompoundTag;
 
 import com.pikycz.mobplugin.entities.animal.WalkingAnimal;
-import com.pikycz.mobplugin.entities.utils.Utils;
+import com.pikycz.mobplugin.utils.Utils;
 
 public class PolarBear extends WalkingAnimal {
 
@@ -24,19 +24,33 @@ public class PolarBear extends WalkingAnimal {
     public int getNetworkId() {
         return NETWORK_ID;
     }
+    
+    @Override
+    public String getName() {
+        return "PolarBear";
+    }
 
     @Override
     public float getWidth() {
+        if (this.isBaby()) {
+            return 0.65f;
+        }
         return 1.3f;
     }
 
     @Override
     public float getHeight() {
+        if (this.isBaby()) {
+            return 0.7f;
+        }
         return 1.4f;
     }
 
     @Override
     public float getEyeHeight() {
+        if (this.isBaby()) {
+            return 0.65f;
+        }
         return 1.4f;
     }
 
@@ -44,17 +58,21 @@ public class PolarBear extends WalkingAnimal {
     public double getSpeed() {
         return 1.25;
     }
+    
+    @Override
+    public boolean isBaby() {
+        return this.getDataFlag(DATA_FLAGS, Entity.DATA_FLAG_BABY);
+    }
 
     @Override
     public void initEntity() {
         super.initEntity();
-
         this.setMaxHealth(30);
     }
 
     @Override
     public Item[] getDrops() {
-        return new Item[]{Item.get(Item.RAW_FISH), Item.get(Item.RAW_SALMON)};
+        return new Item[]{Item.get(Item.RAW_FISH), Item.get(Item.RAW_SALMON)};//todo random
     }
 
     @Override

@@ -1,23 +1,19 @@
-/**
- * Horse.java
- * <p>
- * Created on 09:40:15
- */
 package com.pikycz.mobplugin.entities.animal.walking;
 
+import cn.nukkit.entity.Entity;
+import cn.nukkit.entity.EntityRideable;
 import cn.nukkit.event.entity.EntityDamageByEntityEvent;
 import cn.nukkit.item.Item;
 import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.nbt.tag.CompoundTag;
-import com.pikycz.mobplugin.entities.animal.WalkingAnimal;
-import com.pikycz.mobplugin.entities.utils.Utils;
 
-/**
- * Implementation of a horse
- *
- * @author <a href="mailto:kniffman@googlemail.com">Michael Gertz</a>
- */
-public class Horse extends WalkingAnimal {
+import com.pikycz.mobplugin.entities.animal.WalkingAnimal;
+import com.pikycz.mobplugin.utils.Utils;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Horse extends WalkingAnimal implements EntityRideable {
 
     public static final int NETWORK_ID = 23;
 
@@ -29,15 +25,35 @@ public class Horse extends WalkingAnimal {
     public int getNetworkId() {
         return NETWORK_ID;
     }
+    
+    @Override
+    public String getName() {
+        return "Horse";
+    }
 
     @Override
     public float getWidth() {
-        return 1.4f;
+        if (this.isBaby()) {
+            return 0.6982f;
+        }
+        return 1.3965f;
     }
 
     @Override
     public float getHeight() {
+        if (this.isBaby()) {
+            return 0.8f;
+        }
         return 1.6f;
+    }
+
+    public int getMaxJumpHeight() {
+        return 2;
+    }
+    
+    @Override
+    public boolean isBaby() {
+        return this.getDataFlag(DATA_FLAGS, Entity.DATA_FLAG_BABY);
     }
 
     @Override
@@ -48,10 +64,15 @@ public class Horse extends WalkingAnimal {
 
     @Override
     public Item[] getDrops() {
+        List<Item> drops = new ArrayList<>();
         if (this.lastDamageCause instanceof EntityDamageByEntityEvent) {
-            return new Item[]{Item.get(Item.LEATHER, Utils.rand(0, 2), 1)};
+            int leather = Utils.rand(0, 3); // drops 0-2 leather
+
+            for (int i = 0; i < leather; i++) {
+                drops.add(Item.get(Item.LEATHER, 0, 1));
+            }
         }
-        return new Item[0];
+        return drops.toArray(new Item[drops.size()]);
     }
 
     @Override

@@ -11,7 +11,9 @@ import cn.nukkit.level.particle.HeartParticle;
 import cn.nukkit.math.Vector3;
 import cn.nukkit.nbt.tag.CompoundTag;
 import cn.nukkit.potion.Effect;
+
 import co.aikar.timings.Timings;
+
 import com.pikycz.mobplugin.entities.WalkingEntity;
 
 public abstract class WalkingAnimal extends WalkingEntity implements Animal {
@@ -32,11 +34,14 @@ public abstract class WalkingAnimal extends WalkingEntity implements Animal {
     protected void initEntity() {
         super.initEntity();
 
+        if (this.getDataFlag(DATA_FLAG_BABY, 0)) {
+            this.setDataFlag(DATA_FLAG_BABY, DATA_TYPE_BYTE);
+        }
     }
 
     @Override
     public boolean isBaby() {
-        return false;
+        return this.getDataFlag(DATA_FLAG_BABY, 0);
     }
 
     @Override

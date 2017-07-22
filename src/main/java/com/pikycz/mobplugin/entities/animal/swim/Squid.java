@@ -7,9 +7,10 @@ import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.nbt.tag.CompoundTag;
 import cn.nukkit.utils.DyeColor;
 
-import com.pikycz.mobplugin.entities.SwimmingEntity;
+import com.pikycz.mobplugin.entities.animal.SwimmingAnimal;
+import com.pikycz.mobplugin.utils.Utils;
 
-public class Squid extends SwimmingEntity {
+public class Squid extends SwimmingAnimal {
 
     public static final int NETWORK_ID = 17;
 
@@ -20,6 +21,11 @@ public class Squid extends SwimmingEntity {
     @Override
     public int getNetworkId() {
         return NETWORK_ID;
+    }
+    
+    @Override
+    public String getName() {
+        return "Squid";
     }
 
     @Override
@@ -54,6 +60,16 @@ public class Squid extends SwimmingEntity {
         if (this.lastDamageCause instanceof EntityDamageByEntityEvent) {
         }
         return new Item[]{new ItemDye(DyeColor.BLACK.getDyeData())};
+    }
+
+    @Override
+    public int getKillExperience() {
+        return Utils.rand(1, 3);
+    }
+
+    @Override
+    public boolean isBaby() {
+        return false;
     }
 
 }

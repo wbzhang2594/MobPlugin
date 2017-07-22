@@ -1,8 +1,3 @@
-/*
- * FileLogger.java
- * <p>
- * Created on 10:34:06
- */
 package com.pikycz.mobplugin;
 
 import cn.nukkit.Server;
@@ -12,10 +7,6 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.sql.Timestamp;
 
-/**
- * A simple file logger for logging into separate files
- *
- */
 public class FileLogger {
 
     private static PrintWriter printWriter = null;

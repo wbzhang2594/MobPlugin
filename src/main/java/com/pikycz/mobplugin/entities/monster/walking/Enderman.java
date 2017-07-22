@@ -1,13 +1,16 @@
 package com.pikycz.mobplugin.entities.monster.walking;
 
+import cn.nukkit.Player;
 import cn.nukkit.entity.Entity;
+import cn.nukkit.entity.EntityCreature;
 import cn.nukkit.event.entity.EntityDamageByEntityEvent;
 import cn.nukkit.event.entity.EntityDamageEvent.DamageCause;
 import cn.nukkit.item.Item;
 import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.nbt.tag.CompoundTag;
+
 import com.pikycz.mobplugin.entities.monster.WalkingMonster;
-import com.pikycz.mobplugin.entities.utils.Utils;
+import com.pikycz.mobplugin.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +26,11 @@ public class Enderman extends WalkingMonster {
     @Override
     public int getNetworkId() {
         return NETWORK_ID;
+    }
+    
+    @Override
+    public String getName() {
+        return "Enderman";
     }
 
     @Override
@@ -55,6 +63,11 @@ public class Enderman extends WalkingMonster {
             player.attack(new EntityDamageByEntityEvent(this, player, DamageCause.ENTITY_ATTACK, getDamage()));
         }
     }
+    
+    public boolean targetOption(EntityCreature creature, float distance) {
+        // enderman don't attack alone. they only attack when looked at
+        return false;
+    }
 
     @Override
     public Item[] getDrops() {
@@ -71,6 +84,13 @@ public class Enderman extends WalkingMonster {
     @Override
     public int getKillExperience() {
         return 5; // gain 5 experience
+    }
+    
+    public void playerLooksAt (Player player) {
+        // if the player wears a pumpkin, the enderman doesn't attack the player
+        //if (player.getInventory().getHelmet() instanceof BlockPumpkin) {
+        //    this.setTarget(player);
+        //}
     }
 
 }
