@@ -15,7 +15,6 @@
     </properties>
 	
 	<dependencies>
-	/dependency>
 		<dependency>
 			<!-- Nukkit is last, so that Guava can overwrite the ancient Google Collections -->
 			<groupId>cn.nukkit</groupId>
