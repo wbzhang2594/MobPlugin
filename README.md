@@ -25,6 +25,7 @@ MobPlugin is a plugin that implements the mob entities for MCPE including moveme
   ```
 
 __[Jar Download at Circle CI](https://circleci.com/gh/PikyCZ/MobPlugin/tree/master/)__ (**login required**)
+__[Jar Download at Releases tab](https://github.com/PikyCZ/MobPlugin/releases)__ (**WorkingVersions**)
 
 # Contributed code since 2016
 * [PikyCZ](//github.com/PikyCZ)
