@@ -17,7 +17,7 @@
          <repositories>
         <repository>
             <id>snapshot-repo</id>
-            <url>https://github.com/BlockServerProject/MavenRepository/tree/master/snapshots/com/tinfoiled/mcpe/leveldb/leveldb/0.8-SNAPSHOT</url>
+            <url>https://github.com/BlockServerProject/MavenRepository/blob/master/snapshots/com/tinfoiled/mcpe/leveldb/leveldb/0.8-SNAPSHOT/leveldb-0.8-20150113.021728-1.jar</url>
         </repository>
    </repositories>
 
@@ -32,7 +32,7 @@
         <dependency>
             <groupId>com.tinfoiled.mcpe.leveldb</groupId>
             <artifactId>leveldb</artifactId>
-            <version>0.8</version>
+            <version>0.8-SNAPSHOT</version>
         </dependency>
     </dependencies>
 </project>
