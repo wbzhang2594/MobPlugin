@@ -31,5 +31,5 @@ __[Jar Download at Releases tab](https://github.com/PikyCZ/MobPlugin/releases)__
 # Contributed code since 2016
 * [PikyCZ](//github.com/PikyCZ)
 * [Creeperface01](//github.com/Creeperface01)
-* [woofie](//https://github.com/woofie)
+* [Asuna-Yuuki](//https://github.com/Asuna-Yuuki)
 * [caspervanneck](//https://github.com/caspervanneck)
