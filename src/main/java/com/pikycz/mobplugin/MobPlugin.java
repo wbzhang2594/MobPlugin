@@ -18,13 +18,14 @@ import cn.nukkit.nbt.tag.DoubleTag;
 import cn.nukkit.nbt.tag.FloatTag;
 import cn.nukkit.nbt.tag.ListTag;
 import cn.nukkit.plugin.PluginBase;
+import cn.nukkit.utils.Config;
+import cn.nukkit.utils.ConfigSection;
 import cn.nukkit.utils.TextFormat;
 
 import com.pikycz.mobplugin.entities.BaseEntity;
 import com.pikycz.mobplugin.entities.monster.walking.Wolf;
 import com.pikycz.mobplugin.entities.animal.walking.*;
 import com.pikycz.mobplugin.entities.animal.flying.*;
-import com.pikycz.mobplugin.entities.animal.swim.*;
 import com.pikycz.mobplugin.entities.block.BlockEntitySpawner;
 import com.pikycz.mobplugin.entities.monster.walking.*;
 import com.pikycz.mobplugin.entities.monster.flying.*;
@@ -32,8 +33,16 @@ import com.pikycz.mobplugin.entities.monster.jumping.*;
 import com.pikycz.mobplugin.entities.monster.swim.*;
 import com.pikycz.mobplugin.entities.projectile.*;
 import com.pikycz.mobplugin.utils.Utils;
+import java.util.LinkedHashMap;
 
 public class MobPlugin extends PluginBase implements Listener {
+
+    private ConfigSection entities;
+    private static MobPlugin Instance;
+
+    static MobPlugin getInstance() {
+        return Instance;
+    }
 
     private int counter = 0;
 
@@ -46,13 +55,55 @@ public class MobPlugin extends PluginBase implements Listener {
 
     @Override
     public void onEnable() {
-        // register as listener to plugin events
+        Instance = this;
         this.getServer().getPluginManager().registerEvents(this, this);
+        this.getLogger().info("Prepare" + this.getDataFolder() + "/MobPlugin.yml");
+        this.getDataFolder().mkdirs();
+        this.loadAll();
+
+    }
+
+    public Config getPluginConfig() {
+        return new Config(this.getDataFolder() + "MobPlugin.yml", Config.YAML);
+    }
+
+    public void loadAll() {
+        this.saveDefaultConfig();
+        this.loadEntities();
+    }
+
+    @SuppressWarnings("serial")
+    public void loadEntities() {
+        this.entities = new Config(this.getDataFolder() + "/MobPlugin.yml", Config.YAML,
+                new ConfigSection(new LinkedHashMap<String, Object>() {
+                    {
+                        put("entities.spawn-animals", true);
+                        put("entities.spawn-mobs", true);
+                    }
+                })).getSections();
     }
 
     @Override
     public void onDisable() {
         Utils.logServerInfo("Plugin disabled successful.");
+        this.saveAll();
+    }
+
+    public void saveAll() {
+        this.saveEntities();
+        this.getConfig().save();
+    }
+
+    public void saveEntities(boolean async) {
+        Config mobplugin = new Config(this.getDataFolder() + "/MobPlugin.yml", Config.YAML);
+        mobplugin.setAll(this.entities);
+        mobplugin.save(async); 
+    }
+
+    public void saveEntities() {
+        Config score = new Config(this.getDataFolder() + "/MobPlugin.yml", Config.YAML);
+        score.setAll(this.entities);
+        score.save();
     }
 
     private void registerEntities() {
@@ -70,7 +121,6 @@ public class MobPlugin extends PluginBase implements Listener {
         Entity.registerEntity(Rabbit.class.getSimpleName(), Rabbit.class);
         Entity.registerEntity(Sheep.class.getSimpleName(), Sheep.class);
         Entity.registerEntity(SkeletonHorse.class.getSimpleName(), SkeletonHorse.class);
-        Entity.registerEntity(Squid.class.getSimpleName(), Squid.class); //TODO: Spawning in Water and swim
         Entity.registerEntity(Villager.class.getSimpleName(), Villager.class);
         Entity.registerEntity(Wolf.class.getSimpleName(), Wolf.class);
         Entity.registerEntity(ZombieHorse.class.getSimpleName(), ZombieHorse.class);
