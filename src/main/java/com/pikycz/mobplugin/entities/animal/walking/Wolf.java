@@ -98,7 +98,6 @@ public class Wolf extends TameableMonster {
 
     @Override
     public void attackEntity(Entity player) {
-        if (MobPlugin.MOB_AI_ENABLED) {
             if (this.attackDelay > 10 && this.distanceSquared(player) < 1.6) {
                 this.attackDelay = 0;
                 player.attack(new EntityDamageByEntityEvent(this, player, DamageCause.ENTITY_ATTACK, getDamage()));
