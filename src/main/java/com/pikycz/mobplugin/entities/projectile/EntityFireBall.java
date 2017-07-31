@@ -9,7 +9,7 @@ import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.level.particle.CriticalParticle;
 import cn.nukkit.nbt.tag.CompoundTag;
 import cn.nukkit.network.protocol.AddEntityPacket;
-import com.pikycz.mobplugin.utils.Utils;
+import com.pikycz.mobplugin.entities.utils.Utils;
 
 public class EntityFireBall extends EntityProjectile {
 

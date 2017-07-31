@@ -23,14 +23,13 @@ import cn.nukkit.utils.ConfigSection;
 import cn.nukkit.utils.TextFormat;
 
 import com.pikycz.mobplugin.entities.BaseEntity;
-import com.pikycz.mobplugin.entities.monster.jumping.MagmaCube;
-import com.pikycz.mobplugin.entities.monster.jumping.Slime;
 import com.pikycz.mobplugin.entities.monster.walking.Wolf;
 import com.pikycz.mobplugin.entities.animal.walking.*;
 import com.pikycz.mobplugin.entities.animal.flying.*;
 import com.pikycz.mobplugin.entities.block.BlockEntitySpawner;
 import com.pikycz.mobplugin.entities.monster.walking.*;
 import com.pikycz.mobplugin.entities.monster.flying.*;
+import com.pikycz.mobplugin.entities.monster.jumping.*;
 import com.pikycz.mobplugin.entities.monster.swim.*;
 import com.pikycz.mobplugin.entities.projectile.*;
 import com.pikycz.mobplugin.utils.Utils;
