@@ -2,7 +2,6 @@ package com.pikycz.mobplugin.entities.animal.walking;
 
 import cn.nukkit.Player;
 import cn.nukkit.entity.Entity;
-import static cn.nukkit.entity.Entity.DATA_FLAGS;
 import cn.nukkit.entity.EntityCreature;
 import cn.nukkit.event.entity.EntityDamageByEntityEvent;
 import cn.nukkit.item.Item;

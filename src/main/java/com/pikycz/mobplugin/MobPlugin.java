@@ -122,7 +122,7 @@ public class MobPlugin extends PluginBase implements Listener {
         Entity.registerEntity(Sheep.class.getSimpleName(), Sheep.class);
         Entity.registerEntity(SkeletonHorse.class.getSimpleName(), SkeletonHorse.class);
         Entity.registerEntity(Villager.class.getSimpleName(), Villager.class);
-      //  Entity.registerEntity(Wolf.class.getSimpleName(), Wolf.class);
+        Entity.registerEntity(Wolf.class.getSimpleName(), Wolf.class);
         Entity.registerEntity(ZombieHorse.class.getSimpleName(), ZombieHorse.class);
 
         //register Monster entities
@@ -136,11 +136,11 @@ public class MobPlugin extends PluginBase implements Listener {
         Entity.registerEntity(Creeper.class.getSimpleName(), Creeper.class);
         Entity.registerEntity(Enderman.class.getSimpleName(), Enderman.class); //TODO: Move(teleport) , attack
         Entity.registerEntity(IronGolem.class.getSimpleName(), IronGolem.class);
-      //  Entity.registerEntity(MagmaCube.class.getSimpleName(), MagmaCube.class);//Spawn In Nether
+        Entity.registerEntity(MagmaCube.class.getSimpleName(), MagmaCube.class);//Spawn In Nether
         Entity.registerEntity(PigZombie.class.getSimpleName(), PigZombie.class);//Spawn in Nether
         Entity.registerEntity(Silverfish.class.getSimpleName(), Silverfish.class); //TODO: Spawn random from stone
         Entity.registerEntity(Skeleton.class.getSimpleName(), Skeleton.class);
-       // Entity.registerEntity(Slime.class.getSimpleName(), Slime.class); //TODO: Make random spawn Slime (Big,Small)
+        Entity.registerEntity(Slime.class.getSimpleName(), Slime.class); //TODO: Make random spawn Slime (Big,Small)
         Entity.registerEntity(SnowGolem.class.getSimpleName(), SnowGolem.class);
         Entity.registerEntity(Spider.class.getSimpleName(), Spider.class);
         Entity.registerEntity(Stray.class.getSimpleName(), Stray.class);
