@@ -29,8 +29,8 @@ import com.pikycz.mobplugin.entities.animal.flying.*;
 import com.pikycz.mobplugin.entities.block.BlockEntitySpawner;
 import com.pikycz.mobplugin.entities.monster.walking.*;
 import com.pikycz.mobplugin.entities.monster.flying.*;
-import com.pikycz.mobplugin.entities.monster.jumping.*;
-import com.pikycz.mobplugin.entities.monster.swim.*;
+//import com.pikycz.mobplugin.entities.monster.jumping.*;
+//import com.pikycz.mobplugin.entities.monster.swim.*;
 import com.pikycz.mobplugin.entities.projectile.*;
 import com.pikycz.mobplugin.utils.Utils;
 import java.util.LinkedHashMap;
@@ -129,18 +129,18 @@ public class MobPlugin extends PluginBase implements Listener {
         Entity.registerEntity(Blaze.class.getSimpleName(), Blaze.class);
         Entity.registerEntity(EnderDragon.class.getSimpleName(), EnderDragon.class); //TODO: Spawn in End
         Entity.registerEntity(Wither.class.getSimpleName(), Wither.class);
-        Entity.registerEntity(ElderGuardian.class.getSimpleName(), ElderGuardian.class); //TODO: Spawn in Ocean palace swim , attack
+        //Entity.registerEntity(ElderGuardian.class.getSimpleName(), ElderGuardian.class); //TODO: Spawn in Ocean palace swim , attack
         Entity.registerEntity(Ghast.class.getSimpleName(), Ghast.class); //TODO: Spawn in Nether
-        Entity.registerEntity(Guardian.class.getSimpleName(), Guardian.class); //TODO: Spawn in Ocean palace swim , attack
+        //Entity.registerEntity(Guardian.class.getSimpleName(), Guardian.class); //TODO: Spawn in Ocean palace swim , attack
         Entity.registerEntity(CaveSpider.class.getSimpleName(), CaveSpider.class);
         Entity.registerEntity(Creeper.class.getSimpleName(), Creeper.class);
         Entity.registerEntity(Enderman.class.getSimpleName(), Enderman.class); //TODO: Move(teleport) , attack
         Entity.registerEntity(IronGolem.class.getSimpleName(), IronGolem.class);
-        Entity.registerEntity(MagmaCube.class.getSimpleName(), MagmaCube.class);//Spawn In Nether
+        //Entity.registerEntity(MagmaCube.class.getSimpleName(), MagmaCube.class);//Spawn In Nether
         Entity.registerEntity(PigZombie.class.getSimpleName(), PigZombie.class);//Spawn in Nether
         Entity.registerEntity(Silverfish.class.getSimpleName(), Silverfish.class); //TODO: Spawn random from stone
         Entity.registerEntity(Skeleton.class.getSimpleName(), Skeleton.class);
-        Entity.registerEntity(Slime.class.getSimpleName(), Slime.class); //TODO: Make random spawn Slime (Big,Small)
+        //Entity.registerEntity(Slime.class.getSimpleName(), Slime.class); //TODO: Make random spawn Slime (Big,Small)
         Entity.registerEntity(SnowGolem.class.getSimpleName(), SnowGolem.class);
         Entity.registerEntity(Spider.class.getSimpleName(), Spider.class);
         Entity.registerEntity(Stray.class.getSimpleName(), Stray.class);
