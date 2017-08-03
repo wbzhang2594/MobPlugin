@@ -28,7 +28,6 @@ public class EventListener implements Listener {
         Item item = ev.getItem();
         Block block = ev.getBlock();
         if (item.getId() == Item.SPAWN_EGG && block.getId() == Item.MONSTER_SPAWNER) {
-            ev.setCancelled(true);
 
             BlockEntity blockEntity = block.getLevel().getBlockEntity(block);
             if (blockEntity != null && blockEntity instanceof BlockEntitySpawner) {
