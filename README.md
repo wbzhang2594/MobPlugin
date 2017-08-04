@@ -2,7 +2,7 @@
 
 Development: **[PikyCZ](https://github.com/PikyCZ)**
 
-[![CircleCI](https://circleci.com/gh/PikyCZ/MobPlugin/tree/master.svg?style=shield&circle-token=)](https://circleci.com/gh/PikyCZ/MobPlugin/tree/master)
+[![CircleCI](https://circleci.com/gh/PikyCZ/MobPlugin/tree/master.svg?style=shield&circle-token=)](https://circleci.com/gh/PikyCZ/MobPlugin/tree/master) //Fix Building
 
 ![mobplugin](https://github.com/PikyCZ/MobPlugin/blob/master/images/MobPlugin.png)
 
@@ -16,7 +16,6 @@ MobPlugin is a plugin that implements the mob entities for MCPE including moveme
 | `/mob removemobs` | `/mob removemobs` | Remove all living mobs|
 | `/mob removeitems` | `/mob removeitems` | Remove all items from all levels (ground)|
 | `/mob version` | `/mob version` | Show moblugin version|
-| `/mob info` | `/mob info` | Show info result|
 
 # Permissions
 ```yml
