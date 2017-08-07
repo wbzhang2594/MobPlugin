@@ -145,7 +145,7 @@ public class MobPlugin extends PluginBase implements Listener {
         Entity.registerEntity("BlueWitherSkull", BlueWitherSkull.class);
         Entity.registerEntity("BlazeFireBall", BlazeFireBall.class);
         Entity.registerEntity("DragonFireBall", DragonFireBall.class);
-        Entity.registerEntity("GhastDireBall", GhastFireBall.class);
+        Entity.registerEntity("GhastFireBall", GhastFireBall.class);
 
         // register the mob spawner (which is probably not needed anymore)
         BlockEntity.registerBlockEntity("MobSpawner", BlockEntitySpawner.class);
