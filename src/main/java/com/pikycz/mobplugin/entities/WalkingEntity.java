@@ -8,6 +8,7 @@ import cn.nukkit.block.BlockSlab;
 import cn.nukkit.block.BlockStairs;
 import cn.nukkit.entity.Entity;
 import cn.nukkit.entity.EntityCreature;
+import cn.nukkit.level.Location;
 import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.math.NukkitMath;
 import cn.nukkit.math.Vector2;
@@ -32,60 +33,75 @@ public abstract class WalkingEntity extends BaseEntity {
             return;
         }
 
-        Vector3 target = this.target;
-        if (!(target instanceof EntityCreature) || !this.targetOption((EntityCreature) target, this.distanceSquared(target))) {
-            double near = Integer.MAX_VALUE;
-
-            if(this.moveTime<=0) {
-                resetTarget(null);
-            }
-
-            for (Entity entity : this.getLevel().getEntities()) {
-                if (entity == this || !(entity instanceof EntityCreature) || entity instanceof Animal) {
-                    continue;
-                }
-
-                EntityCreature creature = (EntityCreature) entity;
-                if (creature instanceof BaseEntity && ((BaseEntity) creature).isFriendly() == this.isFriendly()) {
-                    continue;
-                }
-
-                double distance = this.distanceSquared(creature);
-                if (distance > near || !this.targetOption(creature, distance)) {
-                    continue;
-                }
-                near = distance;
-
-                resetTarget(creature);
-                break;
+        if (itsTimeToChangeATarget(this.target)) {
+            EntityCreature creatureTarget = findACreatureTarget();
+            if (creatureTarget != null) {
+                resetTarget(creatureTarget);
+            } else {
+                randomlyDecideATargetStaytimeAndMovetime();
             }
         }
+    }
 
-        if (this.target != null && this.target instanceof EntityCreature && !((EntityCreature) this.target).closed && ((EntityCreature) this.target).isAlive()) {
-            return;
-        }
-
+    private void randomlyDecideATargetStaytimeAndMovetime() {
         int x, z;
+        Vector3 location = null;
         if (this.stayTime > 0) {
-            if (Utils.rand(1, 100) > 5) {
-                return;
+            if (Utils.rand(1, 100) <= 5) {                      //small probability event
+                x = Utils.rand(10, 30);
+                z = Utils.rand(10, 30);
+                location = this.add(Utils.rand() ? x : -x, Utils.rand(-20, 20) / 10, Utils.rand() ? z : -z);
+            } else {
+                location = this.target;
             }
-            x = Utils.rand(10, 30);
-            z = Utils.rand(10, 30);
-            this.target = this.add(Utils.rand() ? x : -x, Utils.rand(-20, 20) / 10, Utils.rand() ? z : -z);
-        } else if (Utils.rand(1, 410) == 1) {
-            x = Utils.rand(10, 30);
-            z = Utils.rand(10, 30);
-            this.stayTime = Utils.rand(90, 400);
-            this.target = this.add(Utils.rand() ? x : -x, Utils.rand(-20, 20) / 10, Utils.rand() ? z : -z);
-        } else if (this.moveTime <= 0 || this.target == null) {
+        } else if (this.moveTime > 0) {
+            if (Utils.rand(1, 410) == 1) {                      //small probability event
+                x = Utils.rand(10, 30);
+                z = Utils.rand(10, 30);
+                this.stayTime = Utils.rand(90, 400);
+                location = this.add(Utils.rand() ? x : -x, Utils.rand(-20, 20) / 10, Utils.rand() ? z : -z);
+            } else {
+                location = this.target;
+            }
+        } else {
             x = Utils.rand(20, 100);
             z = Utils.rand(20, 100);
             this.stayTime = 0;
             this.moveTime = Utils.rand(300, 1200);
-            this.target = this.add(Utils.rand() ? x : -x, 0, Utils.rand() ? z : -z);
+            location = this.add(Utils.rand() ? x : -x, 0, Utils.rand() ? z : -z);
         }
 
+        this.target = location;
+    }
+
+    private EntityCreature findACreatureTarget() {
+        double near = Integer.MAX_VALUE;
+
+        EntityCreature tempCreatureTarget = null;
+        for (Entity entity : this.getLevel().getEntities()) {
+
+
+            if (entity == this || !(entity instanceof EntityCreature) || entity instanceof Animal) {
+                continue;
+            }
+
+            EntityCreature creature = (EntityCreature) entity;
+            if (creature instanceof BaseEntity && ((BaseEntity) creature).isFriendly() == this.isFriendly()) {
+                continue;
+            }
+
+            double distance = this.distanceSquared(creature);
+            if (distance > near || !this.targetOption(creature, distance)) {
+                continue;
+            }
+            near = distance;
+            tempCreatureTarget = creature;
+        }
+        return tempCreatureTarget;
+    }
+
+    private boolean itsTimeToChangeATarget(Vector3 target) {
+        return !(target instanceof EntityCreature) || !this.targetOption((EntityCreature) target, this.distanceSquared(target));
     }
 
     private void resetTarget(Vector3 newTarget) {
@@ -188,7 +204,7 @@ public abstract class WalkingEntity extends BaseEntity {
             this.stayTime -= tickDiff;
             this.move(0, this.motionY * tickDiff, 0);
         } else {
-            Vector2 be = new Vector2(this.x , this.z );
+            Vector2 be = new Vector2(this.x, this.z);
             this.move(dx, this.motionY * tickDiff, dz);
             Vector2 af = new Vector2(this.x, this.z);
 
