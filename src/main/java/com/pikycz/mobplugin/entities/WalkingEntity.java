@@ -36,6 +36,10 @@ public abstract class WalkingEntity extends BaseEntity {
         if (!(target instanceof EntityCreature) || !this.targetOption((EntityCreature) target, this.distanceSquared(target))) {
             double near = Integer.MAX_VALUE;
 
+            if(this.moveTime<=0) {
+                resetTarget(null);
+            }
+
             for (Entity entity : this.getLevel().getEntities()) {
                 if (entity == this || !(entity instanceof EntityCreature) || entity instanceof Animal) {
                     continue;
@@ -52,13 +56,12 @@ public abstract class WalkingEntity extends BaseEntity {
                 }
                 near = distance;
 
-                this.stayTime = 0;
-                this.moveTime = 0;
-                this.target = creature;
+                resetTarget(creature);
+                break;
             }
         }
 
-        if (this.target instanceof EntityCreature && !((EntityCreature) this.target).closed && ((EntityCreature) this.target).isAlive()) {
+        if (this.target != null && this.target instanceof EntityCreature && !((EntityCreature) this.target).closed && ((EntityCreature) this.target).isAlive()) {
             return;
         }
 
@@ -83,6 +86,12 @@ public abstract class WalkingEntity extends BaseEntity {
             this.target = this.add(Utils.rand() ? x : -x, 0, Utils.rand() ? z : -z);
         }
 
+    }
+
+    private void resetTarget(Vector3 newTarget) {
+        this.stayTime = 0;
+        this.moveTime = 0;
+        this.target = newTarget;
     }
 
     protected boolean checkJump(double dx, double dz) {
@@ -155,7 +164,7 @@ public abstract class WalkingEntity extends BaseEntity {
 
         Vector3 before = this.target;
         this.checkTarget();
-        if (this.target instanceof EntityCreature || before != this.target) {
+        if (this.target != null && this.target instanceof EntityCreature || before != this.target) {
             double x = this.target.x - this.x;
             double y = this.target.y - this.y;
             double z = this.target.z - this.z;
@@ -179,7 +188,7 @@ public abstract class WalkingEntity extends BaseEntity {
             this.stayTime -= tickDiff;
             this.move(0, this.motionY * tickDiff, 0);
         } else {
-            Vector2 be = new Vector2(this.x + dx, this.z + dz);
+            Vector2 be = new Vector2(this.x , this.z );
             this.move(dx, this.motionY * tickDiff, dz);
             Vector2 af = new Vector2(this.x, this.z);
 
