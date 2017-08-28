@@ -1,4 +1,4 @@
-package com.pikycz.novamobs.entities;
+package com.pikycz.mobplugin.entities;
 
 import cn.nukkit.block.Block;
 import cn.nukkit.block.BlockFence;
@@ -14,8 +14,8 @@ import cn.nukkit.math.Vector2;
 import cn.nukkit.math.Vector3;
 import cn.nukkit.nbt.tag.CompoundTag;
 
-import com.pikycz.novamobs.entities.animal.Animal;
-import com.pikycz.novamobs.utils.Utils;
+import com.pikycz.mobplugin.entities.animal.Animal;
+import com.pikycz.mobplugin.utils.Utils;
 
 public abstract class WalkingEntity extends BaseEntity {
 
