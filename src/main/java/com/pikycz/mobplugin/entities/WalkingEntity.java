@@ -1,4 +1,4 @@
-package com.pikycz.mobplugin.entities;
+package com.pikycz.novamobs.entities;
 
 import cn.nukkit.block.Block;
 import cn.nukkit.block.BlockFence;
@@ -8,15 +8,14 @@ import cn.nukkit.block.BlockSlab;
 import cn.nukkit.block.BlockStairs;
 import cn.nukkit.entity.Entity;
 import cn.nukkit.entity.EntityCreature;
-import cn.nukkit.level.Location;
 import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.math.NukkitMath;
 import cn.nukkit.math.Vector2;
 import cn.nukkit.math.Vector3;
 import cn.nukkit.nbt.tag.CompoundTag;
 
-import com.pikycz.mobplugin.entities.animal.Animal;
-import com.pikycz.mobplugin.utils.Utils;
+import com.pikycz.novamobs.entities.animal.Animal;
+import com.pikycz.novamobs.utils.Utils;
 
 public abstract class WalkingEntity extends BaseEntity {
 
@@ -39,11 +38,13 @@ public abstract class WalkingEntity extends BaseEntity {
                 resetTarget(creatureTarget);
             } else {
                 randomlyDecideATargetStaytimeAndMovetime();
+
             }
         }
     }
 
     private void randomlyDecideATargetStaytimeAndMovetime() {
+
         int x, z;
         Vector3 location = null;
         if (this.stayTime > 0) {
@@ -76,10 +77,8 @@ public abstract class WalkingEntity extends BaseEntity {
 
     private EntityCreature findACreatureTarget() {
         double near = Integer.MAX_VALUE;
-
         EntityCreature tempCreatureTarget = null;
         for (Entity entity : this.getLevel().getEntities()) {
-
 
             if (entity == this || !(entity instanceof EntityCreature) || entity instanceof Animal) {
                 continue;
